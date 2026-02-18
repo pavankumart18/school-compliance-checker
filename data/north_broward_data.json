@@ -1,0 +1,219 @@
+{
+  "school": {
+    "name": "North Broward Preparatory School",
+    "location": "Coral Springs, FL 33065",
+    "type": "College Preparatory (PK-12)",
+    "enrollment": 847,
+    "score": 87,
+    "compliant": 21,
+    "partial": 4,
+    "non_compliant": 3
+  },
+  "documents": [
+    { "name": "Annual_Survey_2025.pdf", "label": "Annual Private School Survey 2024-25", "desc": "Notarized survey submitted Apr 15, 2025 — FLDOE Survey #NB-0042", "size": "34 KB" },
+    { "name": "VECHS_Clearance_Log.pdf", "label": "FDLE VECHS Clearance Log — All Staff", "desc": "Background screening results for 94 staff — Level 2 VECHS certified", "size": "28 KB" },
+    { "name": "DH684_Immunization_Report.pdf", "label": "Form DH-684 Immunization Compliance Report", "desc": "K & 7th Grade immunization compliance — Oct 2024 submission", "size": "21 KB" },
+    { "name": "Fire_Safety_Inspection.pdf", "label": "Fire Safety Inspection Report 2025", "desc": "Annual fire inspection — 0 violations — Fire Marshal signed Jan 2025", "size": "19 KB" },
+    { "name": "Teacher_Qualifications.pdf", "label": "Teacher Qualification Records — Faculty", "desc": "Transcripts and credentials for all 62 instructional staff", "size": "44 KB" },
+    { "name": "SEVIS_I20_Log.pdf", "label": "SEVIS I-20 Master Log — International Students", "desc": "78 active I-20s — all status Active — term registered within 30 days", "size": "32 KB" }
+  ],
+  "results": [
+    {
+      "id": "ADM-001",
+      "status": "compliant",
+      "evidence": "Survey filed April 15, 2025. Notary seal verified (Broward County seal #FL-882). Filed 16 days ahead of deadline.",
+      "quote": "Page 1: 'Sworn and subscribed before me this 15th day of April, 2025 — Notary Public Maria L. Gomez'",
+      "action": null
+    },
+    {
+      "id": "ADM-002",
+      "status": "compliant",
+      "evidence": "Calendar shows 182 scheduled instructional days. Register maintained daily — last update Feb 17, 2025.",
+      "quote": "Page 2: 'Total instructional days scheduled: 182 | YTD days completed as of Feb 17: 103'",
+      "action": null
+    },
+    {
+      "id": "ADM-003",
+      "status": "compliant",
+      "evidence": "SCF-1 submitted February 22, 2025 — 6 days ahead of deadline. All scholarship student records attached.",
+      "quote": "Page 1: 'Submission Date: Feb 22, 2025 — IEPC Confirmation #FL-2025-0338'",
+      "action": null
+    },
+    {
+      "id": "ADM-004",
+      "status": "compliant",
+      "evidence": "Tuition schedule published Aug 2024. Scholarship rate ($9,800) matches non-scholarship rate ($9,800). No surcharges detected.",
+      "quote": "Page 3: 'Tuition Schedule 2024-25: Standard Rate $9,800 — Scholarship Rate $9,800 — Rate Parity: CONFIRMED'",
+      "action": null
+    },
+    {
+      "id": "ADM-005",
+      "status": "compliant",
+      "evidence": "Policy #GLI-2024-NB-77821 valid through Aug 31, 2025. Liability limits: $1M per occurrence, $3M aggregate.",
+      "quote": "Page 1: 'General Liability Coverage — Expiration: 08/31/2025 — Per Occurrence: $1,000,000 — Aggregate: $3,000,000'",
+      "action": null
+    },
+    {
+      "id": "PER-001",
+      "status": "compliant",
+      "evidence": "94 staff records reviewed — all status 'Eligible'. Most recent screening: Aug 2024. No expired screenings detected.",
+      "quote": "Page 3: 'All 94 instructional and administrative personnel hold current VECHS Eligible status as of date of report'",
+      "action": null
+    },
+    {
+      "id": "PER-002",
+      "status": "partial",
+      "evidence": "59 of 62 teachers have complete qualification files. 3 teachers have degrees referenced in contracts but official transcripts not on file.",
+      "quote": "Page 7: 'Total instructional staff: 62 — Qualification gate: 59 PASS / 3 PENDING — Transcripts needed for: Williams, Chen, Okafor'",
+      "action": "Collect official transcripts from 3 teachers within 30 days. Acceptable alternative: Employment verification letters documenting 3+ years experience."
+    },
+    {
+      "id": "PER-003",
+      "status": "partial",
+      "evidence": "All 8 new hires in 2024-25 have signed affidavits. However, 2 were notarized 1 and 3 days after their respective start dates.",
+      "quote": "Page 5: 'New hire affidavit compliance: 6/8 timely — 2 late notarizations (Hernandez: +1 day, Patel: +3 days)'",
+      "action": "Retroactive notarization is technically non-compliant. Document the gap in personnel files. Enforce pre-start notarization for all future hires."
+    },
+    {
+      "id": "PER-004",
+      "status": "compliant",
+      "evidence": "All 94 staff signed 2024-25 Ethics Policy acknowledgement. Signed copies on file in HR system.",
+      "quote": "Page 2: 'Ethics acknowledgement: 94/94 staff signed — Collection completed August 19, 2024'",
+      "action": null
+    },
+    {
+      "id": "HLT-001",
+      "status": "compliant",
+      "evidence": "DH-684 submitted Sept 28, 2024. Kindergarten: 98.6% compliance rate. Grade 7: 100% compliance rate.",
+      "quote": "Page 1: 'Immunization Report — Submission Date: 09/28/2024 — KG Rate: 98.6% — Gr7 Rate: 100%'",
+      "action": null
+    },
+    {
+      "id": "HLT-002",
+      "status": "partial",
+      "evidence": "845 of 847 students have current DH-680 on file. 2 students have Part B (Temporary Medical Exemption) that expired within last 45 days.",
+      "quote": "Page 4: 'Student immunization records: 845/847 complete — 2 expired temporary exemptions (Student IDs: 4421, 4587)'",
+      "action": "Contact families of 2 students with expired temporary exemptions. Obtain updated DH-680 or permanent exemption within 5 school days."
+    },
+    {
+      "id": "HLT-003",
+      "status": "compliant",
+      "evidence": "Inspection completed January 23, 2025. Zero violations. Certificate valid through Jan 2026.",
+      "quote": "Page 1: 'Florida State Fire Marshal Inspection — Date: 01/23/2025 — Violations: 0 — Status: PASS'",
+      "action": null
+    },
+    {
+      "id": "FAC-001",
+      "status": "compliant",
+      "evidence": "12 consecutive monthly drill logs on file. February 2025 drill completed Feb 7. Reports signed by Principal.",
+      "quote": "Page 8: 'February 2025 Fire Drill — Date: 02/07/2025 — Duration: 4 min 12 sec — Signed: Prin. Harrington'",
+      "action": null
+    },
+    {
+      "id": "FAC-002",
+      "status": "non-compliant",
+      "evidence": "Only 1 radon test on record (September 2018). Second test was due by September 2023 — now overdue by 2+ years. Form DH 1777 not filed for second test.",
+      "quote": null,
+      "action": "Schedule radon test immediately with DEP-certified inspector. Required form: DH 1777. Use DEP-certified lab for analysis. Penalty risk: facility non-compliance flag on annual survey."
+    },
+    {
+      "id": "TRN-001",
+      "status": "compliant",
+      "evidence": "6 bus drivers on record — all hold valid Class B CDL with Passenger (P) and School Bus (S) endorsements. All licenses current.",
+      "quote": "Page 6: '6/6 drivers verified — CDL Class B — P and S endorsements confirmed — No expirations within 90 days'",
+      "action": null
+    },
+    {
+      "id": "TRN-002",
+      "status": "partial",
+      "evidence": "5 of 6 driver medical certificates current. 1 driver (R. Dominguez) certificate expires March 1, 2025 — renewal not yet scheduled.",
+      "quote": "Page 6: 'Medical certs: 5/6 valid — R. Dominguez MCSA-5876 expires 03/01/2025 — RENEWAL NEEDED'",
+      "action": "Schedule DOT medical exam for R. Dominguez before March 1, 2025. Driver may not operate school bus with expired certificate."
+    },
+    {
+      "id": "IMM-001",
+      "status": "compliant",
+      "evidence": "78 international students enrolled — 78 active I-20s on file. All program end dates extend beyond current term. PDSO records verified.",
+      "quote": "Page 3: 'SEVIS Active I-20s: 78/78 — All Program_End_Date > 02/18/2025 — PDSO: Dr. R. Patel'",
+      "action": null
+    },
+    {
+      "id": "IMM-002",
+      "status": "compliant",
+      "evidence": "Term started Jan 6, 2025. SEVIS registration completed Jan 9, 2025 — 3 days after term start. Within 30-day window.",
+      "quote": "Page 1: 'SEVIS Term Registration — Completion Date: Jan 9, 2025 — Days from term start: 3 — Status: COMPLIANT'",
+      "action": null
+    },
+    {
+      "id": "IMM-003",
+      "status": "compliant",
+      "evidence": "I-9 audit completed. All 94 employee I-9s on file. Section 2 signatures verified within 3-day window for all 2024-25 new hires.",
+      "quote": "Page 5: 'I-9 Compliance Audit — Result: PASS — All Section 2 dates within statutory 3-day window'",
+      "action": null
+    },
+    {
+      "id": "DOL-001",
+      "status": "compliant",
+      "evidence": "All 62 teachers classified as 'Exempt Professional.' Lowest salary: $42,800/year ($823/week). Above $684/week threshold.",
+      "quote": "Page 9: 'FLSA Exempt: 62/62 teachers — Min weekly salary: $823 — Threshold: $684 — Status: PASS'",
+      "action": null
+    },
+    {
+      "id": "DOL-002",
+      "status": "compliant",
+      "evidence": "FMLA WH-1420 poster verified posted in Staff Lounge (Building A). Handbook policy exists — Section 4.3, Page 14.",
+      "quote": "Page 2: 'FMLA Notice WH-1420 posted — Location: Staff Lounge A-114 — Handbook Section 4.3 verified'",
+      "action": null
+    },
+    {
+      "id": "DPR-001",
+      "status": "compliant",
+      "evidence": "16 EdTech vendor apps in use. 4 used by students under 13 — all have signed parent consent forms on file. Vendor DPAs reviewed Aug 2024.",
+      "quote": "Page 11: 'COPPA compliance: 4/4 apps affecting U-13 students have parent consent — DPAs on file for all 16 vendors'",
+      "action": null
+    },
+    {
+      "id": "DPR-002",
+      "status": "compliant",
+      "evidence": "16 vendor DPAs on file — all include data-sell prohibition and security standard definition. Most recent review: November 2024.",
+      "quote": "Page 12: 'Vendor DPA audit: 16/16 agreements current — all prohibit data sale — all define encryption standard'",
+      "action": null
+    },
+    {
+      "id": "IRS-001",
+      "status": "compliant",
+      "evidence": "BOI report filed with FinCEN on Jan 10, 2024. Ownership structure reported. Confirmation #FIN-2024-0082-NB.",
+      "quote": "Page 1: 'FinCEN BOI Filing — Date: 01/10/2024 — Confirmation: FIN-2024-0082-NB — Status: Filed'",
+      "action": null
+    },
+    {
+      "id": "IRS-002",
+      "status": "non-compliant",
+      "evidence": "One cash tuition payment of $12,000 received Oct 3, 2024. Form 8300 filing date: Oct 28, 2024 — 25 days after transaction. Exceeds 15-day filing requirement by 10 days.",
+      "quote": null,
+      "action": "File corrective Form 8300 with IRS immediately. Document the late filing. Penalty risk: $25,000+ per violation. Review internal cash-handling procedures to prevent recurrence."
+    },
+    {
+      "id": "BSF-001",
+      "status": "compliant",
+      "evidence": "AMP on file — last updated Sept 2022. Available in Principal's office. Parent/staff access: no fee. Building constructed 1987.",
+      "quote": "Page 1: 'AHERA AMP — Location: Principal Office A-101 — Last Updated: Sept 2022 — Access: Free to parents/staff'",
+      "action": null
+    },
+    {
+      "id": "BSF-002",
+      "status": "compliant",
+      "evidence": "OSHA 300A Summary posted in Staff Lounge since Feb 1, 2025. 2024 log: 2 recordable incidents. Both properly documented.",
+      "quote": "Page 4: 'OSHA 300A — Posted Feb 1, 2025 — Location: Staff Lounge A-114 — 2024 Incidents recorded: 2'",
+      "action": null
+    },
+    {
+      "id": "BSF-003",
+      "status": "non-compliant",
+      "evidence": "Chemical Hygiene Plan (CHP) found but last updated August 2021 — over 3 years outdated. SDS binder in Chemistry lab missing 4 recently added chemicals. Eyewash inspection log has a 3-week gap.",
+      "quote": null,
+      "action": "Update CHP and SDS binder immediately. Add missing 4 chemical entries to SDS binder. Resume weekly eyewash inspections. OSHA inspection trigger risk: HIGH given active chemistry curriculum."
+    }
+  ]
+}
+

@@ -1,0 +1,713 @@
+[
+    {
+        "id": "FL-REC-001",
+        "state_federal": "State",
+        "category": "Administrative & Financial Compliance",
+        "artifact_name": "Attendance Register (Log)",
+        "trigger_condition": "Trigger == \"Audit\"",
+        "validation_logic": "Sum(Instructional_Days) >= 170 OR Sum(Net_Hours) >= Grade_Threshold",
+        "citation": "Rule 6A-1.09512, F.A.C."
+    },
+    {
+        "id": "FL-REC-002",
+        "state_federal": "State",
+        "category": "Administrative & Financial Compliance",
+        "artifact_name": "Notarized Annual Survey",
+        "trigger_condition": "Trigger == \"Annual\"",
+        "validation_logic": "Submission_Date <= May 1st",
+        "citation": "s. 1002.42(2)(b), F.S."
+    },
+    {
+        "id": "FL-REC-003",
+        "state_federal": "State",
+        "category": "Administrative & Financial Compliance",
+        "artifact_name": "Scholarship Compliance Form (IEPC SCF-1)",
+        "trigger_condition": "Trigger == \"Annual\"",
+        "validation_logic": "Submission_Date <= March 1st",
+        "citation": "s. 1002.421"
+    },
+    {
+        "id": "FL-REC-004",
+        "state_federal": "State",
+        "category": "Administrative & Financial Compliance",
+        "artifact_name": "Tuition & Fee Schedule",
+        "trigger_condition": "Trigger == \"Annual\"",
+        "validation_logic": "Scholarship_Rate == Non_Scholarship_Rate (Must match public rates)",
+        "citation": "s. 1002.421"
+    },
+    {
+        "id": "FL-REC-005",
+        "state_federal": "State",
+        "category": "Administrative & Financial Compliance",
+        "artifact_name": "Certificate of Insurance",
+        "trigger_condition": "Trigger == \"Annual\"",
+        "validation_logic": "Expiration_Date > Today (Liability limits met)",
+        "citation": "s. 316.615(4)"
+    },
+    {
+        "id": "FL-REC-006",
+        "state_federal": "Florida State",
+        "category": "Building, Infrastructure & Safety Compliance",
+        "artifact_name": "Food Service Inspection Report",
+        "trigger_condition": "Has_Kitchen == TRUE",
+        "validation_logic": "Frequency >= 4/year (Quarterly) AND Result != \"Unsatisfactory\"",
+        "citation": "Ch. 64E-11, F.A.C."
+    },
+    {
+        "id": "FL-REC-007",
+        "state_federal": "Florida State",
+        "category": "Building, Infrastructure & Safety Compliance",
+        "artifact_name": "Drinking Water Safety Check",
+        "trigger_condition": "Water_Source == \"Well\"",
+        "validation_logic": "Form == \"DH 4020\" AND Date > (Today - 1 year)",
+        "citation": "Ch. 64E-8, F.A.C."
+    },
+    {
+        "id": "FL-REC-008",
+        "state_federal": "Florida State",
+        "category": "Building, Infrastructure & Safety Compliance",
+        "artifact_name": "Certificate of Occupancy (CO)",
+        "trigger_condition": "Trigger == \"New Building\" OR \"Remodel\"",
+        "validation_logic": "Occupancy_Class == \"Educational (Group E)\" AND Max_Occupancy >= Current_Student_Count",
+        "citation": "Florida Building Code"
+    },
+    {
+        "id": "FL-REC-009",
+        "state_federal": "Florida State",
+        "category": "Building, Infrastructure & Safety Compliance",
+        "artifact_name": "Annual Fire Safety Inspection",
+        "trigger_condition": "Scope == \"Facility\"",
+        "validation_logic": "Inspection_Date > (Today - 1 year) AND Violations_Count == 0 (or Reinspection_Pass == TRUE)",
+        "citation": "s. 1013.12 / FFPC NFPA 101"
+    },
+    {
+        "id": "FL-REC-010",
+        "state_federal": "Florida State",
+        "category": "Building, Infrastructure & Safety Compliance",
+        "artifact_name": "Casualty Safety Inspection",
+        "trigger_condition": "Scope == \"Facility\"",
+        "validation_logic": "Date > (Today - 1 year) (Checks for slip/trip hazards, playground safety, etc.)",
+        "citation": "s. 1013.12(2)"
+    },
+    {
+        "id": "FL-REC-011",
+        "state_federal": "Florida State",
+        "category": "Building, Infrastructure & Safety Compliance",
+        "artifact_name": "Sanitation / Group Care Inspection (DH 4030)",
+        "trigger_condition": "Scope == \"Facility\"",
+        "validation_logic": "Date > (Today - 1 year) AND Result == \"Satisfactory\"",
+        "citation": "s. 381.006(6)"
+    },
+    {
+        "id": "FL-REC-012",
+        "state_federal": "Florida State",
+        "category": "Building, Infrastructure & Safety Compliance",
+        "artifact_name": "Radon Testing Report (DH 1777)",
+        "trigger_condition": "Building_Age > 1 year",
+        "validation_logic": "IF Test_Count < 2: Date > (Today - 5 years). IF Test_Count >= 2: Required = FALSE (unless Remodel == TRUE)",
+        "citation": "s. 404.056"
+    },
+    {
+        "id": "FL-REC-013",
+        "state_federal": "Federal",
+        "category": "Copyright & Digital Content (Library of Congress)",
+        "artifact_name": "Movie Licensing USA (or similar)",
+        "trigger_condition": "Event == \"Movie Night\" or \"Rainy Day\"",
+        "validation_logic": "License_Active == TRUE (Netflix personal accounts cannot be used for class/public showing)",
+        "citation": "17 U.S.C. \u00a7 110(1)"
+    },
+    {
+        "id": "FL-REC-014",
+        "state_federal": "Federal",
+        "category": "Copyright & Digital Content (Library of Congress)",
+        "artifact_name": "Software License Inventory",
+        "trigger_condition": "Audit == \"Annual\"",
+        "validation_logic": "Installed_Seats <= Purchased_Licenses (BSA Audit Risk)",
+        "citation": "Copyright Act"
+    },
+    {
+        "id": "FL-REC-015",
+        "state_federal": "Federal",
+        "category": "Department of Education (Civil Rights)",
+        "artifact_name": "Assurance of Compliance (Form 690)",
+        "trigger_condition": "Federal_Funding == TRUE",
+        "validation_logic": "Signed_Date is current. (Triggers Title VI, IX, and Section 504 compliance)",
+        "citation": "34 CFR 100.4"
+    },
+    {
+        "id": "FL-REC-016",
+        "state_federal": "Federal",
+        "category": "Department of Education (Civil Rights)",
+        "artifact_name": "Title IX Coordinator Designation",
+        "trigger_condition": "Federal_Funding == TRUE",
+        "validation_logic": "Coordinator_Name is published on website/handbook",
+        "citation": "34 CFR 106.8"
+    },
+    {
+        "id": "FL-REC-017",
+        "state_federal": "Federal",
+        "category": "Department of Education (Civil Rights)",
+        "artifact_name": "FERPA Annual Notice",
+        "trigger_condition": "Federal_Funding == TRUE (Or Voluntary)",
+        "validation_logic": "Distributed_to_Parents == TRUE by Start_of_Year",
+        "citation": "34 CFR 99.7"
+    },
+    {
+        "id": "FL-REC-018",
+        "state_federal": "Federal",
+        "category": "Department of Labor (DOL) - Wage & Hour",
+        "artifact_name": "FLSA Exemption Status Form",
+        "trigger_condition": "Role == \"Teacher\"",
+        "validation_logic": "Salary >= $684/week (Current Threshold) OR Duty_Test == \"Teaching\"",
+        "citation": "29 CFR 541.303"
+    },
+    {
+        "id": "FL-REC-019",
+        "state_federal": "Federal",
+        "category": "Department of Labor (DOL) - Wage & Hour",
+        "artifact_name": "FMLA Poster & Notice",
+        "trigger_condition": "Employee_Count >= 50",
+        "validation_logic": "Posted_in_Breakroom == TRUE AND Handbook_Policy_Exists == TRUE",
+        "citation": "29 CFR 825.300"
+    },
+    {
+        "id": "FL-REC-020",
+        "state_federal": "Federal",
+        "category": "Department of Labor (DOL) - Wage & Hour",
+        "artifact_name": "FMLA Medical Cert (WH-380-E)",
+        "trigger_condition": "Trigger == \"Medical_Leave_Request\"",
+        "validation_logic": "Provider_Signature == TRUE AND Leave_Duration matches request",
+        "citation": "29 CFR 825.305"
+    },
+    {
+        "id": "FL-REC-021",
+        "state_federal": "Federal",
+        "category": "Department of Labor (DOL) - Wage & Hour",
+        "artifact_name": "Overtime Log / Timesheets",
+        "trigger_condition": "Role == \"Non-Exempt\" (e.g., Admin Asst)",
+        "validation_logic": "IF Hours > 40: Overtime_Paid == TRUE (1.5x rate). Validation: No \"Comp Time\" in lieu of pay.",
+        "citation": "Fair Labor Standards Act"
+    },
+    {
+        "id": "FL-REC-022",
+        "state_federal": "Federal",
+        "category": "Department of Labor (DOL) - Wage & Hour",
+        "artifact_name": "Nursing Mother's Break Log",
+        "trigger_condition": "Trigger == \"Lactating Employee\"",
+        "validation_logic": "Private_Space_Provided == TRUE (Cannot be a bathroom)",
+        "citation": "PUMP Act (2023)"
+    },
+    {
+        "id": "FL-REC-023",
+        "state_federal": "Federal",
+        "category": "DHS & ICE (Immigration & Border Control)",
+        "artifact_name": "Form I-901 (SEVIS Fee Receipt)",
+        "trigger_condition": "Trigger == \"New Enrollment\"",
+        "validation_logic": "Payment_Confirmed == TRUE AND SEVIS_ID matches I-20",
+        "citation": "8 CFR 214.13"
+    },
+    {
+        "id": "FL-REC-024",
+        "state_federal": "Federal",
+        "category": "DHS & ICE (Immigration & Border Control)",
+        "artifact_name": "Form I-20 (Certificate of Eligibility)",
+        "trigger_condition": "Citizenship != \"USA\"",
+        "validation_logic": "Status == \"Active\" AND Program_End_Date > Today",
+        "citation": "8 CFR 214.2(f)"
+    },
+    {
+        "id": "FL-REC-025",
+        "state_federal": "Federal",
+        "category": "DHS & ICE (Immigration & Border Control)",
+        "artifact_name": "Financial Solvency Affidavit",
+        "trigger_condition": "Trigger == \"Admission\" OR \"Extension\"",
+        "validation_logic": "Bank_Statement_Date < (Start_Date - 6 months) AND Amount >= Est_Annual_Cost",
+        "citation": "8 CFR 214.2(f)(1)"
+    },
+    {
+        "id": "FL-REC-026",
+        "state_federal": "Federal",
+        "category": "DHS & ICE (Immigration & Border Control)",
+        "artifact_name": "Student Reporting Log (Term)",
+        "trigger_condition": "Trigger == \"Term_Start\"",
+        "validation_logic": "Registration_in_SEVIS must be completed within 30 days of term start",
+        "citation": "8 CFR 214.3(g)"
+    },
+    {
+        "id": "FL-REC-027",
+        "state_federal": "Federal",
+        "category": "DHS & ICE (Immigration & Border Control)",
+        "artifact_name": "English Proficiency Waiver/Proof",
+        "trigger_condition": "Trigger == \"Admission\"",
+        "validation_logic": "Test_Score exists (TOEFL/IELTS) OR Waiver_Reason is documented (e.g., \"Native Speaker\")",
+        "citation": "8 CFR 214.3(k)"
+    },
+    {
+        "id": "FL-REC-028",
+        "state_federal": "Federal",
+        "category": "DHS & ICE (Immigration & Border Control)",
+        "artifact_name": "Form I-9 (Employment Eligibility)",
+        "trigger_condition": "Role == \"Staff\" (All)",
+        "validation_logic": "Section_2_Signed_Date <= (Start_Date + 3 days) AND List_A_or_BC_Docs are valid",
+        "citation": "8 CFR 274a.2"
+    },
+    {
+        "id": "FL-REC-029",
+        "state_federal": "State",
+        "category": "Facility & Operations",
+        "artifact_name": "Drill Log & After-Action Report",
+        "trigger_condition": "Trigger == \"Monthly\"",
+        "validation_logic": "Log_Entry exists for Current_Month",
+        "citation": "Rule 6A-1.0018"
+    },
+    {
+        "id": "FL-REC-030",
+        "state_federal": "State",
+        "category": "Facility & Operations",
+        "artifact_name": "Form DH 4030 (Group Care)",
+        "trigger_condition": "Trigger == \"Annual\"",
+        "validation_logic": "Date > (Today - 1 Year)",
+        "citation": "s. 381.006, F.S."
+    },
+    {
+        "id": "FL-REC-031",
+        "state_federal": "State",
+        "category": "Facility & Operations",
+        "artifact_name": "DOH Sanitation Certificate",
+        "trigger_condition": "Trigger == \"Annual\"",
+        "validation_logic": "Expiration_Date > Today",
+        "citation": "s. 381.0072, F.S."
+    },
+    {
+        "id": "FL-REC-032",
+        "state_federal": "State",
+        "category": "Facility & Operations",
+        "artifact_name": "Form DH 1777 (Radon)",
+        "trigger_condition": "Building_Age > 1 Year",
+        "validation_logic": "IF Tests_Done < 2: Date > (Today - 5 Years). ELSE: Exempt.",
+        "citation": "s. 404.056, F.S."
+    },
+    {
+        "id": "FL-REC-033",
+        "state_federal": "State",
+        "category": "Facility & Operations",
+        "artifact_name": "Fire Marshal Report",
+        "trigger_condition": "Trigger == \"Annual\"",
+        "validation_logic": "Date > (Today - 1 Year) AND Violations == 0",
+        "citation": "s. 633.202, F.S."
+    },
+    {
+        "id": "FL-REC-034",
+        "state_federal": "Federal",
+        "category": "Federal Building & Safety Overlays (The \"Hidden\" Liabilities)",
+        "artifact_name": "OSHA 300 Log (Injury)",
+        "trigger_condition": "Employee_Count > 10",
+        "validation_logic": "Year == (Previous_Year) AND Posted_Feb_to_April == TRUE",
+        "citation": "29 CFR 1904"
+    },
+    {
+        "id": "FL-REC-035",
+        "state_federal": "Federal",
+        "category": "Federal Building & Safety Overlays (The \"Hidden\" Liabilities)",
+        "artifact_name": "AHERA 3-Year Reinspection Report",
+        "trigger_condition": "Building_Built_Year < 1989",
+        "validation_logic": "Date > (Today - 3 years) AND Inspector_Accreditation exists",
+        "citation": "40 CFR 763.85(b)"
+    },
+    {
+        "id": "FL-REC-036",
+        "state_federal": "Federal",
+        "category": "Federal Building & Safety Overlays (The \"Hidden\" Liabilities)",
+        "artifact_name": "AHERA 6-Month Surveillance",
+        "trigger_condition": "Building_Built_Year < 1989",
+        "validation_logic": "Date > (Today - 6 months) (Can be done by trained staff, not just external pro)",
+        "citation": "40 CFR 763.92(b)"
+    },
+    {
+        "id": "FL-REC-037",
+        "state_federal": "Federal",
+        "category": "Federal Building & Safety Overlays (The \"Hidden\" Liabilities)",
+        "artifact_name": "Asbestos Management Plan (AMP)",
+        "trigger_condition": "Building_Built_Year < 1989",
+        "validation_logic": "Plan_Exists == TRUE AND Location == \"On Site\" (Must be available to parents/staff without cost)",
+        "citation": "AHERA (40 CFR 763)"
+    },
+    {
+        "id": "FL-REC-038",
+        "state_federal": "Federal",
+        "category": "Federal Building & Safety Overlays (The \"Hidden\" Liabilities)",
+        "artifact_name": "Lead Water Testing (LCCA)",
+        "trigger_condition": "Water_Source == \"Any\"",
+        "validation_logic": "Date > (Today - 3 years) (Standard best practice based on EPA '3Ts')",
+        "citation": "Lead Contamination Control Act"
+    },
+    {
+        "id": "FL-REC-039",
+        "state_federal": "Federal",
+        "category": "Federal Building & Safety Overlays (The \"Hidden\" Liabilities)",
+        "artifact_name": "Bloodborne Pathogen Exposure Plan",
+        "trigger_condition": "Role IN [\"Nurse\", \"Coach\"]",
+        "validation_logic": "HepB_Vaccine_Offer_Signed == TRUE AND Training_Date > (Today - 1 year)",
+        "citation": "OSHA 29 CFR 1910.1030"
+    },
+    {
+        "id": "FL-REC-040",
+        "state_federal": "Federal",
+        "category": "Federal Building & Safety Overlays (The \"Hidden\" Liabilities)",
+        "artifact_name": "Chemical Hygiene Plan (HazCom)",
+        "trigger_condition": "Has_Science_Lab == TRUE",
+        "validation_logic": "Training_Log exists AND SDS_Binder is current",
+        "citation": "OSHA 29 CFR 1910.1450"
+    },
+    {
+        "id": "FL-REC-041",
+        "state_federal": "Florida State",
+        "category": "Financial & Scholarship Compliance (Step Up For Students)",
+        "artifact_name": "Fiscal Soundness Attestation",
+        "trigger_condition": "Scholarship_Revenue <= $250,000",
+        "validation_logic": "School_Head_Signature == TRUE AND Cash_on_Hand > 0",
+        "citation": "s. 1002.42(2)(c)"
+    },
+    {
+        "id": "FL-REC-042",
+        "state_federal": "Florida State",
+        "category": "Financial & Scholarship Compliance (Step Up For Students)",
+        "artifact_name": "Surety Bond",
+        "trigger_condition": "Financial_History < 3 years",
+        "validation_logic": "Bond_Amount >= Quarterly_Scholarship_Advances",
+        "citation": "s. 1002.421(1)(f)"
+    },
+    {
+        "id": "FL-REC-043",
+        "state_federal": "Florida State",
+        "category": "Financial & Scholarship Compliance (Step Up For Students)",
+        "artifact_name": "Agreed-Upon Procedures (AUP) Audit",
+        "trigger_condition": "Scholarship_Revenue > $250,000",
+        "validation_logic": "Opinion == \"Unmodified\" AND CPA_Signed == TRUE",
+        "citation": "s. 1002.421(1)(q)"
+    },
+    {
+        "id": "FL-REC-044",
+        "state_federal": "Florida State",
+        "category": "Financial & Scholarship Compliance (Step Up For Students)",
+        "artifact_name": "Scholarship Compliance Form",
+        "trigger_condition": "Scholarship_Student_Count > 0",
+        "validation_logic": "Submission_Date < March 1st (Standard Deadline)",
+        "citation": "SFO Handbook"
+    },
+    {
+        "id": "FL-REC-045",
+        "state_federal": "Federal",
+        "category": "FTC & FCC (Data Privacy & Marketing)",
+        "artifact_name": "Marketing Substantiation File",
+        "trigger_condition": "Trigger == \"Ad Campaign\"",
+        "validation_logic": "IF Ad claims \"100% College Acceptance\": Proof_Data must exist in file.",
+        "citation": "15 U.S.C. \u00a7 45 (Truth in Ad)"
+    },
+    {
+        "id": "FL-REC-046",
+        "state_federal": "Federal",
+        "category": "FTC & FCC (Data Privacy & Marketing)",
+        "artifact_name": "COPPA Direct Notice to Parents",
+        "trigger_condition": "Student_Age < 13 AND App_Usage == \"3rd Party\"",
+        "validation_logic": "Parent_Consent_Signed == TRUE (School can consent only for educational use, not commercial)",
+        "citation": "16 CFR 312 (COPPA)"
+    },
+    {
+        "id": "FL-REC-047",
+        "state_federal": "Federal",
+        "category": "FTC & FCC (Data Privacy & Marketing)",
+        "artifact_name": "Vendor Privacy Agreement (DPA)",
+        "trigger_condition": "Vendor_Category == \"EdTech\"",
+        "validation_logic": "Prohibits_Selling_Data == TRUE AND Security_Standard is defined",
+        "citation": "FTC Safeguards Rule"
+    },
+    {
+        "id": "FL-REC-048",
+        "state_federal": "Federal",
+        "category": "FTC & FCC (Data Privacy & Marketing)",
+        "artifact_name": "Do-Not-Call/Text Audit",
+        "trigger_condition": "Trigger == \"Marketing Outreach\"",
+        "validation_logic": "Recipient_Phone NOT IN National_DNC_Registry (Unless prior relationship exists)",
+        "citation": "TCPA (47 U.S.C. 227)"
+    },
+    {
+        "id": "FL-REC-049",
+        "state_federal": "Florida State",
+        "category": "Health, Safety & Physical Plant",
+        "artifact_name": "Form DH 680 (Immunization)",
+        "trigger_condition": "Grade == \"7\"",
+        "validation_logic": "Tdap_Date exists AND Tdap_Date > DOB + 10 years",
+        "citation": "s. 1003.22"
+    },
+    {
+        "id": "FL-REC-050",
+        "state_federal": "Florida State",
+        "category": "Health, Safety & Physical Plant",
+        "artifact_name": "Form DH 3040 (Health Exam)",
+        "trigger_condition": "Trigger == \"New Entry\"",
+        "validation_logic": "Exam_Date > (School_Entry_Date - 12 months)",
+        "citation": "s. 1003.22"
+    },
+    {
+        "id": "FL-REC-051",
+        "state_federal": "Florida State",
+        "category": "Health, Safety & Physical Plant",
+        "artifact_name": "Fire Safety Inspection Report",
+        "trigger_condition": "Scope == \"Facility\"",
+        "validation_logic": "Inspection_Date > (Today - 1 year) AND Violations_Count == 0 (or Reinspection_Clearance == TRUE)",
+        "citation": "s. 1013.12 / FFPC"
+    },
+    {
+        "id": "FL-REC-052",
+        "state_federal": "Florida State",
+        "category": "International Student Compliance (SEVIS / F-1)",
+        "artifact_name": "Form I-20 (Certificate of Eligibility)",
+        "trigger_condition": "Citizenship != \"USA\"",
+        "validation_logic": "Program_Start_Date <= Current_Date <= Program_End_Date",
+        "citation": "8 CFR 214.2(f)"
+    },
+    {
+        "id": "FL-REC-053",
+        "state_federal": "Florida State",
+        "category": "International Student Compliance (SEVIS / F-1)",
+        "artifact_name": "SEVIS Status Update Log",
+        "trigger_condition": "Trigger == \"Drop_Out\" OR \"Address_Change\"",
+        "validation_logic": "Reported_To_SEVIS_Date <= (Event_Date + 21 days)",
+        "citation": "8 CFR 214.2(f)"
+    },
+    {
+        "id": "FL-REC-054",
+        "state_federal": "Florida State",
+        "category": "International Student Compliance (SEVIS / F-1)",
+        "artifact_name": "Proof of Financial Solvency",
+        "trigger_condition": "Trigger == \"Admission\"",
+        "validation_logic": "Document_Type IN [\"Bank Statement\", \"Scholarship Letter\"] AND Amount >= Est_Annual_Tuition_Living",
+        "citation": "8 CFR 214.2(f)(1)"
+    },
+    {
+        "id": "FL-REC-055",
+        "state_federal": "Florida State",
+        "category": "International Student Compliance (SEVIS / F-1)",
+        "artifact_name": "English Proficiency Proof",
+        "trigger_condition": "Trigger == \"Admission\"",
+        "validation_logic": "Test_Score exists (TOEFL/IELTS) OR School_Waiver_Documented == TRUE",
+        "citation": "8 CFR 214.3(k)"
+    },
+    {
+        "id": "FL-REC-056",
+        "state_federal": "Federal",
+        "category": "IRS & Treasury (For-Profit Corporate)",
+        "artifact_name": "Form 8300 (Cash Payments)",
+        "trigger_condition": "Transaction_Amount > $10,000",
+        "validation_logic": "Filed_Within_15_Days == TRUE (Common in international schools with cash tuition payments)",
+        "citation": "26 U.S.C. 6050I"
+    },
+    {
+        "id": "FL-REC-057",
+        "state_federal": "Federal",
+        "category": "IRS & Treasury (For-Profit Corporate)",
+        "artifact_name": "Beneficial Ownership Info (BOI)",
+        "trigger_condition": "Entity_Type == \"LLC/Corp\"",
+        "validation_logic": "Report_Filed_FinCEN == TRUE (New 2024 Requirement under Corporate Transparency Act)",
+        "citation": "31 CFR 1010.380"
+    },
+    {
+        "id": "FL-REC-058",
+        "state_federal": "Federal",
+        "category": "IRS & Treasury (For-Profit Corporate)",
+        "artifact_name": "W-8BEN (Foreign Status)",
+        "trigger_condition": "Payee == \"Foreign Contractor/Guest\"",
+        "validation_logic": "Form_On_File == TRUE (Before payment is issued to avoid 30% withholding)",
+        "citation": "IRS Treas. Reg. 1.1441-1"
+    },
+    {
+        "id": "FL-REC-059",
+        "state_federal": "Florida State",
+        "category": "Personnel & \"Hard\" Legal Requirements",
+        "artifact_name": "FDLE VECHS Clearance",
+        "trigger_condition": "Role IN [\"Teacher\", \"Staff\", \"Volunteer_HighContact\"]",
+        "validation_logic": "Status == \"Eligible\" AND Date_Screened > (Today - 5 years)",
+        "citation": "s. 1002.421(1)(m)"
+    },
+    {
+        "id": "FL-REC-060",
+        "state_federal": "Florida State",
+        "category": "Personnel & \"Hard\" Legal Requirements",
+        "artifact_name": "Affidavit of Good Moral Character",
+        "trigger_condition": "Trigger == \"New Hire\"",
+        "validation_logic": "Notarized == TRUE AND Signed_Date < Start_Date",
+        "citation": "s. 1002.421(1)(m)"
+    },
+    {
+        "id": "FL-REC-061",
+        "state_federal": "Florida State",
+        "category": "Personnel & \"Hard\" Legal Requirements",
+        "artifact_name": "Employment History Check",
+        "trigger_condition": "Trigger == \"New Hire\"",
+        "validation_logic": "Previous_Employer_Contacted == TRUE AND Screened_For_Misconduct == TRUE",
+        "citation": "s. 1002.421(1)(n)"
+    },
+    {
+        "id": "FL-REC-062",
+        "state_federal": "Florida State",
+        "category": "Personnel & \"Hard\" Legal Requirements",
+        "artifact_name": "Teacher Qualification Record",
+        "trigger_condition": "Role == \"Teacher\"",
+        "validation_logic": "Has_Bachelor_Degree == TRUE OR Teaching_Exp_Years >= 3 OR Special_Skills_documented == TRUE",
+        "citation": "s. 1002.421(2)(h)"
+    },
+    {
+        "id": "FL-REC-063",
+        "state_federal": "Florida State",
+        "category": "Personnel & \"Hard\" Legal Requirements",
+        "artifact_name": "Ethics Policy Acknowledgement",
+        "trigger_condition": "Role IN [\"Teacher\", \"Admin\"]",
+        "validation_logic": "Signed_Date exists AND Signed_Date > (Today - 1 year) (Best practice: Annual re-sign)",
+        "citation": "s. 1012.796"
+    },
+    {
+        "id": "FL-REC-064",
+        "state_federal": "State",
+        "category": "Personnel & Staffing",
+        "artifact_name": "VECHS Eligibility Letter / Clearinghouse Result",
+        "trigger_condition": "Role == \"Staff\"",
+        "validation_logic": "Status == \"Eligible\" AND Date_Screened > (Today - 5 Years)",
+        "citation": "s. 1002.42(2)(c); s. 1012.32"
+    },
+    {
+        "id": "FL-REC-065",
+        "state_federal": "State",
+        "category": "Personnel & Staffing",
+        "artifact_name": "FDLE Screening Result (Owner)",
+        "trigger_condition": "Role == \"Owner/Principal\"",
+        "validation_logic": "Date_Screened > (Today - 5 Years) (Mandatory regardless of student contact)",
+        "citation": "s. 1002.42(2)(c)1, F.S."
+    },
+    {
+        "id": "FL-REC-066",
+        "state_federal": "State",
+        "category": "Personnel & Staffing",
+        "artifact_name": "Teacher Transcript / Resume / Skills Attestation",
+        "trigger_condition": "Role == \"Teacher\"",
+        "validation_logic": "Has_Degree == TRUE OR Experience >= 3 Years OR Special_Skill == TRUE",
+        "citation": "s. 1002.421(1)(h), F.S."
+    },
+    {
+        "id": "FL-REC-067",
+        "state_federal": "State",
+        "category": "Personnel & Staffing",
+        "artifact_name": "Photo of Signage / Signed Ethics Policy",
+        "trigger_condition": "Trigger == \"Audit\"",
+        "validation_logic": "Signage_Visible == TRUE AND Policy_Acknowledged == TRUE",
+        "citation": "s. 1006.061, F.S."
+    },
+    {
+        "id": "FL-REC-068",
+        "state_federal": "State",
+        "category": "Student Health & Safety",
+        "artifact_name": "Form DH 684 (Immunization Report)",
+        "trigger_condition": "Trigger == \"Annual\"",
+        "validation_logic": "Submission_Date <= Oct 1st",
+        "citation": "Rule 64D-3.046"
+    },
+    {
+        "id": "FL-REC-069",
+        "state_federal": "State",
+        "category": "Student Health & Safety",
+        "artifact_name": "Form DH 680 (Blue Card)",
+        "trigger_condition": "Trigger == \"Entry\" OR \"Grade 7\"",
+        "validation_logic": "IF Grade 7: Tdap_Date > (DOB + 10 Years). ELSE: Status == \"Complete\"",
+        "citation": "s. 1003.22, F.S."
+    },
+    {
+        "id": "FL-REC-070",
+        "state_federal": "State",
+        "category": "Student Health & Safety",
+        "artifact_name": "Form DH 3040 (Gold Form)",
+        "trigger_condition": "Trigger == \"New Entry\"",
+        "validation_logic": "Exam_Date > (Entry_Date - 12 Months)",
+        "citation": "s. 1003.22, F.S."
+    },
+    {
+        "id": "FL-REC-071",
+        "state_federal": "State",
+        "category": "Transportation (Bus Drivers & Vehicles)",
+        "artifact_name": "Form MCSA-5876 (Medical Cert)",
+        "trigger_condition": "Role == \"Driver\"",
+        "validation_logic": "Expiration_Date > Today (Max 2 Year validity)",
+        "citation": "Rule 6A-3.0141"
+    },
+    {
+        "id": "FL-REC-072",
+        "state_federal": "State",
+        "category": "Transportation (Bus Drivers & Vehicles)",
+        "artifact_name": "Form ESE 480 (Dexterity Test)",
+        "trigger_condition": "Role == \"Driver\"",
+        "validation_logic": "Date > (Today - 1 Year)",
+        "citation": "Rule 6A-3.0141"
+    },
+    {
+        "id": "FL-REC-073",
+        "state_federal": "State",
+        "category": "Transportation (Bus Drivers & Vehicles)",
+        "artifact_name": "Training Log (8 Hrs In-Service)",
+        "trigger_condition": "Role == \"Driver\"",
+        "validation_logic": "Date > (Today - 1 Year) AND Hours >= 8",
+        "citation": "Rule 6A-3.0141"
+    },
+    {
+        "id": "FL-REC-074",
+        "state_federal": "State",
+        "category": "Transportation (Bus Drivers & Vehicles)",
+        "artifact_name": "Form 2020-IF (Safety Inspection)",
+        "trigger_condition": "Asset == \"Bus\"",
+        "validation_logic": "Date > (Today - 30 School Days)",
+        "citation": "Rule 6A-3.0171"
+    },
+    {
+        "id": "FL-REC-075",
+        "state_federal": "State",
+        "category": "Transportation (Bus Drivers & Vehicles)",
+        "artifact_name": "CDL Scan (Class B + P/S)",
+        "trigger_condition": "Role == \"Driver\"",
+        "validation_logic": "Status == \"Valid\" AND Endorsements CONTAINS (\"P\", \"S\")",
+        "citation": "s. 1012.45"
+    },
+    {
+        "id": "FL-REC-076",
+        "state_federal": "Florida State",
+        "category": "Transportation (Private School Specifics)",
+        "artifact_name": "Daily Inspection Log",
+        "trigger_condition": "Asset_Type == \"Bus\"",
+        "validation_logic": "Log_Entry_Date == Today (Must be retained for 3 months)",
+        "citation": "Rule 6A-3"
+    },
+    {
+        "id": "FL-REC-077",
+        "state_federal": "Florida State",
+        "category": "Transportation (Private School Specifics)",
+        "artifact_name": "CDL License Scan",
+        "trigger_condition": "Role == \"Bus Driver\"",
+        "validation_logic": "Endorsements CONTAINS (\"P\" AND \"S\") AND Status == \"Valid\"",
+        "citation": "s. 316.615"
+    },
+    {
+        "id": "FL-REC-078",
+        "state_federal": "Florida State",
+        "category": "Transportation (Private School Specifics)",
+        "artifact_name": "Medical Examiner\u2019s Certificate (MCSA-5876)",
+        "trigger_condition": "Role == \"Bus Driver\"",
+        "validation_logic": "Expiration_Date > Today (Must be renewed annually, not every 2 years like standard CDL)",
+        "citation": "s. 316.615(3)"
+    },
+    {
+        "id": "FL-REC-079",
+        "state_federal": "Florida State",
+        "category": "Transportation (Private School Specifics)",
+        "artifact_name": "Annual Vehicle Inspection",
+        "trigger_condition": "Asset_Type == \"Bus\"",
+        "validation_logic": "Inspection_Date > (Today - 1 year) AND Inspector_Cert exists",
+        "citation": "s. 316.615(4)"
+    }
+]

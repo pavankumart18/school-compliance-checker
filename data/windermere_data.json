@@ -1,0 +1,219 @@
+{
+  "school": {
+    "name": "Windermere Preparatory School",
+    "location": "Orlando, FL 34786",
+    "type": "College Preparatory (PK-12)",
+    "enrollment": 623,
+    "score": 61,
+    "compliant": 14,
+    "partial": 7,
+    "non_compliant": 7
+  },
+  "documents": [
+    { "name": "Annual_Survey_2025.pdf", "label": "Annual Private School Survey 2024-25", "desc": "Survey submitted May 3, 2025 — MISSING notary seal — under review", "size": "33 KB" },
+    { "name": "VECHS_Clearance_Log.pdf", "label": "FDLE VECHS Clearance Log — All Staff", "desc": "1 expired screening (J. Martinez — last screened June 2019, 5yr 8mo ago)", "size": "27 KB" },
+    { "name": "DH684_Immunization_Report.pdf", "label": "Form DH-684 Immunization Report 2024", "desc": "K grade complete — 7th grade data missing — submission incomplete", "size": "18 KB" },
+    { "name": "Fire_Safety_Inspection.pdf", "label": "Fire Safety Inspection Report 2025", "desc": "Inspection Feb 2025 — 2 minor violations — reinspection pending", "size": "22 KB" },
+    { "name": "Teacher_Qualifications.pdf", "label": "Teacher Qualification Records", "desc": "3 teachers missing bachelor's degree or 3yr experience documentation", "size": "38 KB" },
+    { "name": "SCF1_Scholarship_Form.pdf", "label": "Scholarship Compliance Form SCF-1", "desc": "Filed March 8, 2025 — MISSED March 1 deadline by 7 days", "size": "15 KB" }
+  ],
+  "results": [
+    {
+      "id": "ADM-001",
+      "status": "non-compliant",
+      "evidence": "Survey submitted May 3, 2025 — 2 days past the May 1st statutory deadline. Additionally, notary seal is missing from the filed document.",
+      "quote": null,
+      "action": "Resubmit survey with proper notarization immediately. Contact FLDOE to request late-filing waiver. Risk: scholarship eligibility jeopardized for 2025-26 academic year."
+    },
+    {
+      "id": "ADM-002",
+      "status": "compliant",
+      "evidence": "180 instructional days scheduled. Daily attendance register verified current through Feb 14, 2025.",
+      "quote": "Page 1: 'Academic calendar 2024-25: 180 instructional days. Attendance log updated daily by admin office.'",
+      "action": null
+    },
+    {
+      "id": "ADM-003",
+      "status": "non-compliant",
+      "evidence": "SCF-1 submitted March 8, 2025 — 7 days past the March 1st hard deadline. Step Up For Students portal shows 'LATE' flag on submission.",
+      "quote": null,
+      "action": "File corrective submission immediately with Step Up For Students. Contact SFO at (877) 880-4994. Risk: scholarship payment suspension for enrolled scholarship students."
+    },
+    {
+      "id": "ADM-004",
+      "status": "compliant",
+      "evidence": "Tuition schedule published July 2024. Scholarship rate ($8,500) matches non-scholarship rate ($8,500). Verified by SFO reconciliation.",
+      "quote": "Page 2: 'Tuition 2024-25: Standard $8,500 — Scholarship $8,500 — Rate match confirmed by SFO audit'",
+      "action": null
+    },
+    {
+      "id": "ADM-005",
+      "status": "compliant",
+      "evidence": "Policy active through July 31, 2025. Per occurrence: $1M. Aggregate: $2M. Carrier: Florida Peninsula Insurance.",
+      "quote": "Page 1: 'Policy active — expires Jul 31, 2025 — minimum limits met per state requirement'",
+      "action": null
+    },
+    {
+      "id": "PER-001",
+      "status": "non-compliant",
+      "evidence": "1 staff member (J. Martinez, Physical Education) last screened June 2019 — 5 years 8 months ago. Exceeded the 5-year VECHS renewal limit by 8 months.",
+      "quote": null,
+      "action": "Remove J. Martinez from ALL student-contact duties immediately. Initiate emergency VECHS rescreening through FDLE Clearinghouse portal. This is a Level 1 personnel violation."
+    },
+    {
+      "id": "PER-002",
+      "status": "partial",
+      "evidence": "44 of 47 teachers have complete qualification files. 3 teachers have incomplete documentation — degrees referenced in contracts but transcripts not on file.",
+      "quote": "Page 5: 'Faculty qualification audit: 44/47 PASS — 3 PENDING: Rodriguez (transcript), Kim (exp. verification), Davis (transcript)'",
+      "action": "Collect official transcripts from 3 teachers within 30 days. Acceptable alternative: Employment verification letters documenting 3+ years experience."
+    },
+    {
+      "id": "PER-003",
+      "status": "partial",
+      "evidence": "4 of 6 new hires signed affidavits correctly. 2 were notarized 1 and 3 days after their respective start dates — technically non-compliant.",
+      "quote": "Page 4: 'New hire affidavit compliance: 4/6 timely — 2 late notarizations flagged for corrective action'",
+      "action": "Retroactive notarization does not satisfy the statute. Document the gap and ensure all future hires complete notarization before Day 1."
+    },
+    {
+      "id": "PER-004",
+      "status": "partial",
+      "evidence": "41 of 47 staff have signed the 2024-25 Ethics Policy acknowledgement. 6 signatures outstanding — 3 part-time staff and 3 recent hires.",
+      "quote": "Page 3: 'Ethics acknowledgement: 41/47 signed — 6 outstanding as of Feb 10, 2025'",
+      "action": "Collect outstanding 6 signatures within 2 weeks. Part-time and seasonal staff are NOT exempt from this requirement under s. 1012.796."
+    },
+    {
+      "id": "HLT-001",
+      "status": "non-compliant",
+      "evidence": "DH-684 submitted for Kindergarten ONLY. Grade 7 immunization data was not included in the October submission. 7th grade Tdap compliance data is entirely missing.",
+      "quote": null,
+      "action": "File amended DH-684 including 7th Grade Tdap data immediately with Orange County DOH. Contact: 407-858-1400. Statutory deadline was Oct 1 — already past deadline."
+    },
+    {
+      "id": "HLT-002",
+      "status": "partial",
+      "evidence": "618 of 623 students have current DH-680. 3 students have Part B (Temporary Medical Exemption) that expired, 2 students missing records entirely.",
+      "quote": "Page 3: 'Immunization records: 618/623 — 3 expired temp exemptions — 2 no record on file'",
+      "action": "Contact 5 families. Obtain updated DH-680 or permanent exemption within 5 school days. Students without valid records may be excluded per s. 1003.22."
+    },
+    {
+      "id": "HLT-003",
+      "status": "partial",
+      "evidence": "Inspection completed February 8, 2025. 2 violations found: (1) blocked stairwell exit in Building C, (2) expired fire extinguisher tag in Gymnasium. Reinspection scheduled.",
+      "quote": "Page 2: 'Violations: 2 — #1: Blocked egress stairwell B-C3 — #2: Extinguisher tag expired (Gym) — Reinspection: within 30 days'",
+      "action": "Clear Building C stairwell and replace gymnasium extinguisher tag immediately. Reinspection must occur within 30 days per FFPC requirement."
+    },
+    {
+      "id": "FAC-001",
+      "status": "compliant",
+      "evidence": "Monthly drills current. January 2025 drill completed Jan 14. All 12 months logged with signed after-action reports.",
+      "quote": "Page 3: 'Drill log current — 12/12 months completed for 2024-25 academic year — All signed by administration'",
+      "action": null
+    },
+    {
+      "id": "FAC-002",
+      "status": "compliant",
+      "evidence": "Two completed radon tests on record (2016 and 2021). Both results below 4.0 pCi/L action level. Per statute, testing requirement fully met after 2 passing tests.",
+      "quote": "Page 2: 'Radon Test 1: Mar 2016 — 1.9 pCi/L. Test 2: Nov 2021 — 2.3 pCi/L. Statutory exemption: CONFIRMED'",
+      "action": null
+    },
+    {
+      "id": "TRN-001",
+      "status": "compliant",
+      "evidence": "4 bus drivers — all CDL Class B with P and S endorsements verified. All licenses current with no expirations within 90 days.",
+      "quote": "Page 4: 'Driver license verification complete — 4/4 compliant — all endorsements P/S confirmed'",
+      "action": null
+    },
+    {
+      "id": "TRN-002",
+      "status": "compliant",
+      "evidence": "All 4 driver medical certificates current. Next expiration: August 2025.",
+      "quote": "Page 4: 'Medical certificates: 4/4 valid — nearest expiry: Aug 2025'",
+      "action": null
+    },
+    {
+      "id": "IMM-001",
+      "status": "partial",
+      "evidence": "52 international students — 50 active I-20s confirmed. 2 I-20s show 'Initial' status, not yet converted to 'Active'. SEVIS reporting pending.",
+      "quote": "Page 2: 'SEVIS Status: 50 Active, 2 Initial — 2 students pending registration activation'",
+      "action": "PDSO must activate 2 pending I-20s in SEVIS within 30 days of term start. Current risk: moderate. Escalate to SEVP if unresolved within 10 days."
+    },
+    {
+      "id": "IMM-002",
+      "status": "compliant",
+      "evidence": "Term start Jan 8, 2025. SEVIS registration completed Jan 11, 2025 — 3 days from term start. Within 30-day window.",
+      "quote": "Page 2: 'Term registration completed Jan 11, 2025 — 3 days from term start — Status: ON TIME'",
+      "action": null
+    },
+    {
+      "id": "IMM-003",
+      "status": "partial",
+      "evidence": "3 of 6 new hire I-9s show Section 2 signed on Day 4 or Day 5 — technically in violation of the 3-business-day rule.",
+      "quote": "Page 5: 'I-9 Audit: 3/6 new hires — Section 2 completed on Day 4-5 — Outside 3-day statutory window'",
+      "action": "Document the administrative delay. Correct I-9 completion protocol in onboarding checklist. Fine exposure: $272–$2,701 per violation under current ICE schedule."
+    },
+    {
+      "id": "DOL-001",
+      "status": "compliant",
+      "evidence": "47 teachers — minimum salary $40,600/yr ($780/week). All above the $684/week FLSA threshold for exempt professional classification.",
+      "quote": "Page 7: 'Teacher FLSA compliance confirmed — 47/47 above $684/wk threshold — Min: $780/wk'",
+      "action": null
+    },
+    {
+      "id": "DOL-002",
+      "status": "non-compliant",
+      "evidence": "FMLA WH-1420 poster was NOT found during facility walkthrough of staff areas. Handbook references FMLA (Section 5.1) but does not include the required full policy text.",
+      "quote": null,
+      "action": "Purchase and post current WH-1420 poster (free download: dol.gov/fmla). Update staff handbook Section 5.1 with complete FMLA policy text. Penalty risk: up to $189/day per violation."
+    },
+    {
+      "id": "DPR-001",
+      "status": "compliant",
+      "evidence": "3 EdTech apps used by students under 13. All have signed parent COPPA consent forms on file. Vendor DPAs reviewed July 2024.",
+      "quote": "Page 6: 'COPPA compliance: 3/3 under-13 apps with parent consent — DPA file current'",
+      "action": null
+    },
+    {
+      "id": "DPR-002",
+      "status": "compliant",
+      "evidence": "11 vendor DPAs on file and current. All include data-sell prohibition and security standard clauses.",
+      "quote": "Page 8: 'DPA review complete — 11 vendors — 11/11 prohibit data sale — 11/11 define security standard'",
+      "action": null
+    },
+    {
+      "id": "IRS-001",
+      "status": "non-compliant",
+      "evidence": "No BOI FinCEN filing found on record. Corporate Transparency Act (CTA) required initial filing by January 1, 2024 for existing entities. School has been non-compliant for over 13 months.",
+      "quote": null,
+      "action": "File BOI immediately at fincen.gov/boi — filing is free. Penalties: $500/day of non-compliance up to $10,000 + potential criminal liability for responsible individuals."
+    },
+    {
+      "id": "IRS-002",
+      "status": "compliant",
+      "evidence": "1 cash tuition transaction over $10,000 in 2024-25. Form 8300 filed within 15 days. IRS confirmation on file.",
+      "quote": "Page 2: 'Form 8300 — 1 transaction ($11,200) — Filed Oct 8 for Oct 1 receipt — Within 15-day window — Confirmed'",
+      "action": null
+    },
+    {
+      "id": "BSF-001",
+      "status": "non-compliant",
+      "evidence": "AHERA Management Plan (AMP) exists but was last updated in 2019. 3-year reinspection was due September 2022 — now overdue by 2+ years. 6-month periodic surveillance logs also incomplete.",
+      "quote": null,
+      "action": "Commission AHERA reinspection by EPA-accredited inspector immediately. Update AMP and make available on-site. Resume 6-month periodic surveillance using trained in-house staff. Fine risk: $37,500/day under TSCA."
+    },
+    {
+      "id": "BSF-002",
+      "status": "compliant",
+      "evidence": "OSHA 300A Summary posted in teacher workroom since Feb 1, 2025. 2024 log: 1 recordable incident, properly documented.",
+      "quote": "Page 3: 'OSHA 300A posted — Posting date: Feb 1, 2025 — Recordable incidents 2024: 1'",
+      "action": null
+    },
+    {
+      "id": "BSF-003",
+      "status": "compliant",
+      "evidence": "Chemical Hygiene Plan (CHP) last updated August 2024. SDS binder current with 38 entries. Eyewash weekly inspection log up to date. Lab safety training completed Jan 2025.",
+      "quote": "Page 2: 'CHP Review Date: Aug 2024 — SDS Binder: 38 entries — Eyewash Log: Current — Training: Jan 10, 2025'",
+      "action": null
+    }
+  ]
+}
+

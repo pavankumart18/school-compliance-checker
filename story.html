@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Compliance Gap — A Data Story by ComplianceIQ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="story.css">
+</head>
+<body>
+
+<!-- STICKY NAV -->
+<nav class="story-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-back">&larr; Dashboard</a>
+    <span class="nav-brand">ComplianceIQ &middot; Data Story</span>
+    <div class="nav-progress-track">
+      <div class="nav-progress-bar" id="readProgress"></div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-content">
+    <div class="hero-kicker">An Investigation Into Regulatory Compliance</div>
+    <h1 class="hero-title">The Compliance Gap</h1>
+    <p class="hero-subtitle">We analyzed <strong>28 state and federal regulations</strong> across two Florida private schools. One scored 87%. The other, 61%. This is the story the documents told us.</p>
+    <div class="hero-meta">
+      <span class="hero-byline">By the ComplianceIQ Research Team</span>
+      <span class="hero-date">February 2026</span>
+    </div>
+    <div class="hero-schools">
+      <div class="hero-school-card nb">
+        <div class="school-score-circle" id="heroScoreNB">87%</div>
+        <div class="school-info-text">
+          <div class="school-card-name">North Broward Preparatory</div>
+          <div class="school-card-loc">Coral Springs, FL</div>
+        </div>
+      </div>
+      <div class="hero-vs">vs</div>
+      <div class="hero-school-card wm">
+        <div class="school-score-circle wm-score" id="heroScoreWM">61%</div>
+        <div class="school-info-text">
+          <div class="school-card-name">Windermere Preparatory</div>
+          <div class="school-card-loc">Orlando, FL</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-cue" id="scrollCue">
+    <span>Scroll to explore</span>
+    <div class="scroll-arrow">&#8595;</div>
+  </div>
+</header>
+
+<!-- ARTICLE BODY -->
+<article class="story-article">
+
+  <!-- SECTION: THE QUESTION -->
+  <section class="story-section" id="sec-question">
+    <div class="section-label">Chapter 1</div>
+    <h2 class="section-title">The Question We Asked</h2>
+    <p class="story-lead">Florida has over 3,000 private schools. Each one is expected to comply with a patchwork of <em>state statutes, federal rules, and agency-specific mandates</em>&thinsp;&mdash;&thinsp;from immunization records to asbestos inspections, from IRS cash reporting to SEVIS immigration logs.</p>
+    <p>But how many schools actually meet every requirement?</p>
+    <p>We set out to answer that question forensically. Not with surveys. Not with self-reported checklists. We went straight to the <strong>source documents</strong>&thinsp;&mdash;&thinsp;the PDFs, the logs, the filed forms&thinsp;&mdash;&thinsp;and measured what was actually there against what the law demands.</p>
+    <div class="pullquote">
+      <div class="pullquote-mark">&ldquo;</div>
+      <blockquote>We didn&rsquo;t ask schools what they filed. We looked at what they filed. There&rsquo;s a difference.</blockquote>
+    </div>
+    <p>We selected two schools&thinsp;&mdash;&thinsp;both accredited, both well-regarded, both serving PK-12 students&thinsp;&mdash;&thinsp;and subjected them to the same 28-regulation audit. The results surprised us.</p>
+  </section>
+
+  <!-- SECTION: THE METHODOLOGY -->
+  <section class="story-section methodology-section" id="sec-methodology">
+    <div class="section-label">Chapter 2</div>
+    <h2 class="section-title">The Methodology.</h2>
+    <div class="method-intro">
+      <div class="method-intro-accent"></div>
+      <div>
+        <h3 class="method-intro-title">Forensic Document Analysis</h3>
+        <p class="method-intro-body">Most compliance audits fail because they start with a checklist. We started with the <strong>evidence</strong>. By treating school filings as a forensic data set, we reverse-engineered actual compliance posture&thinsp;&mdash;&thinsp;not stated intentions.</p>
+        <p class="method-intro-sub">This 5-step pipeline transforms raw regulatory filings into a precise compliance blueprint. It is archaeology, not architecture. We dug for the truth.</p>
+      </div>
+    </div>
+
+    <!-- Pipeline Steps -->
+    <div class="pipeline-steps" id="pipelineSteps">
+      <button class="pipe-step active-step" data-step="1" type="button">
+        <div class="pipe-step-num">1. Identify</div>
+        <div class="pipe-step-desc">Map every applicable state &amp; federal regulation to the school type.</div>
+      </button>
+      <div class="pipe-arrow">&rarr;</div>
+      <button class="pipe-step" data-step="2" type="button">
+        <div class="pipe-step-num">2. Collect</div>
+        <div class="pipe-step-desc">Gather the actual filed documents, not self-reported summaries.</div>
+      </button>
+      <div class="pipe-arrow">&rarr;</div>
+      <button class="pipe-step" data-step="3" type="button">
+        <div class="pipe-step-num">3. Extract</div>
+        <div class="pipe-step-desc">Pull key data points: dates, signatures, enrollment counts, certifications.</div>
+      </button>
+      <div class="pipe-arrow">&rarr;</div>
+      <button class="pipe-step" data-step="4" type="button">
+        <div class="pipe-step-num">4. Validate</div>
+        <div class="pipe-step-desc">Compare extracted evidence against each regulation&rsquo;s exact trigger condition.</div>
+      </button>
+      <div class="pipe-arrow">&rarr;</div>
+      <button class="pipe-step" data-step="5" type="button">
+        <div class="pipe-step-num">5. Report</div>
+        <div class="pipe-step-desc">Generate explainable compliance findings with cited evidence for each rule.</div>
+      </button>
+    </div>
+
+    <!-- Pipeline Output (appears below steps on click) -->
+    <div class="pipeline-output visible" id="pipelineOutput">
+      <!-- Content injected by JS -->
+    </div>
+
+    <!-- Regulation Breakdown Chart -->
+    <div class="chart-card" id="regBreakdownCard">
+      <div class="chart-card-header">
+        <div class="chart-icon">&#128202;</div>
+        <div>
+          <div class="chart-title">Regulation Coverage Breakdown</div>
+          <div class="chart-subtitle">28 regulations across 10 categories — state vs federal distribution</div>
+        </div>
+      </div>
+      <div class="chart-badges">
+        <span class="chart-badge state-badge">16 State</span>
+        <span class="chart-badge fed-badge">12 Federal</span>
+      </div>
+      <div class="chart-area" id="chartCategories"></div>
+    </div>
+  </section>
+
+  <!-- SECTION: THE RAW REALITY -->
+  <section class="story-section" id="sec-reality">
+    <div class="section-label">Chapter 3</div>
+    <h2 class="section-title">The Raw Reality</h2>
+    <div class="insight-box">
+      <div class="insight-label">&#128161; The Insight</div>
+      <p>Filed documents tell the truth. We started by examining the <strong>primary source filings</strong> for each school&thinsp;&mdash;&thinsp;surveys, clearance logs, immunization reports, fire inspection records. Every claim was cross-referenced against the statutory trigger.</p>
+    </div>
+
+    <div class="io-row">
+      <div class="io-card input-card">
+        <div class="io-label">Input</div>
+        <p>12 school document filings, 28 regulatory citations, statutory deadlines, and agency-specific form requirements.</p>
+      </div>
+      <div class="io-card output-card">
+        <div class="io-label output-label">Output</div>
+        <p>A forensic compliance record for every regulation: pass/partial/fail with cited page-level evidence.</p>
+      </div>
+    </div>
+
+    <div class="evidence-block">
+      <div class="evidence-header">&#128196; Sample Evidence Trail</div>
+      <div class="evidence-log" id="evidenceLog">
+        <div class="log-line"><span class="log-ts">ADM-001</span> <span class="log-ok">[PASS]</span> Annual Survey filed Apr 15 — Notary seal verified #FL-882 — 16 days ahead of deadline</div>
+        <div class="log-line"><span class="log-ts">PER-001</span> <span class="log-ok">[PASS]</span> All 94 staff VECHS Level 2 current — oldest renewal: Feb 2022 — zero expired</div>
+        <div class="log-line"><span class="log-ts">HLT-001</span> <span class="log-ok">[PASS]</span> DH-684 submitted Sept 28, 2024 — KG: 98.6% compliant, Grade 7: 100%</div>
+        <div class="log-line"><span class="log-ts">FAC-002</span> <span class="log-fail">[FAIL]</span> Radon test: only 1 of 2 buildings tested — Building B overdue since 2022</div>
+        <div class="log-line"><span class="log-ts">IRS-002</span> <span class="log-fail">[FAIL]</span> $12,000 cash tuition — Form 8300 not filed within 15-day window</div>
+        <div class="log-line"><span class="log-ts">BSF-003</span> <span class="log-fail">[FAIL]</span> CHP last updated 2021 — SDS binder missing 6 chemical entries</div>
+        <div class="log-line dimmed"><span class="log-ts">...</span> (22 more regulations analyzed for North Broward)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: THE COMPARISON -->
+  <section class="story-section" id="sec-comparison">
+    <div class="section-label">Chapter 4</div>
+    <h2 class="section-title">Two Schools, Two Realities</h2>
+    <p class="story-lead">On the surface, both schools look similar: accredited PK-12 college preparatory institutions in Florida. Beneath the surface, their compliance postures diverge sharply.</p>
+
+    <!-- Score Comparison D3 Visual -->
+    <div class="chart-card" id="comparisonCard">
+      <div class="chart-card-header">
+        <div class="chart-icon">&#128200;</div>
+        <div>
+          <div class="chart-title">Head-to-Head Compliance</div>
+          <div class="chart-subtitle">Compliance status across all 28 regulations for each school</div>
+        </div>
+      </div>
+      <div class="chart-area" id="chartComparison" style="min-height:360px"></div>
+    </div>
+
+    <p>North Broward maintained an <strong>87% compliance score</strong> — 21 of 28 regulations fully met. Their documentation was organized, filings were ahead of deadline, and staff clearances were up to date.</p>
+    <p>Windermere scored <strong>61%</strong> — only 14 regulations fully compliant. The gaps weren&rsquo;t random. They concentrated in three areas: <em>administrative deadlines</em>, <em>personnel screening</em>, and <em>facility safety</em>.</p>
+
+    <!-- Category Heatmap -->
+    <div class="chart-card" id="heatmapCard">
+      <div class="chart-card-header">
+        <div class="chart-icon">&#127777;&#65039;</div>
+        <div>
+          <div class="chart-title">Compliance Heatmap by Category</div>
+          <div class="chart-subtitle">Green = Compliant, Amber = Partial, Red = Non-Compliant</div>
+        </div>
+      </div>
+      <div class="chart-area" id="chartHeatmap" style="min-height: 340px"></div>
+    </div>
+  </section>
+
+  <!-- SECTION: THE FAILURES -->
+  <section class="story-section" id="sec-failures">
+    <div class="section-label">Chapter 5</div>
+    <h2 class="section-title">Where Things Went Wrong</h2>
+    <p class="story-lead">The most telling failures were not dramatic. They were quiet: a missed deadline by 7 days, a screening that expired 5 years ago, a radon test never scheduled for the second building.</p>
+
+    <div class="failures-grid" id="failuresGrid">
+      <!-- Populated by JS -->
+    </div>
+
+    <div class="pullquote">
+      <div class="pullquote-mark">&ldquo;</div>
+      <blockquote>Compliance doesn&rsquo;t fail all at once. It erodes&thinsp;&mdash;&thinsp;one overlooked expiration date at a time.</blockquote>
+    </div>
+  </section>
+
+  <!-- SECTION: THE GAP CHART -->
+  <section class="story-section" id="sec-gap">
+    <div class="section-label">Chapter 6</div>
+    <h2 class="section-title">The Compliance Gap, Visualized</h2>
+    <p>If we line up all 28 regulations side by side for both schools, the pattern becomes unmistakable. North Broward holds a consistent green line. Windermere&rsquo;s line fractures across administrative and safety categories.</p>
+
+    <div class="chart-card">
+      <div class="chart-card-header">
+        <div class="chart-icon">&#128208;</div>
+        <div>
+          <div class="chart-title">Regulation-by-Regulation Comparison</div>
+          <div class="chart-subtitle">Each column is one regulation. Hover for details.</div>
+        </div>
+      </div>
+      <div class="chart-area" id="chartDotPlot" style="min-height:300px"></div>
+    </div>
+  </section>
+
+  <!-- SECTION: CONCLUSION -->
+  <section class="story-section" id="sec-conclusion">
+    <div class="section-label">Conclusion</div>
+    <h2 class="section-title">What the Data Tells Us</h2>
+    <p class="story-lead">Regulatory compliance is not a binary pass/fail. It is a <em>spectrum</em>&thinsp;&mdash;&thinsp;and the institutions that treat it as a living process, not an annual checkbox, are the ones that stay ahead.</p>
+
+    <div class="takeaway-grid">
+      <div class="takeaway-card">
+        <div class="takeaway-num">87%</div>
+        <div class="takeaway-text">North Broward&rsquo;s compliance score — strong, but still 3 critical gaps in radon testing, chemical hygiene, and IRS reporting.</div>
+      </div>
+      <div class="takeaway-card">
+        <div class="takeaway-num">61%</div>
+        <div class="takeaway-text">Windermere&rsquo;s score — 7 non-compliant regulations. The pattern: expired clearances, missed deadlines, missing documentation sections.</div>
+      </div>
+      <div class="takeaway-card">
+        <div class="takeaway-num">28</div>
+        <div class="takeaway-text">Regulations spanning 10 categories — from FDLE background checks to FinCEN beneficial ownership filings. No school can ignore the breadth.</div>
+      </div>
+      <div class="takeaway-card">
+        <div class="takeaway-num">12</div>
+        <div class="takeaway-text">Source documents analyzed. The truth was in the filings — not in what schools said they did, but in what the paper trail proved.</div>
+      </div>
+    </div>
+
+    <div class="cta-block">
+      <a href="index.html" class="cta-btn">&larr; Explore the Full Dashboard</a>
+    </div>
+  </section>
+
+</article>
+
+<!-- FOOTER -->
+<footer class="story-footer">
+  <div class="footer-inner">
+    <span>ComplianceIQ &middot; Florida Private School Regulatory Compliance</span>
+    <span>Data collected February 2026</span>
+  </div>
+</footer>
+
+<div class="tooltip" id="tooltip"></div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="story.js"></script>
+</body>
+</html>
+
