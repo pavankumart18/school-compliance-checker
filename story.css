@@ -343,14 +343,19 @@ body {
   font-style: italic;
 }
 
-/* Pipeline steps — similar to reference image */
+/* Pipeline steps — single row, breaks out of narrow article */
 .pipeline-steps {
   display: flex;
   align-items: center;
   gap: 0;
   margin-bottom: 0;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: center;
+  /* break out of the 780px article container */
+  width: 100vw;
+  max-width: 1140px;
+  margin-left: 50%;
+  transform: translateX(-50%);
 }
 button.pipe-step {
   font-family: inherit;
@@ -359,8 +364,8 @@ button.pipe-step {
   outline: none;
 }
 .pipe-step {
-  flex: 1;
-  min-width: 140px;
+  flex: 1 1 0;
+  min-width: 0;
   max-width: 200px;
   background: var(--surface);
   border: 1px solid var(--border);
@@ -410,11 +415,17 @@ button.pipe-step {
               opacity 0.35s ease,
               margin 0.35s ease;
   margin: 0 0 0 0;
+  /* match pipeline breakout width */
+  width: 100vw;
+  max-width: 1140px;
+  margin-left: 50%;
+  transform: translateX(-50%);
 }
 .pipeline-output.visible {
   max-height: 800px;
   opacity: 1;
   margin: 28px 0 48px 0;
+  margin-left: 50%;
 }
 .pipe-output-card {
   background: var(--surface);
@@ -546,7 +557,7 @@ button.pipe-step {
   border: 1px solid var(--border);
   border-radius: 18px;
   margin: 40px 0;
-  overflow: hidden;
+  overflow: visible;
   box-shadow: 0 2px 12px rgba(0,0,0,0.03);
 }
 .chart-card-header {
@@ -556,6 +567,7 @@ button.pipe-step {
   padding: 20px 24px;
   border-bottom: 1px solid var(--border);
   background: var(--surface2);
+  border-radius: 18px 18px 0 0;
 }
 .chart-icon { font-size: 22px; }
 .chart-title {
@@ -595,6 +607,7 @@ button.pipe-step {
 }
 .chart-area {
   padding: 24px;
+  overflow-x: auto;
 }
 
 /* ---- INSIGHT BOX ---- */

@@ -80,6 +80,11 @@ function statusLabel(status) {
   return status;
 }
 
+function citationLink(citation) {
+  const url = 'https://www.google.com/search?q=' + encodeURIComponent(citation);
+  return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="citation-link" title="Search Google for ${citation}">${citation}</a>`;
+}
+
 // ---- Dashboard Update ----
 function updateDashboard() {
   const data = schoolData[currentSchool];
@@ -159,7 +164,7 @@ function renderTable(animate) {
       <div class="row-num">${String(rowNum).padStart(2, '0')}</div>
       <div>
         <div class="reg-name">${reg.name}</div>
-        <div class="reg-citation">${reg.citation}</div>
+        <div class="reg-citation">${citationLink(reg.citation)}</div>
         ${docChipHTML}
       </div>
       <div class="reg-trigger">${reg.trigger}</div>
@@ -179,7 +184,7 @@ function renderTable(animate) {
           </div>
           <div class="detail-box">
             <div class="detail-box-title">Citation</div>
-            <div class="detail-box-body">${reg.citation}</div>
+            <div class="detail-box-body">${citationLink(reg.citation)}</div>
           </div>
           ${reg.relatedDoc ? `
           <div class="detail-box">
@@ -199,8 +204,9 @@ function renderTable(animate) {
 
     // Row click → expand/collapse
     row.addEventListener('click', (e) => {
-      // Don't expand if clicking doc chip
+      // Don't expand if clicking doc chip or citation link
       if (e.target.closest('.doc-chip')) return;
+      if (e.target.closest('.citation-link')) return;
       row.classList.toggle('expanded');
       const detail = row.querySelector('.row-detail');
       detail.classList.toggle('open');
@@ -273,7 +279,7 @@ function openRules() {
         <div class="rule-content">
           <div class="rule-name">${reg.name}</div>
           <div class="rule-meta">
-            <span class="rule-cite">${reg.citation}</span>
+            <span class="rule-cite">${citationLink(reg.citation)}</span>
             <span class="level-badge ${reg.level}">${reg.level.toUpperCase()}</span>
           </div>
           <div class="rule-trigger-text">${reg.trigger}</div>

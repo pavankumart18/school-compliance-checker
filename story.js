@@ -267,14 +267,13 @@ function drawHeatmap() {
   const regs = allRegIds;
 
   const w = container.node().clientWidth;
-  const margin = { top: 40, right: 16, bottom: 60, left: 110 };
-  const cellW = Math.max(16, (w - margin.left - margin.right) / regs.length);
+  const margin = { top: 40, right: 24, bottom: 60, left: 110 };
   const cellH = 40;
   const h = margin.top + schools.length * cellH + margin.bottom;
 
   const svg = container.append('svg').attr('width', w).attr('height', h);
 
-  const x = d3.scaleBand().domain(regs).range([margin.left, margin.left + regs.length * cellW]).padding(0.08);
+  const x = d3.scaleBand().domain(regs).range([margin.left, w - margin.right]).padding(0.08);
   const yBand = d3.scaleBand().domain(schools).range([margin.top, margin.top + schools.length * cellH]).padding(0.12);
 
   // School labels
