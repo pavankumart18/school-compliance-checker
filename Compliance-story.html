@@ -4,255 +4,59 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>How We Taught a Machine to Read the Law</title>
-<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Barlow+Condensed:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="story.css">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+/* Additional styles specific to Compliance-story - uses story.css theme */
 
-:root{
-  --cream:#f7f3ec;
-  --cream2:#ede7db;
-  --cream3:#e0d8cb;
-  --ink:#1c1712;
-  --ink2:#3a342b;
-  --ink3:#8a7d6e;
-  --ink4:#b5a89a;
-  --red:#b5280f;
-  --amber:#c97d10;
-  --green:#2d7a45;
-  --blue:#1b4f8a;
-  --rule:rgba(28,23,18,0.1);
+/* Ensure article content is properly contained */
+.story-article {
+  position: relative;
+  z-index: 1;
 }
 
-html{scroll-behavior:smooth}
+/* Navigation adapted to story.css theme */
+.topbar-nav a.active { color: var(--accent); }
 
-body{
-  background:var(--cream);
-  color:var(--ink);
-  font-family:'Libre Baskerville',Georgia,serif;
-  font-size:17px;
-  line-height:1.8;
-  overflow-x:hidden;
-}
-
-/* ── TOPBAR ── */
-.topbar{
-  background:var(--ink);
-  color:var(--cream);
-  height:40px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 32px;
-  position:sticky;
-  top:0;
-  z-index:200;
-}
-.topbar-brand{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:13px;
-  font-weight:700;
-  letter-spacing:3px;
-  text-transform:uppercase;
-}
-.topbar-nav{
-  display:flex;
-  gap:28px;
-}
-.topbar-nav a{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:11px;
-  font-weight:500;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  color:rgba(247,243,236,0.5);
-  text-decoration:none;
-  transition:color 0.2s;
-}
-.topbar-nav a:hover,.topbar-nav a.active{color:var(--cream)}
-
-/* ── HERO ── */
-.hero{
-  border-bottom:3px solid var(--ink);
-  padding:64px 0 48px;
-  text-align:center;
-  position:relative;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 39px,
-    rgba(28,23,18,0.04) 39px,
-    rgba(28,23,18,0.04) 40px
-  );
-}
-
-.hero-kicker{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:11px;
-  font-weight:700;
-  letter-spacing:4px;
-  text-transform:uppercase;
-  color:var(--red);
-  margin-bottom:20px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:12px;
-}
-.hero-kicker::before,.hero-kicker::after{
-  content:'';width:40px;height:1px;background:var(--red);
-}
-
-.hero-hed{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:clamp(52px,8vw,108px);
-  font-weight:800;
-  line-height:0.92;
-  letter-spacing:-1px;
-  color:var(--ink);
-  max-width:900px;
-  margin:0 auto 28px;
-  text-transform:uppercase;
-}
-
-.hero-hed em{
-  font-style:italic;
-  color:var(--red);
-  font-weight:300;
-  font-family:'Libre Baskerville',serif;
-  font-size:0.75em;
-  display:block;
-  letter-spacing:1px;
-  text-transform:none;
-}
-
-.hero-dek{
-  max-width:580px;
-  margin:0 auto 32px;
-  font-size:16px;
-  color:var(--ink2);
-  font-weight:400;
-  line-height:1.65;
-}
-
-.hero-meta{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:11px;
-  font-weight:500;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  color:var(--ink3);
-  border-top:1px solid var(--rule);
-  display:inline-flex;
-  gap:32px;
-  padding-top:16px;
-}
-
-/* ── LAYOUT ── */
-.body-wrap{max-width:720px;margin:0 auto;padding:0 24px}
-.wide-wrap{max-width:1100px;margin:0 auto;padding:0 24px}
-
-/* ── TEXT ── */
-.chapter-num{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:11px;
-  font-weight:700;
-  letter-spacing:3px;
-  text-transform:uppercase;
-  color:var(--ink4);
-  margin:72px 0 16px;
-  display:flex;align-items:center;gap:12px;
-}
-.chapter-num::after{content:'';flex:1;height:1px;background:var(--rule)}
-
-h2{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:clamp(32px,5vw,52px);
-  font-weight:800;
-  line-height:1.05;
-  text-transform:uppercase;
-  letter-spacing:-0.5px;
-  color:var(--ink);
-  margin-bottom:24px;
-}
-h2 em{font-style:italic;color:var(--red);font-family:'Libre Baskerville',serif;font-size:0.85em;text-transform:none;font-weight:400}
-
-h3{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:22px;
-  font-weight:700;
-  letter-spacing:0.5px;
-  text-transform:uppercase;
-  color:var(--ink);
-  margin:36px 0 12px;
-}
-
-p{color:var(--ink2);margin-bottom:20px;font-size:16px}
-p strong{color:var(--ink);font-weight:700}
-
+/* Dropcap for first paragraph */
 .dropcap::first-letter{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:6em;
-  font-weight:800;
+  font-family:'Playfair Display',serif;
+  font-size:5em;
+  font-weight:700;
   float:left;
-  line-height:0.72;
-  margin:8px 8px 0 0;
-  color:var(--ink);
-  text-transform:uppercase;
+  line-height:0.7;
+  margin:8px 12px 0 0;
+  color:var(--text);
 }
 
-/* pull quote */
-.pq{
-  margin:40px 0;
-  padding:28px 0 24px;
-  border-top:4px solid var(--ink);
-  border-bottom:1px solid var(--ink);
-}
-.pq-text{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:clamp(22px,3vw,34px);
-  font-weight:300;
-  font-style:italic;
-  line-height:1.25;
-  color:var(--ink);
-  margin-bottom:12px;
-  letter-spacing:0.2px;
-}
-.pq-attr{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:11px;
-  letter-spacing:2.5px;
-  text-transform:uppercase;
-  color:var(--ink3);
-  font-weight:600;
-}
-
-/* rule divider */
-hr.rule{border:none;border-top:1px solid var(--rule);margin:56px 0}
-
-/* ── THE PROMPT PANEL ── */
+/* Prompt Panel - adapted to story.css theme */
 .prompt-panel{
   margin:48px 0;
-  border:2px solid var(--ink);
-  background:var(--cream2);
+  border:2px solid var(--border);
+  background:var(--surface);
+  border-radius:16px;
   overflow:hidden;
+  box-shadow:0 2px 12px rgba(0,0,0,0.03);
 }
 .prompt-header{
-  background:var(--ink);
-  color:var(--cream);
+  background:var(--text);
+  color:var(--surface);
   padding:12px 20px;
   display:flex;
   align-items:center;
   gap:10px;
-  font-family:'Fira Code',monospace;
+  font-family:'DM Mono',monospace;
   font-size:12px;
 }
 .prompt-dot{width:10px;height:10px;border-radius:50%}
 .prompt-body{
   padding:24px;
-  font-family:'Fira Code',monospace;
+  font-family:'DM Mono',monospace;
   font-size:12px;
   line-height:1.9;
-  color:var(--ink2);
+  color:var(--text2);
   position:relative;
   max-height:360px;
   overflow:hidden;
@@ -262,28 +66,28 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin:56px 0}
   position:absolute;
   bottom:0;left:0;right:0;
   height:80px;
-  background:linear-gradient(transparent,var(--cream2));
+  background:linear-gradient(transparent,var(--surface));
 }
 .prompt-line{margin-bottom:2px}
-.prompt-line.comment{color:var(--ink3)}
-.prompt-line.bold{color:var(--ink);font-weight:700}
+.prompt-line.comment{color:var(--text3)}
+.prompt-line.bold{color:var(--text);font-weight:700}
 .prompt-line.indent{padding-left:24px}
 .prompt-line.indent2{padding-left:48px}
 .prompt-expand{
   text-align:center;
   padding:14px;
-  background:var(--cream3);
-  border-top:1px solid var(--rule);
-  font-family:'Barlow Condensed',sans-serif;
+  background:var(--surface2);
+  border-top:1px solid var(--border);
+  font-family:'Outfit',sans-serif;
   font-size:12px;
   font-weight:600;
-  letter-spacing:2px;
+  letter-spacing:1px;
   text-transform:uppercase;
-  color:var(--ink3);
+  color:var(--text3);
   cursor:pointer;
   transition:all 0.2s;
 }
-.prompt-expand:hover{background:var(--ink);color:var(--cream)}
+.prompt-expand:hover{background:var(--accent);color:white}
 
 /* ── THE TRANSFORMATION FLOW ── */
 .transform-flow{
@@ -294,27 +98,28 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin:56px 0}
   align-items:start;
 }
 .tf-box{
-  border:1px solid var(--rule);
-  background:var(--cream2);
+  border:1px solid var(--border);
+  background:var(--surface);
   padding:20px;
+  border-radius:12px;
 }
 .tf-box-head{
-  font-family:'Barlow Condensed',sans-serif;
+  font-family:'DM Mono',monospace;
   font-size:10px;
-  font-weight:700;
-  letter-spacing:3px;
+  font-weight:600;
+  letter-spacing:1.5px;
   text-transform:uppercase;
-  color:var(--ink3);
+  color:var(--text3);
   margin-bottom:12px;
   padding-bottom:8px;
-  border-bottom:1px solid var(--rule);
+  border-bottom:1px solid var(--border);
 }
 .tf-item{
-  font-size:12px;
-  color:var(--ink2);
+  font-size:13px;
+  color:var(--text2);
   padding:7px 0;
-  border-bottom:1px solid var(--rule);
-  line-height:1.4;
+  border-bottom:1px solid var(--border);
+  line-height:1.5;
 }
 .tf-item:last-child{border:none}
 .tf-arrow{
@@ -322,12 +127,12 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin:56px 0}
   align-items:center;
   justify-content:center;
   font-size:24px;
-  color:var(--ink3);
+  color:var(--text3);
   padding-top:40px;
 }
-.tf-box.output{background:var(--ink);border-color:var(--ink)}
-.tf-box.output .tf-box-head{color:rgba(247,243,236,0.5);border-color:rgba(247,243,236,0.1)}
-.tf-box.output .tf-item{color:var(--cream);border-color:rgba(247,243,236,0.1)}
+.tf-box.output{background:var(--text);border-color:var(--text)}
+.tf-box.output .tf-box-head{color:rgba(255,255,255,0.5);border-color:rgba(255,255,255,0.1)}
+.tf-box.output .tf-item{color:var(--surface);border-color:rgba(255,255,255,0.1)}
 
 /* ── SCHEMA CARDS ── */
 .schema-grid{
@@ -337,62 +142,62 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin:56px 0}
   gap:2px;
 }
 .sc-card{
-  background:var(--cream2);
+  background:var(--surface);
   padding:24px 20px;
-  border-top:3px solid var(--ink4);
-  transition:border-color 0.2s,background 0.2s;
+  border-top:3px solid var(--border2);
+  border-radius:12px;
+  transition:border-color 0.2s,background 0.2s,box-shadow 0.2s;
   cursor:default;
 }
-.sc-card:hover{background:var(--ink);border-top-color:var(--red)}
-.sc-card:hover .sc-name,.sc-card:hover .sc-body{color:var(--cream)}
-.sc-card:hover .sc-meta{color:rgba(247,243,236,0.5)}
-.sc-card:hover .sc-tag{background:rgba(247,243,236,0.1);color:rgba(247,243,236,0.7)}
+.sc-card:hover{background:var(--surface2);border-top-color:var(--accent);box-shadow:0 4px 16px rgba(59,130,246,0.08)}
+.sc-card:hover .sc-name,.sc-card:hover .sc-body{color:var(--text)}
+.sc-card:hover .sc-meta{color:var(--text3)}
+.sc-card:hover .sc-tag{background:rgba(59,130,246,0.1);color:var(--accent)}
 .sc-tag{
   display:inline-block;
-  font-family:'Barlow Condensed',sans-serif;
+  font-family:'DM Mono',monospace;
   font-size:9px;
-  font-weight:700;
-  letter-spacing:2px;
+  font-weight:600;
+  letter-spacing:1px;
   text-transform:uppercase;
   padding:3px 8px;
-  border-radius:2px;
+  border-radius:4px;
   margin-bottom:10px;
 }
-.sc-tag.state{background:#e8f0f8;color:var(--blue)}
-.sc-tag.fed{background:#fce8e6;color:var(--red)}
+.sc-tag.state{background:rgba(99,102,241,0.08);color:var(--accent2);border:1px solid rgba(99,102,241,0.18)}
+.sc-tag.fed{background:rgba(59,130,246,0.08);color:var(--accent);border:1px solid rgba(59,130,246,0.18)}
 .sc-name{
-  font-family:'Barlow Condensed',sans-serif;
+  font-family:'Playfair Display',serif;
   font-size:16px;
   font-weight:700;
-  text-transform:uppercase;
-  letter-spacing:0.3px;
-  color:var(--ink);
+  color:var(--text);
   margin-bottom:8px;
   line-height:1.2;
   transition:color 0.2s;
 }
 .sc-body{
-  font-size:12px;
-  color:var(--ink2);
+  font-size:13px;
+  color:var(--text2);
   line-height:1.6;
   margin-bottom:10px;
   transition:color 0.2s;
 }
 .sc-meta{
-  font-family:'Fira Code',monospace;
+  font-family:'DM Mono',monospace;
   font-size:10px;
-  color:var(--ink3);
+  color:var(--text3);
   line-height:1.6;
   transition:color 0.2s;
 }
 
 /* ── CODE BLOCK ── */
 .code-block{
-  background:var(--ink);
+  background:var(--text);
   border-left:4px solid var(--red);
   padding:20px 24px;
   margin:32px 0;
-  font-family:'Fira Code',monospace;
+  border-radius:12px;
+  font-family:'DM Mono',monospace;
   font-size:12px;
   line-height:1.9;
   overflow-x:auto;
@@ -412,29 +217,29 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin:56px 0}
   grid-template-columns:1fr 1fr;
   gap:2px;
 }
-.ba-col{padding:28px 24px}
-.ba-col.before{background:var(--cream3)}
-.ba-col.after{background:var(--ink)}
+.ba-col{padding:28px 24px;border-radius:12px}
+.ba-col.before{background:var(--surface2)}
+.ba-col.after{background:var(--text)}
 .ba-head{
-  font-family:'Barlow Condensed',sans-serif;
+  font-family:'DM Mono',monospace;
   font-size:11px;
-  font-weight:700;
-  letter-spacing:3px;
+  font-weight:600;
+  letter-spacing:1.5px;
   text-transform:uppercase;
   margin-bottom:16px;
   padding-bottom:10px;
   border-bottom:2px solid;
 }
-.ba-col.before .ba-head{color:var(--ink3);border-color:var(--ink3)}
-.ba-col.after .ba-head{color:rgba(247,243,236,0.4);border-color:rgba(247,243,236,0.15)}
+.ba-col.before .ba-head{color:var(--text3);border-color:var(--border)}
+.ba-col.after .ba-head{color:rgba(255,255,255,0.4);border-color:rgba(255,255,255,0.15)}
 .ba-item{
   padding:10px 0;
   border-bottom:1px solid;
   font-size:13px;
   line-height:1.5;
 }
-.ba-col.before .ba-item{color:var(--ink2);border-color:var(--rule)}
-.ba-col.after .ba-item{color:var(--cream);border-color:rgba(247,243,236,0.08);font-family:'Fira Code',monospace;font-size:11px}
+.ba-col.before .ba-item{color:var(--text2);border-color:var(--border)}
+.ba-col.after .ba-item{color:var(--surface);border-color:rgba(255,255,255,0.08);font-family:'DM Mono',monospace;font-size:11px}
 .ba-item:last-child{border:none}
 .ba-item strong{font-weight:700}
 .chip{
@@ -460,112 +265,116 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin:56px 0}
   margin:48px 0;
 }
 .stat-cell{
-  background:var(--cream2);
+  background:var(--surface);
   padding:28px 20px;
   text-align:center;
+  border-radius:12px;
 }
-.stat-cell.dark{background:var(--ink)}
+.stat-cell.dark{background:var(--text)}
 .stat-num{
-  font-family:'Barlow Condensed',sans-serif;
+  font-family:'DM Serif Display',serif;
   font-size:clamp(48px,6vw,72px);
-  font-weight:800;
+  font-weight:700;
   line-height:1;
   margin-bottom:6px;
-  color:var(--ink);
+  color:var(--text);
 }
-.stat-cell.dark .stat-num{color:var(--cream)}
+.stat-cell.dark .stat-num{color:var(--surface)}
 .stat-num .accent{color:var(--red)}
 .stat-label{
-  font-family:'Barlow Condensed',sans-serif;
+  font-family:'DM Mono',monospace;
   font-size:11px;
   font-weight:600;
-  letter-spacing:2px;
+  letter-spacing:1px;
   text-transform:uppercase;
-  color:var(--ink3);
+  color:var(--text3);
 }
-.stat-cell.dark .stat-label{color:rgba(247,243,236,0.4)}
+.stat-cell.dark .stat-label{color:rgba(255,255,255,0.4)}
 
 /* ── REGULATION TABLE ── */
 .reg-table-wrap{
   margin:48px 0;
-  border:1px solid var(--rule);
+  border:1px solid var(--border);
+  border-radius:16px;
   overflow:hidden;
+  background:var(--surface);
 }
 .rt-head{
   display:grid;
   grid-template-columns:80px 60px 200px 1fr 200px;
   gap:0;
-  background:var(--ink);
+  background:var(--text);
   padding:12px 20px;
 }
 .rt-th{
-  font-family:'Barlow Condensed',sans-serif;
+  font-family:'DM Mono',monospace;
   font-size:9px;
-  font-weight:700;
-  letter-spacing:2.5px;
+  font-weight:600;
+  letter-spacing:1.5px;
   text-transform:uppercase;
-  color:rgba(247,243,236,0.4);
+  color:rgba(255,255,255,0.4);
 }
 .rt-row{
   display:grid;
   grid-template-columns:80px 60px 200px 1fr 200px;
   gap:0;
   padding:12px 20px;
-  border-bottom:1px solid var(--rule);
+  border-bottom:1px solid var(--border);
   align-items:start;
   transition:background 0.15s;
   cursor:default;
+  background:var(--surface);
 }
-.rt-row:hover{background:var(--cream2)}
+.rt-row:hover{background:var(--surface2)}
 .rt-row:last-child{border:none}
 .rt-level{
-  font-family:'Barlow Condensed',sans-serif;
+  font-family:'DM Mono',monospace;
   font-size:9px;
-  font-weight:700;
-  letter-spacing:1.5px;
+  font-weight:600;
+  letter-spacing:1px;
   text-transform:uppercase;
   padding:3px 0;
 }
-.rt-level.state{color:var(--blue)}
-.rt-level.fed{color:var(--red)}
+.rt-level.state{color:var(--accent2)}
+.rt-level.fed{color:var(--accent)}
 .rt-id{
-  font-family:'Fira Code',monospace;
+  font-family:'DM Mono',monospace;
   font-size:10px;
-  color:var(--ink3);
+  color:var(--text3);
   padding-top:2px;
 }
 .rt-name{
   font-size:13px;
-  font-weight:700;
-  color:var(--ink);
+  font-weight:600;
+  color:var(--text);
   line-height:1.35;
 }
 .rt-logic{
-  font-family:'Fira Code',monospace;
+  font-family:'DM Mono',monospace;
   font-size:10px;
-  color:var(--ink2);
+  color:var(--text2);
   line-height:1.65;
   padding:0 12px;
 }
 .rt-logic .hl{color:var(--red)}
 .rt-cite{
-  font-family:'Fira Code',monospace;
+  font-family:'DM Mono',monospace;
   font-size:10px;
-  color:var(--ink3);
+  color:var(--text3);
   line-height:1.5;
 }
 .rt-cat-row{
-  background:var(--cream2);
-  border-bottom:1px solid var(--rule);
+  background:var(--surface2);
+  border-bottom:1px solid var(--border);
   padding:8px 20px;
 }
 .rt-cat-label{
-  font-family:'Barlow Condensed',sans-serif;
+  font-family:'DM Mono',monospace;
   font-size:10px;
-  font-weight:700;
-  letter-spacing:3px;
+  font-weight:600;
+  letter-spacing:2px;
   text-transform:uppercase;
-  color:var(--ink3);
+  color:var(--text3);
 }
 
 /* ── INSIGHT BOXES ── */
@@ -574,21 +383,22 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin:56px 0}
   grid-template-columns:4px 1fr;
   margin:32px 0;
 }
-.insight-bar{background:var(--red)}
+.insight-bar{background:var(--accent)}
 .insight-body{
-  background:var(--cream2);
+  background:rgba(59,130,246,0.03);
   padding:16px 20px;
   font-size:14px;
-  color:var(--ink2);
+  color:var(--text2);
   line-height:1.65;
+  border-radius:0 12px 12px 0;
 }
 .insight-body strong{
-  font-family:'Barlow Condensed',sans-serif;
+  font-family:'DM Mono',monospace;
   font-size:10px;
-  font-weight:700;
-  letter-spacing:2px;
+  font-weight:600;
+  letter-spacing:1.5px;
   text-transform:uppercase;
-  color:var(--red);
+  color:var(--accent);
   display:block;
   margin-bottom:6px;
 }
@@ -605,38 +415,39 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin:56px 0}
 .big-ticker{
   text-align:center;
   padding:64px 24px;
-  background:var(--ink);
+  background:var(--text);
   margin:64px 0;
   position:relative;
   overflow:hidden;
+  border-radius:16px;
 }
 .big-ticker::before{
   content:'LAW → DATA → CODE';
   position:absolute;
-  font-family:'Barlow Condensed',sans-serif;
+  font-family:'DM Serif Display',serif;
   font-size:200px;
-  font-weight:800;
+  font-weight:700;
   color:rgba(255,255,255,0.025);
   white-space:nowrap;
   top:50%;transform:translateY(-50%);
   letter-spacing:-5px;
 }
 .bt-num{
-  font-family:'Barlow Condensed',sans-serif;
+  font-family:'DM Serif Display',serif;
   font-size:clamp(80px,14vw,160px);
-  font-weight:800;
+  font-weight:700;
   line-height:1;
-  color:var(--cream);
+  color:var(--surface);
   position:relative;
 }
 .bt-num span{color:var(--red)}
 .bt-label{
-  font-family:'Barlow Condensed',sans-serif;
+  font-family:'DM Mono',monospace;
   font-size:14px;
   font-weight:600;
-  letter-spacing:4px;
+  letter-spacing:2px;
   text-transform:uppercase;
-  color:rgba(247,243,236,0.35);
+  color:rgba(255,255,255,0.35);
   position:relative;
   margin-top:8px;
 }
@@ -655,53 +466,42 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin:56px 0}
   flex:1;
   padding:28px 20px;
   position:relative;
-  border:1px solid var(--rule);
+  border:1px solid var(--border);
   border-right:none;
+  background:var(--surface);
 }
-.flow-step:last-child{border-right:1px solid var(--rule)}
+.flow-step:last-child{border-right:1px solid var(--border)}
 .flow-step::after{
   content:'→';
   position:absolute;
   right:-14px;top:50%;
   transform:translateY(-50%);
   font-size:20px;
-  color:var(--ink3);
+  color:var(--text3);
   z-index:1;
-  background:var(--cream);
+  background:var(--bg);
   padding:0 2px;
 }
 .flow-step:last-child::after{display:none}
 .fs-num{
-  font-family:'Barlow Condensed',sans-serif;
+  font-family:'DM Serif Display',serif;
   font-size:48px;
-  font-weight:800;
-  color:var(--cream3);
+  font-weight:700;
+  color:var(--border2);
   line-height:1;
   margin-bottom:8px;
 }
 .fs-title{
-  font-family:'Barlow Condensed',sans-serif;
+  font-family:'Playfair Display',serif;
   font-size:14px;
   font-weight:700;
-  letter-spacing:1px;
-  text-transform:uppercase;
-  color:var(--ink);
+  letter-spacing:0.5px;
+  color:var(--text);
   margin-bottom:6px;
 }
-.fs-body{font-size:12px;color:var(--ink3);line-height:1.5}
+.fs-body{font-size:13px;color:var(--text3);line-height:1.5}
 
-/* ── FOOTER ── */
-.story-footer{
-  background:var(--ink);
-  color:rgba(247,243,236,0.35);
-  padding:32px 40px;
-  margin-top:80px;
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:11px;
-  letter-spacing:1px;
-  line-height:2;
-  text-align:center;
-}
+/* Footer already styled in story.css */
 
 /* Scrollbar */
 ::-webkit-scrollbar{width:4px}
@@ -723,55 +523,61 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin:56px 0}
 </head>
 <body>
 
-<!-- TOP BAR -->
-<div class="topbar">
-  <div class="topbar-brand">ComplianceIQ · Policy as Code</div>
-  <nav class="topbar-nav">
-    <a href="index.html" style="color:var(--cream);opacity:0.85">&larr; Dashboard</a>
-    <a href="#act1" class="active">The Problem</a>
-    <a href="#act2">The Prompt</a>
-    <a href="#act3">The Output</a>
-    <a href="#act4">The Schema</a>
-    <a href="#act5">The Engine</a>
-  </nav>
-</div>
+<!-- STICKY NAV -->
+<nav class="story-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-back">&larr; Dashboard</a>
+    <span class="nav-brand">ComplianceIQ · Policy as Code</span>
+    <div style="flex:1"></div>
+    <a href="#act1" class="nav-back" style="margin-right:16px">The Problem</a>
+    <a href="#act2" class="nav-back" style="margin-right:16px">The Prompt</a>
+    <a href="#act3" class="nav-back" style="margin-right:16px">The Output</a>
+    <a href="#act4" class="nav-back" style="margin-right:16px">The Schema</a>
+    <a href="#act5" class="nav-back">The Engine</a>
+  </div>
+</nav>
 
 <!-- HERO -->
-<div class="hero">
-  <div class="hero-kicker">An Investigation into AI-Extracted Regulation</div>
-  <h1 class="hero-hed">
-    How We Taught<br>a Machine to<br>
-    <em>Read the Law</em>
-  </h1>
-  <p class="hero-dek">We gave an AI a single research prompt. It returned 72 regulations across 11 agencies, structured as machine-readable compliance logic. This is the story of how legal text becomes executable code.</p>
-  <div class="hero-meta">
-    <span>Nord Anglia · Florida</span>
-    <span>February 2025</span>
-    <span>North Broward &amp; Windermere Prep</span>
+<header class="hero">
+  <div class="hero-content">
+    <div class="hero-kicker">An Investigation into AI-Extracted Regulation</div>
+    <h1 class="hero-title">
+      How We Taught<br>a Machine to<br>
+      <em>Read the Law</em>
+    </h1>
+    <p class="hero-subtitle">We gave an AI a single research prompt. It returned <strong>72 regulations across 11 agencies</strong>, structured as machine-readable compliance logic. This is the story of how legal text becomes executable code.</p>
+    <div class="hero-meta">
+      <span class="hero-byline">Nord Anglia · Florida</span>
+      <span class="hero-date">February 2025</span>
+    </div>
   </div>
-</div>
+</header>
+
+<!-- ARTICLE BODY -->
+<article class="story-article">
 
 <!-- ACT 1: THE PROBLEM -->
-<div class="body-wrap" id="act1">
-  <div class="chapter-num">Act I · The Problem</div>
-  <h2>A school that doesn't know<br>what it <em>doesn't</em> know</h2>
+<section class="story-section" id="act1">
+  <div class="section-label">Act I · The Problem</div>
+  <h2 class="section-title">A school that doesn't know<br>what it <em>doesn't</em> know</h2>
 
   <p class="dropcap">Every morning, North Broward Preparatory School in Coral Springs opens its doors to 847 students. Windermere Preparatory School in Orlando does the same for 680 more. Both are part of Nord Anglia Education — one of the world's largest private school groups. And both are simultaneously subject to a regulatory framework so fragmented, so spread across state codes, federal rules, and agency guidelines, that no single person at either school could recite it in full.</p>
 
   <p>This is not a failure of diligence. It is a structural problem. The regulations governing a private international school in Florida don't live in one place. They are scattered across <strong>Florida Statutes Chapter 1002, the Florida Administrative Code, Title 8 of the Code of Federal Regulations, the Fair Labor Standards Act, IRS tax code, OSHA standards, EPA asbestos rules, FTC guidelines, and a half-dozen agency handbooks</strong> — each updated on its own cycle, each enforced by a different office.</p>
 
-  <div class="pq fade">
-    <div class="pq-text">"The school had the right policies. It simply lacked the system to track them."</div>
-    <div class="pq-attr">Core finding — Windermere compliance audit</div>
+  <div class="pullquote">
+    <div class="pullquote-mark">&ldquo;</div>
+    <blockquote>"The school had the right policies. It simply lacked the system to track them."</blockquote>
+    <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text3);margin-top:8px;letter-spacing:1px">Core finding — Windermere compliance audit</div>
   </div>
 
   <p>The question we set out to answer was simple: <strong>could an AI read this entire regulatory landscape — from raw statutes to agency handbooks — and produce a structured, machine-readable compliance schema that a software engine could actually execute?</strong></p>
 
   <p>The answer required two things. First, a very precisely engineered research prompt. Second, the willingness to treat the AI's output not as a document to read, but as a database to run.</p>
-</div>
+</section>
 
 <!-- STAT ROW -->
-<div class="wide-wrap fade">
+<div style="max-width:1100px;margin:48px auto;padding:0 32px">
   <div class="stat-row">
     <div class="stat-cell dark">
       <div class="stat-num"><span>11</span></div>
@@ -793,19 +599,19 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin:56px 0}
 </div>
 
 <!-- ACT 2: THE PROMPT -->
-<div class="body-wrap" id="act2">
-  <div class="chapter-num">Act II · The Prompt</div>
-  <h2>Writing a question<br>the law could <em>answer</em></h2>
+<section class="story-section" id="act2">
+  <div class="section-label">Act II · The Prompt</div>
+  <h2 class="section-title">Writing a question<br>the law could <em>answer</em></h2>
 
   <p>The first and most important step was not running an AI search. It was crafting a research brief precise enough that the AI would return structured, auditable data — not a general overview. This took careful thought about what we actually needed.</p>
 
   <p>Most AI research prompts ask for a summary. We needed something different: <strong>for each regulation, we needed the exact statute number, the specific form required, the inspection interval, which agency enforces it, and — critically — what a software engine could verify.</strong> Not "schools must maintain safe facilities." Rather: "Form 2020-IF, every 30 school days, Rule 6A-3.0171, flag if days since last inspection > 30."</p>
 
   <p>The prompt was structured into five specific research mandates, each targeting a different regulatory domain, and it demanded output in a precise format.</p>
-</div>
+</section>
 
 <!-- THE ACTUAL PROMPT -->
-<div class="wide-wrap fade">
+<div style="max-width:1100px;margin:48px auto;padding:0 32px">
   <div class="prompt-panel">
     <div class="prompt-header">
       <div class="prompt-dot" style="background:#ef4444"></div>
@@ -856,7 +662,7 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin:56px 0}
   </div>
 </div>
 
-<div class="body-wrap fade">
+<section class="story-section">
   <p>Two things make this prompt different from a typical search query. First, it is <strong>domain-specific</strong> — it names exact statute numbers, specific form identifiers, and known regulatory sub-domains. This forces the AI to go beyond surface summaries and into the actual legal text. Second, it demands a <strong>specific output schema</strong> — not prose, but structured columns that can be directly ingested into a database.</p>
 
   <div class="insight">
@@ -871,15 +677,15 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin:56px 0}
 </div>
 
 <!-- ACT 3: THE OUTPUT -->
-<div class="body-wrap" id="act3">
-  <div class="chapter-num">Act III · The Output</div>
-  <h2>What the AI<br><em>actually returned</em></h2>
+<section class="story-section" id="act3">
+  <div class="section-label">Act III · The Output</div>
+  <h2 class="section-title">What the AI<br><em>actually returned</em></h2>
 
   <p>The AI's output arrived as a structured report with seven sections — each corresponding to a regulatory domain. But the critical achievement was not the prose. It was the three parallel artifacts the AI produced for each regulation:</p>
 </div>
 
 <!-- TRANSFORMATION FLOW -->
-<div class="wide-wrap fade">
+<div style="max-width:1100px;margin:48px auto;padding:0 32px">
   <div class="transform-flow">
     <div class="tf-box">
       <div class="tf-box-head">Input: Raw Legal Text</div>
@@ -910,15 +716,15 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin:56px 0}
   </div>
 </div>
 
-<div class="body-wrap fade">
+<section class="story-section">
   <p>For each rule, the AI returned three layers that map directly to how a compliance engine operates: the <strong>artifact</strong> (what document to look for), the <strong>trigger condition</strong> (when this rule activates), and the <strong>validation logic</strong> (the boolean check to run). This is not a regulatory summary. This is code waiting to be executed.</p>
 
   <h3>The "Gotcha" findings</h3>
 
   <p>Beyond the structured schema, the AI surfaced several non-obvious regulatory nuances that a manual research process would likely miss entirely:</p>
-</div>
+</section>
 
-<div class="wide-wrap">
+<div style="max-width:1100px;margin:48px auto;padding:0 32px;position:relative;z-index:1">
   <div class="before-after fade">
     <div class="ba-col before">
       <div class="ba-head">What schools typically assume</div>
@@ -943,7 +749,7 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin:56px 0}
   </div>
 </div>
 
-<div class="body-wrap">
+<section class="story-section">
   <div class="insight fade">
     <div class="insight-bar"></div>
     <div class="insight-body">
@@ -954,7 +760,7 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin:56px 0}
 </div>
 
 <!-- BIG TICKER -->
-<div class="wide-wrap fade">
+<div style="max-width:1100px;margin:48px auto;padding:0 32px">
   <div class="big-ticker">
     <div class="bt-num"><span>72</span></div>
     <div class="bt-label">Regulations extracted from legal text · structured as machine-executable logic · in one research session</div>
@@ -962,9 +768,9 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin:56px 0}
 </div>
 
 <!-- ACT 4: THE SCHEMA -->
-<div class="body-wrap" id="act4">
-  <div class="chapter-num">Act IV · The Schema</div>
-  <h2>From legal language<br>to <em>boolean logic</em></h2>
+<section class="story-section" id="act4">
+  <div class="section-label">Act IV · The Schema</div>
+  <h2 class="section-title">From legal language<br>to <em>boolean logic</em></h2>
 
   <p>The final output from the AI research was not a report to be filed. It was a data schema — 72 regulations, each expressed as a row in a compliance matrix, each with a trigger condition and validation rule written in boolean logic. This is what "Policy as Code" means in practice.</p>
 
@@ -972,7 +778,7 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin:56px 0}
 </div>
 
 <!-- THE ACTUAL REGULATION TABLE -->
-<div class="wide-wrap fade">
+<div style="max-width:1100px;margin:48px auto;padding:0 32px">
   <div class="reg-table-wrap">
     <div class="rt-head">
       <div class="rt-th">Level</div>
@@ -1083,15 +889,15 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin:56px 0}
 </div>
 
 <!-- ACT 5: THE ENGINE -->
-<div class="body-wrap" id="act5">
-  <div class="chapter-num">Act V · The Engine</div>
-  <h2>Schema becomes<br><em>working software</em></h2>
+<section class="story-section" id="act5">
+  <div class="section-label">Act V · The Engine</div>
+  <h2 class="section-title">Schema becomes<br><em>working software</em></h2>
 
   <p>With the schema extracted, the final step was building the compliance engine. The AI-generated schema becomes the checklist.json — a structured file that the engine reads to know what to check. The school's PDF documents become the evidence base. A series of LLM calls evaluates each regulation against the documents, returning a JSON object for every check.</p>
 </div>
 
 <!-- CODE BLOCK -->
-<div class="wide-wrap fade">
+<div style="max-width:1100px;margin:48px auto;padding:0 32px">
   <div class="code-block">
 <span class="cb-comment">// Step 1: Load the AI-extracted schema</span>
 <span class="cb-fn">const</span> <span class="cb-var">checklist</span> = <span class="cb-fn">await</span> fetch(<span class="cb-str">"./data/checklist.json"</span>).then(r => r.json())
@@ -1125,7 +931,7 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin:56px 0}
 </div>
 
 <!-- FLOW DIAGRAM -->
-<div class="wide-wrap fade">
+<div style="max-width:1100px;margin:48px auto;padding:0 32px">
   <div class="flow-diagram">
     <div class="flow-steps">
       <div class="flow-step">
@@ -1155,28 +961,29 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin:56px 0}
       </div>
     </div>
   </div>
-</div>
+</section>
 
-<div class="body-wrap">
-
-  <h3>Why it works: evidence, not assertion</h3>
+<section class="story-section">
+  <h3 style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--text);margin:36px 0 12px">Why it works: evidence, not assertion</h3>
 
   <p>The critical design principle is that every compliance determination must be <strong>cited, not just stated.</strong> When the engine marks a school compliant on VECHS screening, it must quote the exact text from the document that proves it. When it flags a violation, it names the statute, explains what's wrong, and tells the administrator exactly what to do.</p>
 
   <p>This is what makes the AI extraction step non-negotiable. Without a precisely structured schema derived from actual legal text, the engine has nothing to check against. The prompt wasn't a search. <strong>It was a specification.</strong></p>
 
-  <div class="pq fade">
-    <div class="pq-text">"The output format is as important as the question. Ask for a report and you get prose. Ask for a schema and you get a database."</div>
-    <div class="pq-attr">Design principle — ComplianceIQ</div>
+  <div class="pullquote">
+    <div class="pullquote-mark">&ldquo;</div>
+    <blockquote>"The output format is as important as the question. Ask for a report and you get prose. Ask for a schema and you get a database."</blockquote>
+    <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text3);margin-top:8px;letter-spacing:1px">Design principle — ComplianceIQ</div>
   </div>
 
   <p>The result, across the two schools, was striking. North Broward returned a compliance score of 87% — strong on personnel and immigration, with three technical failures in environmental compliance. Windermere scored 61% — seven non-compliances, all administrative failures: a late survey, an expired VECHS clearance still on campus, a missed scholarship deadline. <strong>Not failures of intent. Failures of system.</strong></p>
 
   <p>Every single one of those failures is now impossible to miss. That is what the machine learned to see.</p>
-</div>
+</section>
 
 <!-- SCHEMA GRID -->
-<div class="wide-wrap fade">
+<section class="story-section" style="max-width:none;padding-left:0;padding-right:0">
+<div style="max-width:1100px;margin:0 auto;padding:0 32px">
   <div class="schema-grid">
     <div class="sc-card">
       <div class="sc-tag state">STATE</div>
@@ -1216,26 +1023,32 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin:56px 0}
     </div>
   </div>
 </div>
+</section>
 
 <!-- CLOSING -->
-<div class="body-wrap">
-  <div class="chapter-num">Conclusion</div>
-  <h2>The prompt was<br>the <em>first step</em></h2>
+<section class="story-section">
+  <div class="section-label">Conclusion</div>
+  <h2 class="section-title">The prompt was<br>the <em>first step</em></h2>
 
   <p>The story of this compliance engine begins not with code, but with a question — precisely engineered to extract structured data from legal text. The AI did not write the regulations. It read them, translated them, and handed back a schema that could be executed by a machine.</p>
 
   <p>That schema — 72 regulations, 11 agencies, 18 categories — now powers a live compliance dashboard for two Florida schools. Every red flag it surfaces is the direct product of a legal text the AI read, a validation rule it wrote, and a school document it checked. The machine learned to read the law so that the humans running the school don't have to.</p>
 
-  <div class="pq fade">
-    <div class="pq-text">"We didn't automate compliance. We automated the reading of the law that compliance is based on."</div>
-    <div class="pq-attr">ComplianceIQ · Policy as Code · February 2025</div>
+  <div class="pullquote">
+    <div class="pullquote-mark">&ldquo;</div>
+    <blockquote>"We didn't automate compliance. We automated the reading of the law that compliance is based on."</blockquote>
+    <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text3);margin-top:8px;letter-spacing:1px">ComplianceIQ · Policy as Code · February 2025</div>
   </div>
-</div>
+</section>
 
-<div class="story-footer">
-  Sources: Florida Statutes Chapter 1002 (FLDOE) · Florida Administrative Code · 8 CFR 214 (SEVIS/DHS) · 29 CFR 541 (FLSA/DOL) · 16 CFR 312 (COPPA/FTC) · 26 U.S.C. 6050I (IRS) · 31 CFR 1010.380 (FinCEN/CTA 2024) · 40 CFR 763 (AHERA/EPA) · OSHA 29 CFR 1904 &amp; 1910 · Rule 6A-3.0171 (FLDOE Transportation) · Step Up For Students Private School Handbook<br>
-  Research conducted via Gemini Deep Research · Schema validated against FLDOE, FLSENATE.GOV, and agency handbooks · Nord Anglia Education · Florida Schools · 2025
-</div>
+</article>
+
+<footer class="story-footer">
+  <div class="footer-inner">
+    <span>Sources: Florida Statutes Chapter 1002 (FLDOE) · Florida Administrative Code · 8 CFR 214 (SEVIS/DHS) · 29 CFR 541 (FLSA/DOL) · 16 CFR 312 (COPPA/FTC) · 26 U.S.C. 6050I (IRS) · 31 CFR 1010.380 (FinCEN/CTA 2024) · 40 CFR 763 (AHERA/EPA) · OSHA 29 CFR 1904 &amp; 1910 · Rule 6A-3.0171 (FLDOE Transportation) · Step Up For Students Private School Handbook</span>
+    <span>Research conducted via Gemini Deep Research · Schema validated against FLDOE, FLSENATE.GOV, and agency handbooks · Nord Anglia Education · Florida Schools · 2025</span>
+  </div>
+</footer>
 
 <script>
 // Intersection observer for fade animations
@@ -1246,7 +1059,7 @@ const io = new IntersectionObserver((entries) => {
 document.querySelectorAll('.fade').forEach(el => io.observe(el));
 
 // Nav active state
-const navLinks = document.querySelectorAll('.topbar-nav a');
+const navLinks = document.querySelectorAll('.nav-inner a[href^="#"]');
 const sections = ['act1','act2','act3','act4','act5'];
 const sectionEls = sections.map(id => document.getElementById(id)).filter(Boolean);
 
@@ -1255,7 +1068,11 @@ const navObs = new IntersectionObserver((entries) => {
     if (e.isIntersecting) {
       const id = e.target.id;
       navLinks.forEach(a => {
-        a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+        if (a.getAttribute('href') === '#' + id) {
+          a.style.color = 'var(--accent)';
+        } else {
+          a.style.color = '';
+        }
       });
     }
   });
