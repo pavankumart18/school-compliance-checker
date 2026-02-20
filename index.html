@@ -1,158 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ComplianceIQ — Florida Private School Regulatory Dashboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
-<!-- HEADER -->
-<div class="header">
-  <div class="header-left">
-    <div class="logo-badge">&#127963;</div>
-    <div>
-      <div class="header-title">ComplianceIQ</div>
-      <div class="header-subtitle">FLORIDA PRIVATE SCHOOL &middot; POLICY AS CODE</div>
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <div class="logo-badge">&#127963;</div>
+      <div>
+        <div class="header-title">ComplianceIQ</div>
+        <div class="header-subtitle">FLORIDA PRIVATE SCHOOL &middot; POLICY AS CODE</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <a href="story.html" class="btn btn-outline" style="text-decoration:none">
+        &#128214; Data Story
+      </a>
+      <a href="Compliance-story.html" class="btn btn-outline" style="text-decoration:none">
+        &#129302; Rules Generation Story
+      </a>
+      <button class="btn btn-outline" id="btnRules">
+        &#128203; Rules &amp; Checklist
+      </button>
+      <button class="btn btn-outline" id="btnDocs">
+        &#128194; School Documents
+      </button>
     </div>
   </div>
-  <div class="header-right">
-    <a href="story.html" class="btn btn-outline" style="text-decoration:none">
-      &#128214; Data Story
-    </a>
-    <a href="Compliance-story.html" class="btn btn-outline" style="text-decoration:none">
-      &#129302; Rules Generation Story
-    </a>
-    <button class="btn btn-outline" id="btnRules">
-      &#128203; Rules &amp; Checklist
-    </button>
-    <button class="btn btn-outline" id="btnDocs">
-      &#128194; School Documents
-    </button>
-  </div>
-</div>
 
-<!-- SCHOOL SELECTOR -->
-<div class="school-bar">
-  <span class="school-label">School &rarr;</span>
-  <div class="school-tabs" id="schoolTabs">
-    <button class="school-tab active" data-school="0">
-      <div class="school-dot green"></div>
-      North Broward Preparatory
-    </button>
-    <button class="school-tab" data-school="1">
-      <div class="school-dot amber"></div>
-      Windermere Preparatory
-    </button>
+  <!-- SCHOOL SELECTOR -->
+  <div class="school-bar">
+    <span class="school-label">School &rarr;</span>
+    <div class="school-tabs" id="schoolTabs">
+      <button class="school-tab active" data-school="0">
+        <div class="school-dot green"></div>
+        North Broward Preparatory
+      </button>
+      <button class="school-tab" data-school="1">
+        <div class="school-dot amber"></div>
+        Windermere Preparatory
+      </button>
+    </div>
+    <div class="overall-score" id="overallScore">
+      <span class="score-label">COMPLIANCE SCORE</span>
+      <span class="score-val" id="scoreVal">—</span>
+    </div>
   </div>
-  <div class="overall-score" id="overallScore">
-    <span class="score-label">COMPLIANCE SCORE</span>
-    <span class="score-val" id="scoreVal">—</span>
-  </div>
-</div>
 
-<!-- SUMMARY STRIP -->
-<div class="summary-strip">
-  <div class="stat-card">
-    <div class="stat-icon green">&#10004;&#65039;</div>
-    <div>
-      <div class="stat-num" id="countCompliant">—</div>
-      <div class="stat-label">Compliant</div>
+  <!-- SUMMARY STRIP -->
+  <div class="summary-strip">
+    <div class="stat-card">
+      <div class="stat-icon green">&#10004;&#65039;</div>
+      <div>
+        <div class="stat-num" id="countCompliant">—</div>
+        <div class="stat-label">Compliant</div>
+      </div>
     </div>
-  </div>
-  <div class="stat-card">
-    <div class="stat-icon amber">&#9888;&#65039;</div>
-    <div>
-      <div class="stat-num" id="countPartial">—</div>
-      <div class="stat-label">Partially Compliant</div>
+    <div class="stat-card">
+      <div class="stat-icon amber">&#9888;&#65039;</div>
+      <div>
+        <div class="stat-num" id="countPartial">—</div>
+        <div class="stat-label">Partially Compliant</div>
+      </div>
     </div>
-  </div>
-  <div class="stat-card">
-    <div class="stat-icon red">&#10060;</div>
-    <div>
-      <div class="stat-num" id="countNon">—</div>
-      <div class="stat-label">Non-Compliant</div>
+    <div class="stat-card">
+      <div class="stat-icon red">&#10060;</div>
+      <div>
+        <div class="stat-num" id="countNon">—</div>
+        <div class="stat-label">Non-Compliant</div>
+      </div>
     </div>
-  </div>
-  <div class="stat-card">
-    <div class="stat-icon blue">&#128196;</div>
-    <div>
-      <div class="stat-num" id="countTotal">—</div>
-      <div class="stat-label">Total Regulations Checked</div>
-    </div>
-  </div>
-</div>
-
-<!-- FILTER BAR -->
-<div class="filter-bar" id="filterBar">
-  <button class="filter-chip active-filter" data-filter="all">All</button>
-  <button class="filter-chip" data-filter="compliant">&#10004;&#65039; Compliant</button>
-  <button class="filter-chip" data-filter="partial">&#9888;&#65039; Partial</button>
-  <button class="filter-chip" data-filter="non-compliant">&#10060; Non-Compliant</button>
-  <div class="filter-sep"></div>
-  <button class="filter-chip" data-filter="state">State</button>
-  <button class="filter-chip" data-filter="federal">Federal</button>
-</div>
-
-<!-- MAIN TABLE -->
-<div class="main">
-  <div class="table-wrap">
-    <div class="scan-progress" id="scanProgress"></div>
-    <div class="table-header-row">
-      <div class="th">#</div>
-      <div class="th">Regulation / Artifact</div>
-      <div class="th">Trigger Condition</div>
-      <div class="th">Status</div>
-      <div class="th">Evidence / Action</div>
-    </div>
-    <div id="tableBody">
-      <div class="loading-state">
-        <div class="loading-spinner"></div>
-        <div>Loading compliance data&hellip;</div>
+    <div class="stat-card">
+      <div class="stat-icon blue">&#128196;</div>
+      <div>
+        <div class="stat-num" id="countTotal">—</div>
+        <div class="stat-label">Total Regulations Checked</div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- RULES MODAL -->
-<div class="modal-overlay" id="rulesModal">
-  <div class="modal" style="max-width:900px">
-    <div class="modal-header">
-      <div class="modal-title">&#128203; Regulatory Checklist — All Rules</div>
-      <button class="modal-close" data-close="rulesModal">&times;</button>
-    </div>
-    <div class="modal-body" id="rulesBody"></div>
+  <!-- FILTER BAR -->
+  <div class="filter-bar" id="filterBar">
+    <button class="filter-chip active-filter" data-filter="all">All</button>
+    <button class="filter-chip" data-filter="compliant">&#10004;&#65039; Compliant</button>
+    <button class="filter-chip" data-filter="partial">&#9888;&#65039; Partial</button>
+    <button class="filter-chip" data-filter="non-compliant">&#10060; Non-Compliant</button>
+    <div class="filter-sep"></div>
+    <button class="filter-chip" data-filter="state">State</button>
+    <button class="filter-chip" data-filter="federal">Federal</button>
   </div>
-</div>
 
-<!-- DOCS MODAL -->
-<div class="modal-overlay" id="docsModal">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">&#128194; School Documents</div>
-      <button class="modal-close" data-close="docsModal">&times;</button>
-    </div>
-    <div class="modal-body" id="docsBody"></div>
-  </div>
-</div>
-
-<!-- PDF PREVIEW MODAL -->
-<div class="modal-overlay" id="pdfModal">
-  <div class="modal" style="max-width:1000px;max-height:90vh">
-    <div class="modal-header">
-      <div class="modal-title" id="pdfModalTitle">&#128196; Document Preview</div>
-      <button class="modal-close" data-close="pdfModal">&times;</button>
-    </div>
-    <div class="pdf-iframe-wrap" id="pdfIframeWrap">
-      <!-- iframe injected by JS -->
+  <!-- MAIN TABLE -->
+  <div class="main">
+    <div class="table-wrap">
+      <div class="scan-progress" id="scanProgress"></div>
+      <div id="tableBody">
+        <div class="loading-state">
+          <div class="loading-spinner"></div>
+          <div>Loading compliance data&hellip;</div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
 
-<script src="script.js"></script>
+  <!-- RULES MODAL -->
+  <div class="modal-overlay" id="rulesModal">
+    <div class="modal" style="max-width:900px">
+      <div class="modal-header">
+        <div class="modal-title">&#128203; Regulatory Checklist — All Rules</div>
+        <button class="modal-close" data-close="rulesModal">&times;</button>
+      </div>
+      <div class="modal-body" id="rulesBody"></div>
+    </div>
+  </div>
+
+  <!-- DOCS MODAL -->
+  <div class="modal-overlay" id="docsModal">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title">&#128194; School Documents</div>
+        <button class="modal-close" data-close="docsModal">&times;</button>
+      </div>
+      <div class="modal-body" id="docsBody"></div>
+    </div>
+  </div>
+
+  <!-- PDF PREVIEW MODAL -->
+  <div class="modal-overlay" id="pdfModal">
+    <div class="modal" style="max-width:1000px;max-height:90vh">
+      <div class="modal-header">
+        <div class="modal-title" id="pdfModalTitle">&#128196; Document Preview</div>
+        <button class="modal-close" data-close="pdfModal">&times;</button>
+      </div>
+      <div class="pdf-iframe-wrap" id="pdfIframeWrap">
+        <!-- iframe injected by JS -->
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
+
 </html>

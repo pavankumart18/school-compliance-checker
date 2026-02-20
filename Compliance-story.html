@@ -1,1389 +1,2014 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>How to Extract Regulations Using AI — A Policy as Code Story</title>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-
-:root{
-  --parchment:#f7f2e9;
-  --parchment2:#ede7da;
-  --parchment3:#e4dccf;
-  --parchment4:#d8cfc0;
-  --ink:#18130e;
-  --ink2:#3d3328;
-  --ink3:#7a6a56;
-  --ink4:#b8a892;
-  --red:#c0341c;
-  --amber:#b87800;
-  --green:#2e7a50;
-  --blue:#1e4f8c;
-  --rule:rgba(24,19,14,0.1);
-  --rule2:rgba(24,19,14,0.06);
-}
-
-html{scroll-behavior:smooth}
-
-body{
-  background:var(--parchment);
-  color:var(--ink);
-  font-family:'Instrument Sans',sans-serif;
-  font-size:17px;
-  line-height:1.75;
-  overflow-x:hidden;
-}
-
-/* ━━ THIN TOP BAR ━━ */
-.topbar{height:4px;background:var(--ink);width:100%}
-
-/* ━━ STICKY NAV ━━ */
-.nav{
-  position:sticky;top:0;z-index:200;
-  background:rgba(247,242,233,0.96);
-  backdrop-filter:blur(8px);
-  border-bottom:1px solid var(--rule);
-  height:48px;display:flex;align-items:center;
-  justify-content:space-between;padding:0 48px;
-}
-.nav-name{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:10px;letter-spacing:2px;text-transform:uppercase;
-  color:var(--ink3);
-}
-.nav-links{display:flex;gap:32px}
-.nav-links a{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:10px;letter-spacing:1.5px;text-transform:uppercase;
-  color:var(--ink4);text-decoration:none;transition:color 0.2s;
-}
-.nav-links a:hover,.nav-links a.lit{color:var(--ink)}
-
-/* ━━ HERO ━━ */
-.hero{
-  padding:96px 0 80px;
-  border-bottom:2.5px solid var(--ink);
-  position:relative;
-  overflow:hidden;
-}
-/* crosshatch background */
-.hero::before{
-  content:'';position:absolute;inset:0;
-  background-image:
-    repeating-linear-gradient(0deg,transparent,transparent 23px,rgba(24,19,14,0.035) 23px,rgba(24,19,14,0.035) 24px),
-    repeating-linear-gradient(90deg,transparent,transparent 23px,rgba(24,19,14,0.02) 23px,rgba(24,19,14,0.02) 24px);
-  pointer-events:none;
-}
-
-.hero-inner{
-  max-width:1000px;margin:0 auto;padding:0 48px;
-  position:relative;
-}
-
-.hero-kicker{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:10px;letter-spacing:4px;text-transform:uppercase;
-  color:var(--red);margin-bottom:24px;
-  display:flex;align-items:center;gap:14px;
-}
-.hero-kicker::before{content:'';width:32px;height:1px;background:var(--red)}
-
-.hero-hed{
-  font-family:'Instrument Serif',serif;
-  font-size:clamp(52px,8vw,110px);
-  line-height:0.95;letter-spacing:-2px;
-  color:var(--ink);margin-bottom:32px;
-  max-width:900px;
-}
-.hero-hed em{color:var(--red);font-style:italic}
-
-.hero-cols{
-  display:grid;grid-template-columns:1fr 380px;
-  gap:48px;align-items:end;
-  margin-top:16px;
-}
-.hero-dek{
-  font-size:18px;font-weight:400;
-  color:var(--ink2);line-height:1.65;
-  border-left:3px solid var(--ink);
-  padding-left:20px;
-}
-.hero-numbers{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:1px;background:var(--rule);
-  border:1px solid var(--rule);
-}
-.hn{
-  background:var(--parchment2);
-  padding:20px 18px;
-}
-.hn-n{
-  font-family:'Instrument Serif',serif;
-  font-size:52px;line-height:1;
-  color:var(--ink);margin-bottom:4px;
-}
-.hn-n span{color:var(--red)}
-.hn-l{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:9px;letter-spacing:2px;text-transform:uppercase;
-  color:var(--ink3);
-}
-
-.hero-meta{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:10px;letter-spacing:1px;
-  color:var(--ink4);
-  border-top:1px solid var(--rule);
-  padding-top:20px;margin-top:40px;
-  display:flex;gap:40px;
-}
-
-/* ━━ LAYOUT ━━ */
-.prose{max-width:700px;margin:0 auto;padding:0 48px}
-.wide{max-width:1100px;margin:0 auto;padding:0 48px}
-
-/* ━━ TYPOGRAPHY ━━ */
-.chap-mark{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:10px;letter-spacing:3px;text-transform:uppercase;
-  color:var(--ink4);
-  margin:80px 0 18px;
-  display:flex;align-items:center;gap:14px;
-}
-.chap-mark::after{content:'';flex:1;height:1px;background:var(--rule)}
-
-h2{
-  font-family:'Instrument Serif',serif;
-  font-size:clamp(34px,5vw,58px);
-  line-height:1.06;letter-spacing:-0.5px;
-  color:var(--ink);margin-bottom:24px;
-}
-h2 em{font-style:italic;color:var(--red)}
-
-p{color:var(--ink2);margin-bottom:22px;font-size:16px;font-weight:400}
-p strong{color:var(--ink);font-weight:600}
-
-.dropcap::first-letter{
-  font-family:'Instrument Serif',serif;
-  font-size:5.5em;float:left;
-  line-height:0.72;margin:4px 10px 0 0;
-  color:var(--ink);
-}
-
-/* pull quote */
-.pq{
-  margin:44px 0;padding:28px 0 24px;
-  border-top:3px solid var(--ink);
-  border-bottom:1px solid var(--ink);
-}
-.pq-t{
-  font-family:'Instrument Serif',serif;
-  font-size:clamp(20px,3vw,32px);
-  font-style:italic;color:var(--ink);
-  line-height:1.3;margin-bottom:10px;
-}
-.pq-a{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:10px;letter-spacing:2px;text-transform:uppercase;
-  color:var(--ink4);
-}
-
-/* sidebar annotation */
-.aside{
-  background:var(--parchment2);
-  border-left:3px solid var(--amber);
-  padding:16px 20px;margin:28px 0;
-  font-size:14px;color:var(--ink2);line-height:1.65;
-}
-.aside strong{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:9px;letter-spacing:2px;text-transform:uppercase;
-  color:var(--amber);display:block;margin-bottom:6px;
-}
-
-hr{border:none;border-top:1px solid var(--rule);margin:60px 0}
-
-/* ━━ THE PROMPT STACK ━━ */
-.prompt-stack{
-  margin:56px 0;
-  display:flex;flex-direction:column;
-  gap:3px;
-}
-
-.ps-row{
-  display:grid;
-  grid-template-columns:56px 1fr;
-  gap:0;
-  position:relative;
-}
-
-/* vertical connector line */
-.ps-row::before{
-  content:'';
-  position:absolute;
-  left:27px;top:56px;bottom:-3px;
-  width:2px;
-  background:var(--rule);
-  z-index:0;
-}
-.ps-row:last-child::before{display:none}
-
-.ps-num{
-  display:flex;flex-direction:column;
-  align-items:center;
-  padding-top:24px;
-  position:relative;z-index:1;
-}
-.ps-circle{
-  width:44px;height:44px;border-radius:50%;
-  border:2px solid var(--parchment3);
-  background:var(--parchment);
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Instrument Serif',serif;
-  font-size:17px;color:var(--ink3);
-  transition:all 0.4s ease;
-  flex-shrink:0;
-}
-.ps-circle.active{
-  background:var(--ink);border-color:var(--ink);
-  color:var(--parchment);
-}
-.ps-circle.insight{
-  background:var(--parchment);border-color:var(--red);
-  color:var(--red);
-}
-
-.ps-content{
-  padding:16px 0 20px 20px;
-}
-.ps-label{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:9px;letter-spacing:2.5px;text-transform:uppercase;
-  color:var(--ink4);margin-bottom:6px;
-}
-.ps-title{
-  font-family:'Instrument Serif',serif;
-  font-size:22px;color:var(--ink);line-height:1.2;
-  margin-bottom:12px;
-}
-
-/* the terminal box */
-.term{
-  background:var(--ink);
-  border-radius:4px;overflow:hidden;
-  margin:14px 0;
-}
-.term-bar{
-  background:rgba(255,255,255,0.05);
-  padding:9px 14px;
-  border-bottom:1px solid rgba(255,255,255,0.06);
-  display:flex;align-items:center;gap:6px;
-}
-.term-dot{width:8px;height:8px;border-radius:50%}
-.term-label{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:9px;letter-spacing:1px;
-  color:rgba(247,242,233,0.3);margin-left:6px;
-}
-.term-body{
-  padding:16px 18px;
-  font-family:'IBM Plex Mono',monospace;
-  font-size:11px;line-height:1.95;
-  color:rgba(247,242,233,0.7);
-}
-.term-body .kw{color:#f0a090;font-weight:500}
-.term-body .hi{color:#90d4a8}
-.term-body .st{color:#f0d090}
-.term-body .em{color:rgba(247,242,233,0.95);font-weight:500}
-.term-body .cm{color:rgba(247,242,233,0.25);font-style:italic}
-.term-body .bl{color:#90b8e8}
-
-/* insight chip */
-.ps-insight{
-  background:var(--parchment2);
-  border-left:3px solid var(--red);
-  padding:13px 17px;margin:12px 0;
-  font-size:13px;color:var(--ink2);line-height:1.65;
-}
-.ps-insight::before{
-  content:'The move';
-  font-family:'IBM Plex Mono',monospace;
-  font-size:9px;letter-spacing:2px;text-transform:uppercase;
-  color:var(--red);display:block;margin-bottom:5px;
-}
-
-/* output chip */
-.ps-out{
-  background:rgba(46,122,80,0.06);
-  border:1px solid rgba(46,122,80,0.2);
-  padding:13px 17px;margin:12px 0;
-  font-size:13px;color:var(--ink2);line-height:1.65;
-}
-.ps-out::before{
-  content:'↳ Result';
-  font-family:'IBM Plex Mono',monospace;
-  font-size:9px;letter-spacing:2px;text-transform:uppercase;
-  color:var(--green);display:block;margin-bottom:5px;
-}
-
-/* ━━ THE BIG TRANSFORMATION VISUAL ━━ */
-.transform{
-  margin:56px 0;
-  display:grid;
-  grid-template-columns:1fr 60px 1fr;
-  align-items:start;
-  gap:0;
-}
-.tf-col{padding:0}
-.tf-head{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:9px;letter-spacing:3px;text-transform:uppercase;
-  padding:12px 20px;
-  border-bottom:1px solid var(--rule);
-}
-.tf-col.before .tf-head{
-  background:var(--parchment3);color:var(--ink3);
-  border-left:1px solid var(--rule);border-top:1px solid var(--rule);border-right:1px solid var(--rule);
-}
-.tf-col.after .tf-head{
-  background:var(--ink);color:rgba(247,242,233,0.4);
-  border-top:1px solid var(--ink);
-}
-.tf-item{
-  padding:13px 20px;
-  font-size:13px;line-height:1.5;
-  border-bottom:1px solid var(--rule);
-}
-.tf-item:last-child{border-bottom:none}
-.tf-col.before .tf-item{
-  color:var(--ink3);
-  background:var(--parchment2);
-  border-left:1px solid var(--rule);
-  border-right:1px solid var(--rule);
-}
-.tf-col.before .tf-item:last-child{border-bottom:1px solid var(--rule)}
-.tf-col.after .tf-item{
-  font-family:'IBM Plex Mono',monospace;font-size:10.5px;
-  background:var(--ink2);color:rgba(247,242,233,0.8);
-  line-height:1.7;
-}
-.tf-col.after .tf-item:last-child{border-bottom:none}
-.tf-arrow-col{
-  display:flex;align-items:center;justify-content:center;
-  padding:60px 0 0;
-  color:var(--ink4);font-size:22px;
-}
-
-/* tags */
-.tag{
-  display:inline-block;
-  font-family:'IBM Plex Mono',monospace;
-  font-size:8px;letter-spacing:1.5px;text-transform:uppercase;
-  padding:2px 6px;border-radius:2px;
-  margin-left:4px;vertical-align:middle;
-}
-.tag.r{background:rgba(192,52,28,0.1);color:var(--red)}
-.tag.g{background:rgba(46,122,80,0.1);color:var(--green)}
-.tag.a{background:rgba(184,120,0,0.1);color:var(--amber)}
-
-/* ━━ THE SCHEMA TABLE ━━ */
-.schema-wrap{
-  margin:48px 0;
-  border:1px solid var(--rule);
-  overflow:hidden;
-}
-.sch-thead{
-  display:grid;
-  grid-template-columns:70px 60px 210px 1fr 190px;
-  background:var(--ink);
-}
-.sch-th{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:9px;letter-spacing:2px;text-transform:uppercase;
-  color:rgba(247,242,233,0.3);
-  padding:11px 12px;
-  border-right:1px solid rgba(255,255,255,0.05);
-}
-.sch-th:last-child{border-right:none}
-
-.sch-cat{
-  background:var(--parchment3);
-  padding:8px 12px;
-  font-family:'IBM Plex Mono',monospace;
-  font-size:9px;letter-spacing:2.5px;text-transform:uppercase;
-  color:var(--ink4);
-  border-bottom:1px solid var(--rule);
-}
-
-.sch-row{
-  display:grid;
-  grid-template-columns:70px 60px 210px 1fr 190px;
-  border-bottom:1px solid var(--rule2);
-  transition:background 0.15s;cursor:default;
-}
-.sch-row:hover{background:var(--parchment2)}
-.sch-row:last-child{border-bottom:none}
-
-.sch-cell{
-  padding:11px 12px;font-size:12px;
-  border-right:1px solid var(--rule2);
-  line-height:1.5;color:var(--ink2);
-}
-.sch-cell:last-child{border-right:none}
-
-.lv{
-  font-family:'IBM Plex Mono',monospace;font-size:8.5px;
-  letter-spacing:1px;text-transform:uppercase;
-  padding:2px 6px;border-radius:2px;
-  display:inline-block;
-}
-.lv.s{background:rgba(30,79,140,0.08);color:var(--blue)}
-.lv.f{background:rgba(192,52,28,0.08);color:var(--red)}
-
-.sch-name{color:var(--ink);font-weight:600}
-.sch-logic{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:10px;line-height:1.7;color:var(--ink2);
-}
-.sch-logic .hl{color:var(--red)}
-.sch-cite{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:10px;color:var(--ink3);
-}
-
-/* ━━ REFINE ARC ━━ */
-.arc{
-  display:flex;flex-direction:column;gap:2px;
-  margin:48px 0;
-}
-.arc-row{
-  display:grid;grid-template-columns:72px 1fr;gap:0;
-}
-.arc-ver{
-  background:var(--parchment3);
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Instrument Serif',serif;
-  font-size:32px;color:var(--ink4);
-  padding:20px 0;
-  border-right:1px solid var(--rule);
-}
-.arc-body{
-  background:var(--parchment2);
-  padding:18px 24px;
-}
-.arc-title{
-  font-family:'Instrument Sans',sans-serif;
-  font-size:14px;font-weight:600;
-  color:var(--ink);margin-bottom:6px;
-}
-.arc-desc{font-size:13px;color:var(--ink2);line-height:1.6;margin-bottom:10px}
-.arc-pills{display:flex;gap:6px;flex-wrap:wrap}
-.arc-pill{
-  font-family:'IBM Plex Mono',monospace;font-size:9px;
-  padding:3px 9px;border-radius:100px;
-  background:var(--parchment3);color:var(--ink3);
-  letter-spacing:0.5px;
-}
-.arc-pill.add{background:rgba(46,122,80,0.1);color:var(--green)}
-.arc-pill.new{background:rgba(192,52,28,0.08);color:var(--red)}
-
-/* ━━ BIG NUMBER PANEL ━━ */
-.bignum-panel{
-  background:var(--ink);
-  padding:80px 48px;
-  margin:64px 0;
-  text-align:center;
-  position:relative;
-  overflow:hidden;
-}
-.bignum-panel::before{
-  content:'LAW → CODE';
-  position:absolute;
-  font-family:'Instrument Serif',serif;
-  font-size:220px;line-height:1;
-  font-style:italic;
-  color:rgba(255,255,255,0.025);
-  letter-spacing:-8px;
-  top:50%;left:50%;
-  transform:translate(-50%,-50%);
-  white-space:nowrap;
-}
-.bn-n{
-  font-family:'Instrument Serif',serif;
-  font-size:clamp(100px,16vw,180px);
-  line-height:1;color:rgba(247,242,233,0.9);
-  position:relative;margin-bottom:8px;
-}
-.bn-n span{color:var(--red)}
-.bn-l{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:12px;letter-spacing:4px;text-transform:uppercase;
-  color:rgba(247,242,233,0.25);position:relative;
-}
-
-/* ━━ COPY PROMPT BOX ━━ */
-.copy-box{
-  margin:56px 0;
-  border:2px solid var(--ink);
-  overflow:hidden;
-}
-.cb-head{
-  background:var(--ink);
-  padding:14px 20px;
-  display:flex;align-items:center;justify-content:space-between;
-}
-.cb-title{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:10px;letter-spacing:2px;text-transform:uppercase;
-  color:rgba(247,242,233,0.4);
-  display:flex;align-items:center;gap:10px;
-}
-.cb-dots{display:flex;gap:5px}
-.cb-dot{width:9px;height:9px;border-radius:50%}
-.cb-btn{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:9px;letter-spacing:2px;text-transform:uppercase;
-  background:rgba(192,52,28,0.15);
-  border:1px solid rgba(192,52,28,0.3);
-  color:var(--red);padding:7px 16px;
-  cursor:pointer;transition:all 0.2s;
-}
-.cb-btn:hover{background:var(--red);color:var(--parchment)}
-.cb-body{
-  background:var(--ink);
-  padding:28px;
-  font-family:'IBM Plex Mono',monospace;
-  font-size:11.5px;line-height:1.95;
-  color:rgba(247,242,233,0.65);
-  max-height:480px;overflow-y:auto;
-  border-top:1px solid rgba(255,255,255,0.05);
-}
-.cb-body .kw{color:#f0a090;font-weight:500}
-.cb-body .hi{color:#90d4a8}
-.cb-body .st{color:#f0d090}
-.cb-body .cm{color:rgba(247,242,233,0.22);font-style:italic}
-.cb-body .em{color:rgba(247,242,233,0.95)}
-.cb-body .bl{color:#90b8e8}
-.cb-follow{
-  background:var(--parchment2);
-  border-top:2px solid var(--ink);
-  padding:20px 28px;
-  font-family:'IBM Plex Mono',monospace;
-  font-size:11px;color:var(--ink3);line-height:2.1;
-}
-.cb-follow strong{color:var(--ink);font-weight:500}
-
-/* ━━ INSIGHT CALLOUT ━━ */
-.callout{
-  display:grid;grid-template-columns:auto 1fr;gap:0;
-  margin:44px 0;
-  border:1px solid var(--rule);
-}
-.callout-num{
-  background:var(--ink);
-  padding:24px 20px;
-  display:flex;align-items:center;justify-content:center;
-}
-.callout-n{
-  font-family:'Instrument Serif',serif;
-  font-size:56px;color:var(--red);line-height:1;
-  writing-mode:vertical-lr;
-  text-orientation:mixed;
-  transform:rotate(180deg);
-}
-.callout-body{
-  background:var(--parchment2);
-  padding:22px 26px;
-}
-.callout-label{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:9px;letter-spacing:2.5px;text-transform:uppercase;
-  color:var(--ink4);margin-bottom:10px;
-}
-.callout-text{
-  font-family:'Instrument Serif',serif;
-  font-size:22px;line-height:1.35;
-  color:var(--ink);margin-bottom:10px;
-  font-style:italic;
-}
-.callout-sub{
-  font-size:13px;color:var(--ink2);line-height:1.6;
-}
-
-/* ━━ FADE IN ━━ */
-.fade{
-  opacity:0;transform:translateY(20px);
-  transition:opacity 0.65s ease,transform 0.65s ease;
-}
-.fade.in{opacity:1;transform:translateY(0)}
-
-/* ━━ FOOTER ━━ */
-.footer{
-  background:var(--ink);
-  padding:32px 48px;
-  margin-top:80px;
-  font-family:'IBM Plex Mono',monospace;
-  font-size:10px;letter-spacing:1px;
-  color:rgba(247,242,233,0.2);
-  line-height:2;text-align:center;
-}
-
-::-webkit-scrollbar{width:3px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:var(--parchment3)}
-
-@media(max-width:768px){
-  .hero-cols{grid-template-columns:1fr}
-  .transform{grid-template-columns:1fr}
-  .tf-arrow-col{display:none}
-  .sch-thead,.sch-row{grid-template-columns:60px 1fr}
-  .sch-th:nth-child(n+3),.sch-cell:nth-child(n+3){display:none}
-  .ps-row{grid-template-columns:44px 1fr;gap:12px}
-  .hero,.prose,.wide,.nav{padding-left:24px;padding-right:24px}
-  .hero-inner{padding:0 24px}
-}
-</style>
-</head>
-<body>
-
-<div class="topbar"></div>
-
-<nav class="nav" id="top">
-  <div class="nav-name">Policy as Code · Florida Schools</div>
-  <div class="nav-links">
-    <a href="index.html">Return to Dashboard</a>
-    <a href="#s-problem" class="lit">The Problem</a>
-    <a href="#s-method">The Method</a>
-    <a href="#s-output">The Output</a>
-    <a href="#s-prompt">The Prompt</a>
-  </div>
-</nav>
-
-<!-- ━━━ HERO ━━━ -->
-<section id="s-problem">
-<div class="hero">
-  <div class="hero-inner">
-    <div class="hero-kicker">A Policy-as-Code Investigation · Florida Private Schools</div>
-    <h1 class="hero-hed">
-      The law is<br>
-      written in<br>
-      <em>plain text.</em><br>
-      We made it<br>
-      executable.
-    </h1>
-    <div class="hero-cols">
-      <p class="hero-dek">
-        We gave an AI a single research brief — carefully engineered across 8 iterative prompts — and it returned the complete regulatory schema for Florida private schools: 72 requirements, 11 agencies, every validation rule expressed as boolean code ready for a compliance engine to run.
-      </p>
-      <div class="hero-numbers">
-        <div class="hn">
-          <div class="hn-n"><span>8</span></div>
-          <div class="hn-l">Prompts to get there</div>
-        </div>
-        <div class="hn">
-          <div class="hn-n">72</div>
-          <div class="hn-l">Regulations extracted</div>
-        </div>
-        <div class="hn">
-          <div class="hn-n">11</div>
-          <div class="hn-l">Gov. agencies</div>
-        </div>
-        <div class="hn">
-          <div class="hn-n"><span>1</span></div>
-          <div class="hn-l">Afternoon</div>
-        </div>
-      </div>
-    </div>
-    <div class="hero-meta">
-      <span>Nord Anglia Education · Florida</span>
-      <span>North Broward Prep · Windermere Prep</span>
-      <span>Gemini Deep Research</span>
-    </div>
-  </div>
-</div>
-</section>
-
-<!-- ━━━ OPENING ━━━ -->
-<div class="prose" style="padding-top:64px">
-  <h2>A school that doesn't know<br>what it <em>doesn't</em> know</h2>
-
-  <p class="dropcap">A private international school in Florida is simultaneously subject to Florida state statutes, federal immigration law, labor regulations, IRS tax code, EPA asbestos rules, OSHA standards, FTC data privacy guidelines, and Department of Health inspection requirements — each enforced by a different agency, each on a different cycle. Nobody in the school has a complete picture. The regulations aren't secret. They're just scattered.</p>
-
-  <p>For Nord Anglia Education — which operates schools across 35 countries — the question was pointed: <strong>do we actually know everything we're required to comply with in Florida?</strong> And more pressingly: is there a way to verify compliance automatically, against actual school documents, rather than relying on institutional memory?</p>
-
-  <p>The answer required a prior step. Before any software could check compliance, every regulation had to be extracted from legal text and expressed as machine-readable logic. That extraction is what this story is about.</p>
-
-  <div class="pq">
-    <div class="pq-t">"The output format is as important as the question. Ask for a summary and you get prose. Ask for a Data Schema Table and you get a database."</div>
-    <div class="pq-a">The core insight · this project</div>
-  </div>
-
-  <p>The method was 8 prompts — a deliberate, iterative sequence run in a single Gemini Deep Research session. Each prompt had a specific purpose. The result was not a report. It was a schema: 72 rows of compliance logic, ready to be loaded into a software engine and run against school documents in real time.</p>
-</div>
-
-<!-- ━━━ THE BIG PANEL ━━━ -->
-<div class="wide fade">
-  <div class="bignum-panel">
-    <div class="bn-n"><span>72</span></div>
-    <div class="bn-l">Regulations — from legal text to boolean logic — in one session</div>
-  </div>
-</div>
-
-<!-- ━━━ THE METHOD ━━━ -->
-<div class="prose" id="s-method">
-  <div class="chap-mark">The Method</div>
-  <h2>Eight prompts.<br>A deliberate <em>sequence.</em></h2>
-  <p>Most AI research is a single query. This was a structured methodology — each prompt building on the last, each one serving a specific function in a pipeline designed to turn statute language into executable code.</p>
-</div>
-
-<div class="wide">
-<div class="prompt-stack">
-
-  <!-- STEP 1 -->
-  <div class="ps-row fade">
-    <div class="ps-num"><div class="ps-circle active">1</div></div>
-    <div class="ps-content">
-      <div class="ps-label">Prompt 1 · The Meta-Move</div>
-      <div class="ps-title">Ask the AI to critique the prompt before running it</div>
-      <div class="term">
-        <div class="term-bar">
-          <div class="term-dot" style="background:#ef4444"></div>
-          <div class="term-dot" style="background:#f59e0b"></div>
-          <div class="term-dot" style="background:#10b981"></div>
-          <div class="term-label">→ Gemini Deep Research</div>
-        </div>
-        <div class="term-body">
-<span class="kw">what would an expert change in this prompt</span>
-<span class="em">that a beginner would miss?</span>
-
-<span class="cm">[ + original compliance research brief attached ]</span>
-        </div>
-      </div>
-      <div class="ps-insight">
-        Don't run your first draft. Feed it to the AI and ask what an expert would change. This meta-prompting technique surfaces blind spots in seconds that domain expertise would take days to identify. The AI returned 6 structural gaps in the original prompt — most critically: it was written from a public-school mindset. Private school law in Florida lives in Chapter 1002 F.S. Treating them identically produces hundreds of false-positive regulations.
-      </div>
-      <div class="ps-out">6 structural gaps identified. Key finding: the original prompt conflated Florida's public school statute (Chapter 1003) with private school law (Chapter 1002). The AI flagged that this would return the wrong regulatory universe entirely.</div>
-    </div>
-  </div>
-
-  <!-- STEP 2 -->
-  <div class="ps-row fade">
-    <div class="ps-num"><div class="ps-circle active">2</div></div>
-    <div class="ps-content">
-      <div class="ps-label">Prompt 2 · Get the Better Prompt Written</div>
-      <div class="ps-title">"Give me the full prompt I can pass to Gemini Deep Research"</div>
-      <div class="term">
-        <div class="term-bar">
-          <div class="term-dot" style="background:#ef4444"></div>
-          <div class="term-dot" style="background:#f59e0b"></div>
-          <div class="term-dot" style="background:#10b981"></div>
-          <div class="term-label">→ Gemini Deep Research</div>
-        </div>
-        <div class="term-body">
-<span class="hi">give me the full prompt</span>
-<span class="em">that I can pass to Gemini Deep Research</span>
-        </div>
-      </div>
-      <div class="ps-insight">
-        After the AI described what to change, the next move was simple: ask it to write the improved prompt. Critique → implementation. Two steps, not one. The AI produced a completely restructured brief with a new role framing ("Senior Compliance Architect"), a strict scope (Chapter 1002 only, exclude Chapter 1003), and a Data Schema Table as the output format — replacing the original legal memo structure.
-      </div>
-      <div class="ps-out">Expert-rewritten prompt returned. The output format changed from prose to a structured table with four columns: Artifact Name | Trigger Condition | Validation Logic (The Code) | Citation. This column structure is what makes the output machine-executable.</div>
-    </div>
-  </div>
-
-  <!-- STEP 3 -->
-  <div class="ps-row fade">
-    <div class="ps-num"><div class="ps-circle active">3</div></div>
-    <div class="ps-content">
-      <div class="ps-label">Prompt 3 · The Core Research Run</div>
-      <div class="ps-title">Run the expert-designed prompt — ~20 minutes, 24+ sources</div>
-      <div class="term">
-        <div class="term-bar">
-          <div class="term-dot" style="background:#ef4444"></div>
-          <div class="term-dot" style="background:#f59e0b"></div>
-          <div class="term-dot" style="background:#10b981"></div>
-          <div class="term-label">→ Gemini Deep Research · ~20 min · 24+ primary sources</div>
-        </div>
-        <div class="term-body">
-<span class="kw">Role:</span> <span class="hi">Act as a Senior Compliance Architect and Legal Researcher.</span>
-<span class="kw">Context:</span> "Policy as Code" engine for Nord Anglia (North Broward + Windermere).
-<span class="kw">Problem:</span> Most data conflates <span class="em">Public</span> (Chapter 1003) vs <span class="em">Private</span> (Chapter 1002) rules.
-
-<span class="kw">Scope:</span>
-  <span class="st">State:</span>   Chapter 1002 ONLY — <span class="em">EXCLUDE</span> Chapter 1003
-  <span class="st">Scholarship:</span> Step Up For Students (FES-UA, FES-EO, FTC) via Provider Handbooks
-  <span class="st">Federal:</span> DHS/ICE SEVIS for F-1 visa students
-  <span class="st">Accreditation:</span> Where does FCIS or Cognia supersede state inspection?
-
-<span class="kw">Output Format — Data Schema Table (NOT a legal memo):</span>
-  <span class="hi">Artifact Name | Trigger Condition | Validation Logic | Citation</span>
-
-<span class="cm">// "Do not provide generic summaries."
-// Validation Logic must be written as boolean code, not prose.
-// Example: Tdap_Date > DOB + 10 years — not "must have Tdap vaccine"</span>
-        </div>
-      </div>
-      <div class="ps-insight">
-        The role framing ("Senior Compliance Architect") and the instruction to write Validation Logic as boolean code — not prose — are the two design decisions that separate this from a typical AI search. Without them, you get summaries. With them, you get logic gates. "Must be dated within 12 months" becomes "Exam_Date > (Entry_Date - 12 months)". That's the difference between a document you read and code you run.
-      </div>
-      <div class="ps-out">28 regulations returned across 5 state categories. Each row includes an exact form number, a trigger condition, and boolean validation logic. State layer complete.</div>
-    </div>
-  </div>
-
-  <!-- STEP 4 -->
-  <div class="ps-row fade">
-    <div class="ps-num"><div class="ps-circle">4</div></div>
-    <div class="ps-content">
-      <div class="ps-label">Prompt 4 · Scope Expansion</div>
-      <div class="ps-title">Add buildings and infrastructure</div>
-      <div class="term">
-        <div class="term-bar">
-          <div class="term-dot" style="background:#ef4444"></div>
-          <div class="term-dot" style="background:#f59e0b"></div>
-          <div class="term-dot" style="background:#10b981"></div>
-          <div class="term-label">→ Gemini Deep Research</div>
-        </div>
-        <div class="term-body">
-<span class="hi">Are there any building and infrastructure requirements</span>
-<span class="em">— can you add that too</span>
-        </div>
-      </div>
-      <div class="ps-insight">
-        Expanding scope within the same session preserves context. The AI already knew the school type, the output format, and the regulatory universe. A fresh session would reset all of that. This one built on it — adding 12 regulations that a state-only search would never surface, including federal AHERA asbestos rules which apply to all private schools regardless of funding.
-      </div>
-      <div class="ps-out">Added 12 building & safety regulations — Certificate of Occupancy, Radon Testing (Form DH 1777, 5-year cycle, stops after 2 tests), AHERA Asbestos Plan, OSHA 300 Injury Log, Chemical Hygiene Plan for science labs, ADA barrier documentation.</div>
-    </div>
-  </div>
-
-  <!-- STEP 5 -->
-  <div class="ps-row fade">
-    <div class="ps-num"><div class="ps-circle">5</div></div>
-    <div class="ps-content">
-      <div class="ps-label">Prompt 5 · The Hidden Layer</div>
-      <div class="ps-title">Unlock the federal overlay — six words, 32 regulations</div>
-      <div class="term">
-        <div class="term-bar">
-          <div class="term-dot" style="background:#ef4444"></div>
-          <div class="term-dot" style="background:#f59e0b"></div>
-          <div class="term-dot" style="background:#10b981"></div>
-          <div class="term-label">→ Gemini Deep Research</div>
-        </div>
-        <div class="term-body">
-<span class="hi">while these are state level requirements</span>
-<span class="em">are there any federal requirements?</span>
-        </div>
-      </div>
-      <div class="ps-insight">
-        Six words. An entirely new regulatory dimension. Federal rules for international private schools carry the highest-consequence requirements in the entire matrix — including criminal liability for IRS cash reporting failures and the permanent loss of F-1 visa issuance rights for SEVIS non-compliance. A state-only research frame would miss all of it.
-      </div>
-      <div class="ps-out">Added 32 federal regulations across 7 agencies: DHS/ICE (Form I-20, I-9, SEVIS logs), DOL (FLSA, FMLA, PUMP Act 2023), FTC (COPPA, Vendor DPAs), IRS (Form 8300 cash reporting — federal felony if missed, BOI FinCEN 2024), Copyright Act (movie licensing), OSHA/AHERA overlays.</div>
-    </div>
-  </div>
-
-  <!-- STEP 6 -->
-  <div class="ps-row fade">
-    <div class="ps-num"><div class="ps-circle">6</div></div>
-    <div class="ps-content">
-      <div class="ps-label">Prompt 6 · The Self-Audit</div>
-      <div class="ps-title">Feed the full list back — ask what's been missed</div>
-      <div class="term">
-        <div class="term-bar">
-          <div class="term-dot" style="background:#ef4444"></div>
-          <div class="term-dot" style="background:#f59e0b"></div>
-          <div class="term-dot" style="background:#10b981"></div>
-          <div class="term-label">→ Gemini Deep Research</div>
-        </div>
-        <div class="term-body">
-<span class="hi">review these listed and let me know if</span>
-<span class="em">anyone has been missed in your evaluation</span>
-
-<span class="cm">[ + entire compiled regulation list pasted in ]</span>
-        </div>
-      </div>
-      <div class="ps-insight">
-        The AI's initial research runs are forward-looking — scanning for things to include. This backward pass is a different cognitive task: checking a completed list for what's absent. Pasting the full compiled list back in and asking for a gap check reliably surfaces regulations that fell through the cracks of the category-by-category approach.
-      </div>
-      <div class="ps-out">4 gaps found. Added: Nursing Mother's Break Log (PUMP Act 2023 — newly enacted, widely missed), SEVIS Status Update Log with the specific 21-day reporting window for dropout/address changes, English Proficiency documentation for international student admissions, Form I-901 SEVIS Fee Receipt.</div>
-    </div>
-  </div>
-
-  <!-- STEP 7 -->
-  <div class="ps-row fade">
-    <div class="ps-num"><div class="ps-circle">7</div></div>
-    <div class="ps-content">
-      <div class="ps-label">Prompt 7 · Lock the Schema</div>
-      <div class="ps-title">Enforce one consistent format across all 72 rows</div>
-      <div class="term">
-        <div class="term-bar">
-          <div class="term-dot" style="background:#ef4444"></div>
-          <div class="term-dot" style="background:#f59e0b"></div>
-          <div class="term-dot" style="background:#10b981"></div>
-          <div class="term-label">→ Gemini Deep Research</div>
-        </div>
-        <div class="term-body">
-<span class="hi">can you reorganise</span> <span class="cm">[ full list ]</span>
-<span class="em">in this format:</span>
-
-  <span class="kw">State/Federal</span> | <span class="kw">Category</span> | <span class="kw">Artifact Name</span>
-  | <span class="kw">Trigger Condition</span> | <span class="kw">Validation Logic (The "Code")</span>
-  | <span class="kw">Citation</span>
-        </div>
-      </div>
-      <div class="ps-insight">
-        After 6 passes of expansion and cross-checking, the accumulated list was inconsistently formatted. This prompt enforced a uniform 6-column schema across every row. The result is not a document — it is a database. Every row becomes a checklist item the software engine can evaluate: load this schema, scan the school's documents against each row, return compliant / partial / non-compliant with evidence.
-      </div>
-      <div class="ps-out">72 regulations unified into one schema: State/Federal | Category | Artifact Name | Trigger Condition | Validation Logic (boolean code) | Citation. This is checklist.json — the file that powers the compliance engine.</div>
-    </div>
-  </div>
-
-  <!-- STEP 8 -->
-  <div class="ps-row fade">
-    <div class="ps-num"><div class="ps-circle insight">8</div></div>
-    <div class="ps-content">
-      <div class="ps-label">Prompt 8 · The Honest Failure — and the smarter fix</div>
-      <div class="ps-title">When AI can't do something, find the workaround</div>
-      <div class="term">
-        <div class="term-bar">
-          <div class="term-dot" style="background:#ef4444"></div>
-          <div class="term-dot" style="background:#f59e0b"></div>
-          <div class="term-dot" style="background:#10b981"></div>
-          <div class="term-label">→ Gemini Deep Research</div>
-        </div>
-        <div class="term-body">
-<span class="hi">can you give me the specific URLs</span>
-<span class="em">for each citation as reference</span>
-
-<span class="cm">→ First attempt: URLs returned but led to catalog landing pages
-→ AI acknowledged: "previous links were citation landing pages
-   like a library card catalog"
-→ Second attempt: still opened incorrect pages</span>
-
-<span class="kw">// Resolution:</span>
-<span class="em">Convert each citation to a Google search query instead</span>
-<span class="cm">// → "s. 1002.42(2)(b) F.S." → Google: "Florida Statute 1002.42 private school"
-// → Always resolvable · Never rots · Always finds current text</span>
-        </div>
-      </div>
-      <div class="ps-insight">
-        AI tools have a known limitation with live URL verification. The solution — converting every citation to a pre-filled Google search query — is actually better than hardcoded URLs. Statute pages move. Search results always find the current text. The failure led to a more robust design than the original request would have produced.
-      </div>
-      <div class="ps-out">Final schema delivered with Google search query links for all 72 citations. Every link opens a targeted search for the exact statute — always live, always current, never a dead URL.</div>
-    </div>
-  </div>
-
-</div><!-- .prompt-stack -->
-</div><!-- .wide -->
-
-<!-- ━━━ THE TRANSFORMATION ━━━ -->
-<div class="prose">
-  <div class="chap-mark">The Difference</div>
-  <h2>The same regulation.<br><em>Two outputs.</em></h2>
-  <p>The most important upgrade across 8 prompts wasn't the scope — it was the format. The same regulatory content, expressed two different ways, produces a document versus a database. Only one of those can power software.</p>
-</div>
-
-<div class="wide fade">
-  <div class="transform">
-    <div class="tf-col before">
-      <div class="tf-head">Prompt V1 — prose output (unexecutable)</div>
-      <div class="tf-item">Teacher requirements: Private schools must ensure teachers are qualified. Florida law allows alternatives to state certification for private school educators. <span class="tag r">Vague</span></div>
-      <div class="tf-item">Background checks: All staff working with students must undergo background screening, renewed periodically as required. <span class="tag r">No deadline</span></div>
-      <div class="tf-item">Bus inspections: School vehicles must be regularly inspected to ensure student safety. <span class="tag r">No interval</span></div>
-      <div class="tf-item">Scholarship audits: Schools receiving scholarship funds may face financial oversight depending on the amount received. <span class="tag r">No threshold</span></div>
-      <div class="tf-item">Radon testing: Schools should test for radon gas as required by Florida law, at appropriate intervals. <span class="tag r">No form number</span></div>
-    </div>
-    <div class="tf-arrow-col">→</div>
-    <div class="tf-col after">
-      <div class="tf-head">Prompt V3 — boolean logic (executable)</div>
-      <div class="tf-item">Has_Degree == TRUE <span style="color:#f0a090">OR</span> Exp_Years >= 3 <span style="color:#f0a090">OR</span> Special_Skills == TRUE → s.1002.421(1)(h) <span class="tag g">Runs as code</span></div>
-      <div class="tf-item">Status == "Eligible" AND Date_Screened > (Today - 5yr) → VECHS → s.1002.42(2)(c) <span class="tag g">Has deadline</span></div>
-      <div class="tf-item">School_Days_Since(Inspection) &lt;= 30 → Form 2020-IF → Rule 6A-3.0171 <span class="tag a">School days, not calendar</span></div>
-      <div class="tf-item">IF Revenue > $250,000: CPA_Opinion == "Unmodified" AND Filed &lt;= Sept 15 → s.1002.421(1)(q) <span class="tag g">Has threshold</span></div>
-      <div class="tf-item">IF Tests_Done >= 2: Required = FALSE (unless Remodel == TRUE) → Form DH 1777 → s.404.056 <span class="tag g">Has form + stop rule</span></div>
-    </div>
-  </div>
-</div>
-
-<!-- ━━━ KEY INSIGHTS ━━━ -->
-<div class="prose">
-  <div class="chap-mark">What AI surfaced</div>
-  <h2>The rules schools<br>didn't know <em>existed</em></h2>
-  <p>The structured prompt approach didn't just retrieve known regulations faster. It surfaced regulatory nuances that a manual research process — or a generic AI search — would likely miss entirely. Here are the five most consequential findings.</p>
-</div>
-
-<div class="wide">
-  <div class="callout fade">
-    <div class="callout-num"><div class="callout-n">01</div></div>
-    <div class="callout-body">
-      <div class="callout-label">The For-Profit Switch</div>
-      <div class="callout-text">Nord Anglia schools are corporate subsidiaries of a private equity firm — not nonprofits. Every compliance framework built for 501(c)(3) schools is wrong for them.</div>
-      <div class="callout-sub">No Form 990. Instead: mandatory Beneficial Ownership Information (BOI) filing with FinCEN (Corporate Transparency Act 2024), Form 8300 for any cash tuition payment over $10,000 filed within 15 days — criminal felony if missed. W-8BEN for any foreign contractor or guest speaker. The AI identified this switch immediately. Most generic frameworks miss it entirely.</div>
-    </div>
-  </div>
-
-  <div class="callout fade">
-    <div class="callout-num"><div class="callout-n">02</div></div>
-    <div class="callout-body">
-      <div class="callout-label">The Teacher OR Gate</div>
-      <div class="callout-text">Private schools in Florida don't require state teacher certification. The law is an OR gate, not a minimum standard.</div>
-      <div class="callout-sub">Under s.1002.421(1)(h), a teacher qualifies if they have <em>any one</em> of: a bachelor's degree in any field, 3 or more years of teaching experience, or documented special skills (a native French speaker teaching French, a professional musician teaching band). A compliance engine checking for "state certification" on every teacher would flag false non-compliance for every private school in Florida.</div>
-    </div>
-  </div>
-
-  <div class="callout fade">
-    <div class="callout-num"><div class="callout-n">03</div></div>
-    <div class="callout-body">
-      <div class="callout-label">The Radon Stop Rule</div>
-      <div class="callout-text">Radon testing in Florida schools is not annual. It is mandatory exactly twice — then it stops.</div>
-      <div class="callout-sub">Under s.404.056, schools must test once upon occupancy and once 5 years later. After that, testing stops unless the building is remodeled. Most compliance frameworks treat this as an ongoing annual requirement. The correct logic is: IF Tests_Done >= 2: Required = FALSE (unless Remodel == TRUE). Schools are either over-testing or forgetting the second test entirely.</div>
-    </div>
-  </div>
-
-  <div class="callout fade">
-    <div class="callout-num"><div class="callout-n">04</div></div>
-    <div class="callout-body">
-      <div class="callout-label">The FERPA Trap</div>
-      <div class="callout-text">Florida scholarship programs (FTC, FES) are state tax-credit funds — not federal funds. FERPA doesn't apply. But Florida's own SOPIPA does.</div>
-      <div class="callout-sub">Schools that assume FERPA triggers automatically are applying the wrong framework. The actual exposure is Florida's SOPIPA (s.1006.1494) — which prohibits EdTech vendors from selling or profiling student data regardless of federal funding status. Every vendor contract must include specific SOPIPA compliance language. The AI surfaced this distinction; a federal-law-first research approach would have missed the state-level exposure.</div>
-    </div>
-  </div>
-
-  <div class="callout fade">
-    <div class="callout-num"><div class="callout-n">05</div></div>
-    <div class="callout-body">
-      <div class="callout-label">The 30-Day School Clock</div>
-      <div class="callout-text">Bus safety inspections run every 30 school days — not 30 calendar days. The distinction closes one inspection cycle entirely.</div>
-      <div class="callout-sub">Rule 6A-3.0171 F.A.C. specifies school days. A 180-school-day year requires 6 inspections annually, not 12. A compliance tool checking on a calendar-month basis would flag false violations through summer and school breaks. More importantly, a school tracking on calendar months might miss that their bus needs inspection after returning from a long break.</div>
-    </div>
-  </div>
-</div>
-
-<!-- ━━━ THE SCHEMA ━━━ -->
-<div class="prose" id="s-output">
-  <div class="chap-mark">The Output</div>
-  <h2>The actual schema<br><em>the session produced</em></h2>
-  <p>Below is a direct sample from the final compliance matrix — exactly as it emerged from the 8-prompt Gemini session, organized into the uniform 6-column schema enforced in Step 7. Each row is loaded into the compliance engine as a discrete check.</p>
-</div>
-
-<div class="wide fade">
-  <div class="schema-wrap">
-    <div class="sch-thead">
-      <div class="sch-th">Level</div>
-      <div class="sch-th">ID</div>
-      <div class="sch-th">Artifact Name</div>
-      <div class="sch-th">Validation Logic — The Code</div>
-      <div class="sch-th">Citation</div>
-    </div>
-
-    <div class="sch-cat">State · Administrative &amp; Financial Compliance</div>
-    <div class="sch-row">
-      <div class="sch-cell"><span class="lv s">STATE</span></div>
-      <div class="sch-cell sch-cite">ADM-01</div>
-      <div class="sch-cell sch-name">Notarized Annual Survey</div>
-      <div class="sch-cell sch-logic">Submission_Date &lt;= <span class="hl">May 1st</span> AND Notarized == TRUE</div>
-      <div class="sch-cell sch-cite">s. 1002.42(2)(b), F.S.</div>
-    </div>
-    <div class="sch-row">
-      <div class="sch-cell"><span class="lv s">STATE</span></div>
-      <div class="sch-cell sch-cite">ADM-02</div>
-      <div class="sch-cell sch-name">Attendance Register</div>
-      <div class="sch-cell sch-logic">Sum(Days) &gt;= <span class="hl">170</span> OR Sum(Hours) &gt;= Grade_Threshold</div>
-      <div class="sch-cell sch-cite">Rule 6A-1.09512, F.A.C.</div>
-    </div>
-    <div class="sch-row">
-      <div class="sch-cell"><span class="lv s">STATE</span></div>
-      <div class="sch-cell sch-cite">ADM-03</div>
-      <div class="sch-cell sch-name">Scholarship Compliance Form SCF-1</div>
-      <div class="sch-cell sch-logic">Submission_Date &lt;= <span class="hl">March 1st</span> AND Notarized == TRUE</div>
-      <div class="sch-cell sch-cite">s. 1002.421, F.S.</div>
-    </div>
-
-    <div class="sch-cat">State · Personnel &amp; Hard Legal Requirements</div>
-    <div class="sch-row">
-      <div class="sch-cell"><span class="lv s">STATE</span></div>
-      <div class="sch-cell sch-cite">PER-01</div>
-      <div class="sch-cell sch-name">FDLE VECHS Clearance</div>
-      <div class="sch-cell sch-logic">Status == "Eligible" AND Date_Screened > (Today - <span class="hl">5 years</span>)</div>
-      <div class="sch-cell sch-cite">s. 1002.421(1)(m)</div>
-    </div>
-    <div class="sch-row">
-      <div class="sch-cell"><span class="lv s">STATE</span></div>
-      <div class="sch-cell sch-cite">PER-02</div>
-      <div class="sch-cell sch-name">Teacher Qualification Record</div>
-      <div class="sch-cell sch-logic">Has_Degree == TRUE <span class="hl">OR</span> Exp_Years &gt;= 3 <span class="hl">OR</span> Special_Skills == TRUE</div>
-      <div class="sch-cell sch-cite">s. 1002.421(2)(h)</div>
-    </div>
-
-    <div class="sch-cat">Federal · DHS &amp; ICE — Immigration / SEVIS</div>
-    <div class="sch-row">
-      <div class="sch-cell"><span class="lv f">FEDERAL</span></div>
-      <div class="sch-cell sch-cite">IMM-01</div>
-      <div class="sch-cell sch-name">Form I-20 (Certificate of Eligibility)</div>
-      <div class="sch-cell sch-logic">IF Citizenship != "USA": Status == "Active" AND End_Date > Today</div>
-      <div class="sch-cell sch-cite">8 CFR 214.2(f)</div>
-    </div>
-    <div class="sch-row">
-      <div class="sch-cell"><span class="lv f">FEDERAL</span></div>
-      <div class="sch-cell sch-cite">IMM-02</div>
-      <div class="sch-cell sch-name">SEVIS Status Update Log</div>
-      <div class="sch-cell sch-logic">Reported_To_SEVIS_Date &lt;= (Event_Date + <span class="hl">21 days</span>)</div>
-      <div class="sch-cell sch-cite">8 CFR 214.2(f)</div>
-    </div>
-    <div class="sch-row">
-      <div class="sch-cell"><span class="lv f">FEDERAL</span></div>
-      <div class="sch-cell sch-cite">IMM-03</div>
-      <div class="sch-cell sch-name">Form I-9 (Employment Eligibility)</div>
-      <div class="sch-cell sch-logic">Section_2_Signed &lt;= (Start_Date + <span class="hl">3 days</span>) AND Docs_Valid == TRUE</div>
-      <div class="sch-cell sch-cite">8 CFR 274a.2</div>
-    </div>
-
-    <div class="sch-cat">State · Financial &amp; Scholarship Compliance</div>
-    <div class="sch-row">
-      <div class="sch-cell"><span class="lv s">STATE</span></div>
-      <div class="sch-cell sch-cite">FIN-01</div>
-      <div class="sch-cell sch-name">AUP Audit (Agreed-Upon Procedures)</div>
-      <div class="sch-cell sch-logic">IF Revenue &gt; <span class="hl">$250,000</span>: CPA_Opinion == "Unmodified" AND Filed &lt;= Sept 15</div>
-      <div class="sch-cell sch-cite">s. 1002.421(1)(q)</div>
-    </div>
-
-    <div class="sch-cat">Federal · IRS &amp; Treasury — For-Profit Corporate</div>
-    <div class="sch-row">
-      <div class="sch-cell"><span class="lv f">FEDERAL</span></div>
-      <div class="sch-cell sch-cite">IRS-01</div>
-      <div class="sch-cell sch-name">Form 8300 (Cash Payments)</div>
-      <div class="sch-cell sch-logic">IF Cash &gt; <span class="hl">$10,000</span>: Filed_Within_15_Days == TRUE <span style="color:var(--red)">// felony if not</span></div>
-      <div class="sch-cell sch-cite">26 U.S.C. 6050I</div>
-    </div>
-    <div class="sch-row">
-      <div class="sch-cell"><span class="lv f">FEDERAL</span></div>
-      <div class="sch-cell sch-cite">IRS-02</div>
-      <div class="sch-cell sch-name">Beneficial Ownership Info (BOI)</div>
-      <div class="sch-cell sch-logic">IF Entity == "Corp": Report_Filed_FinCEN == TRUE <span style="color:var(--ink3)">// CTA 2024</span></div>
-      <div class="sch-cell sch-cite">31 CFR 1010.380</div>
-    </div>
-
-    <div class="sch-cat">State · Transportation — Rule 6A-3</div>
-    <div class="sch-row">
-      <div class="sch-cell"><span class="lv s">STATE</span></div>
-      <div class="sch-cell sch-cite">TRN-01</div>
-      <div class="sch-cell sch-name">Form 2020-IF (Bus Safety Inspection)</div>
-      <div class="sch-cell sch-logic">School_Days_Since(Last_Inspection) &lt;= <span class="hl">30</span> <span style="color:var(--red)">// not calendar days</span></div>
-      <div class="sch-cell sch-cite">Rule 6A-3.0171, F.A.C.</div>
-    </div>
-    <div class="sch-row">
-      <div class="sch-cell"><span class="lv s">STATE</span></div>
-      <div class="sch-cell sch-cite">TRN-02</div>
-      <div class="sch-cell sch-name">Form MCSA-5876 (Medical Certificate)</div>
-      <div class="sch-cell sch-logic">Expiration_Date > Today AND Max_Validity &lt;= <span class="hl">2 years</span></div>
-      <div class="sch-cell sch-cite">Rule 6A-3.0141, F.A.C.</div>
-    </div>
-
-    <div class="sch-cat">Federal · Building &amp; Safety — AHERA / OSHA</div>
-    <div class="sch-row">
-      <div class="sch-cell"><span class="lv f">FEDERAL</span></div>
-      <div class="sch-cell sch-cite">BSF-01</div>
-      <div class="sch-cell sch-name">AHERA Asbestos Management Plan</div>
-      <div class="sch-cell sch-logic">IF Built_Year &lt; <span class="hl">1989</span>: AMP_On_Site == TRUE AND Reinspection &lt; 3yr ago</div>
-      <div class="sch-cell sch-cite">40 CFR 763</div>
-    </div>
-    <div class="sch-row">
-      <div class="sch-cell"><span class="lv f">FEDERAL</span></div>
-      <div class="sch-cell sch-cite">BSF-02</div>
-      <div class="sch-cell sch-name">Radon Testing Report (DH 1777)</div>
-      <div class="sch-cell sch-logic">IF Tests_Done &lt; 2: Date &gt; (Today - 5yr). IF Tests_Done &gt;= 2: <span class="hl">Required = FALSE</span></div>
-      <div class="sch-cell sch-cite">s. 404.056, F.S.</div>
-    </div>
-  </div>
-</div>
-
-<!-- ━━━ THE PROMPT ━━━ -->
-<div class="prose" id="s-prompt">
-  <div class="chap-mark">Replicate it</div>
-  <h2>The full prompt —<br><em>ready to run</em></h2>
-  <p>Below is the expert-engineered research brief from Step 3 — the one that did the core work. Copy it into Gemini Deep Research and follow it with the four expansion prompts listed at the bottom. Adapt the school names and state for your context.</p>
-</div>
-
-<div class="wide fade">
-  <div class="copy-box">
-    <div class="cb-head">
-      <div class="cb-title">
-        <div class="cb-dots">
-          <div class="cb-dot" style="background:#ef4444"></div>
-          <div class="cb-dot" style="background:#f59e0b"></div>
-          <div class="cb-dot" style="background:#10b981"></div>
-        </div>
-        Gemini Deep Research · Expert Compliance Extraction Prompt
-      </div>
-      <button class="cb-btn" onclick="copyPrompt()">Copy prompt</button>
-    </div>
-    <div class="cb-body">
-<span class="kw">Role:</span> <span class="hi">Act as a Senior Compliance Architect and Legal Researcher for an EdTech startup.</span>
-
-<span class="kw">Context:</span> I am building a "Policy as Code" compliance engine for private, international
-K-12 schools in Florida (specifically Nord Anglia schools like North Broward Prep
-and Windermere Prep). The software will ingest PDFs (forms, logs, certificates)
-and structured data to automatically flag non-compliance.
-
-<span class="kw">The Problem:</span> Most compliance data conflates <span class="em">Public school rules</span> (highly regulated,
-Chapter 1003) with <span class="em">Private school rules</span> (Chapter 1002, deregulated but
-contractually bound). Do not mix them.
-
-<span class="kw">Your Task:</span> Conduct deep research to identify the specific audit constraints.
-<span class="em">Do not provide generic summaries.</span> Identify:
-  — The specific <span class="hi">Document Artifacts</span> (what exact file does an auditor look for?)
-  — The <span class="hi">Validation Logic</span> (what boolean rule makes it valid or invalid?)
-
-<span class="kw">Scope of Research:</span>
-  <span class="st">Florida State:</span>  Chapter 1002 ONLY — EXCLUDE Chapter 1003 (public schools)
-  <span class="st">Scholarship:</span>   Step Up For Students (FES-UA, FES-EO, FTC)
-                  Use Provider Handbooks, not just statutes
-  <span class="st">Federal/Intl:</span>  DHS/ICE SEVIS record-keeping requirements for F-1 visa students
-  <span class="st">Accreditation:</span> Note where FCIS or Cognia accreditation supersedes state inspection
-
-<span class="kw">Research Categories:</span>
-
-<span class="bl">1. Personnel & Hard Legal Requirements</span>
-   — Teacher Certification: exact OR-gate logic for non-certified private school teachers?
-   — Background Checks: FDLE Level 2 — valid duration before re-screening?
-     What Clearinghouse result must be in the file? ("Eligible" vs "Not Eligible"?)
-   — Ethics Training: s. 1012.796 — one-time or annual renewal?
-
-<span class="bl">2. International Student Compliance (SEVIS / F-1)</span>
-   — Form I-20: What Financial Solvency evidence must be retained?
-   — Reporting: Deadlines for status changes (e.g., within 21 days of dropout?)
-   — English Proficiency: what documentation must the school retain?
-
-<span class="bl">3. Health, Safety & Physical Plant</span>
-   CONSTRAINT: <span class="hi">EXCLUDE SREF.</span> Private schools use Florida Building Code + FFPC only.
-   — DH 680: Specific 7th Grade validation trigger (Tdap booster date vs DOB)?
-   — DH 3040: Freshness rule — exam must be dated within 12 months of start date?
-   — Fire: Annual inspection by local Fire Marshal — what does "clear" look like?
-   — Radon: Re-testing interval for existing buildings? Does testing ever stop?
-   — Food: DOH inspection frequency for private school cafeterias (quarterly?)?
-
-<span class="bl">4. Financial & Scholarship Compliance</span>
-   — AUP Audit: At what revenue threshold does attestation become a full CPA Audit?
-   — Surety Bond: When is one required? What amount?
-
-<span class="bl">5. Transportation (Private School — s. 316.615)</span>
-   — Driver files: CDL endorsements required (P and S?), medical cert frequency
-   — Vehicle: Inspection measured in school days or calendar days?
-
-<span class="kw">Output Format — Data Schema Table (NOT a legal memo):</span>
-
-  <span class="hi">Category | Artifact Name | Trigger Condition | Validation Logic (The Code) | Citation</span>
-
-<span class="cm">// Column definitions:
-// Artifact Name:      Exact filename or form number (e.g., "Form DH 680", "Form MCSA-5876")
-// Trigger Condition:  When does this rule activate? (New Hire / Annually / Citizenship != USA)
-// Validation Logic:   Boolean rule written as code, not prose
-//                     e.g.: Tdap_Date > DOB + 10 years
-//                     e.g.: Status == "Eligible" AND Date_Screened > (Today - 5 years)
-// Citation:           Specific Statute, F.A.C. Rule, or Handbook Section</span>
-    </div>
-    <div class="cb-follow">
-      <strong>Run these 4 follow-up prompts in order after the main research run:</strong><br>
-      <strong>→</strong> "Are there any building and infrastructure requirements — can you add that too"<br>
-      <strong>→</strong> "While these are state level requirements, are there any federal requirements?"<br>
-      <strong>→</strong> "Review these listed and let me know if anyone has been missed in your evaluation [paste full list]"<br>
-      <strong>→</strong> "Can you reorganise in format: State/Federal | Category | Artifact Name | Trigger Condition | Validation Logic (The Code) | Citation"<br>
-      <strong>→</strong> For source links: use Google search query URLs instead of hardcoded URLs — statute pages move, search results don't
-    </div>
-  </div>
-</div>
-
-<!-- ━━━ CLOSING ━━━ -->
-<div class="prose fade">
-  <div class="chap-mark">Conclusion</div>
-  <h2>The law was always<br>readable. Now it's<br><em>executable.</em></h2>
-
-  <p>The regulations governing a Florida private school were never secret. They are published in Florida Statutes, the Code of Federal Regulations, Department of Health guidelines, and scholarship provider handbooks. The problem was never access — it was structure. Every rule existed in legal prose. No software can evaluate legal prose directly. Software needs logic gates.</p>
-
-  <p>The 8-prompt methodology above is a translation pipeline. It takes statute language — "schools must maintain a register of daily attendance" — and returns code: <strong>Sum(Instructional_Days) >= 170 OR Sum(Net_Hours) >= Grade_Threshold</strong>. That code is what a compliance engine runs against a school's uploaded documents. Every row of the schema is a test. Every test returns compliant, partial, or non-compliant — with evidence cited from the document itself.</p>
-
-  <div class="pq">
-    <div class="pq-t">"We didn't build a faster way to read regulations. We built a way to stop reading them at all — and start running them instead."</div>
-    <div class="pq-a">ComplianceIQ · Policy as Code · Florida Private Schools</div>
-  </div>
-
-  <p>The same methodology applies to any jurisdiction, any school system, any regulatory domain. The prompts change. The output format stays the same. And the output format is the whole game.</p>
-</div>
-
-<div class="footer">
-  Sources traversed by Gemini Deep Research: FLDOE.org · Florida Statutes Ch. 1002 · FLSENATE.GOV · 8 CFR Title 8 (DHS/ICE) · Step Up For Students Private School Handbook · OSHA.gov 29 CFR 1904 &amp; 1910 · IRS.gov 26 U.S.C. 6050I · FinCEN 31 CFR 1010.380 · EPA 40 CFR 763 (AHERA) · FTC 16 CFR 312 (COPPA) · FloridaHealth.gov · 24+ primary sources<br>
-  Output: 72 regulations · 11 government agencies · 18 regulatory categories · checklist.json · ComplianceIQ Dashboard
-</div>
-
-<script>
-// Intersection observer for scroll reveals
-const io = new IntersectionObserver(entries => {
-  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); });
-}, {threshold: 0.1});
-
-document.querySelectorAll('.fade').forEach(el => io.observe(el));
-
-// Step circles light up as they scroll in
-const stepObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if(e.isIntersecting) {
-      e.target.classList.add('in');
-      const circle = e.target.querySelector('.ps-circle:not(.insight)');
-      if(circle) {
-        setTimeout(() => circle.classList.add('active'), 250);
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Extract Regulations Using AI — A Policy as Code Story</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    :root {
+      --parchment: #f7f2e9;
+      --parchment2: #ede7da;
+      --parchment3: #e4dccf;
+      --parchment4: #d8cfc0;
+      --ink: #100d09;
+      --ink2: #2a221b;
+      --ink3: #4a3e2f;
+      --ink4: #655a4b;
+      --red: #a82b16;
+      --amber: #9e6700;
+      --green: #256341;
+      --blue: #184070;
+      --rule: rgba(24, 19, 14, 0.15);
+      --rule2: rgba(24, 19, 14, 0.1);
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      background: var(--parchment);
+      color: var(--ink);
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 17px;
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+
+    /* ━━ THIN TOP BAR ━━ */
+    .topbar {
+      height: 4px;
+      background: var(--ink);
+      width: 100%
+    }
+
+    /* ━━ STICKY NAV ━━ */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: rgba(247, 242, 233, 0.96);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--rule);
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+    }
+
+    .nav-name {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--ink3);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px
+    }
+
+    .nav-links a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--ink4);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.lit {
+      color: var(--ink)
+    }
+
+    /* ━━ HERO ━━ */
+    .hero {
+      padding: 96px 0 80px;
+      border-bottom: 2.5px solid var(--ink);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* crosshatch background */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 23px, rgba(24, 19, 14, 0.035) 23px, rgba(24, 19, 14, 0.035) 24px),
+        repeating-linear-gradient(90deg, transparent, transparent 23px, rgba(24, 19, 14, 0.02) 23px, rgba(24, 19, 14, 0.02) 24px);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 48px;
+      position: relative;
+    }
+
+    .hero-kicker {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .hero-kicker::before {
+      content: '';
+      width: 32px;
+      height: 1px;
+      background: var(--red)
+    }
+
+    .hero-hed {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(52px, 8vw, 110px);
+      line-height: 0.95;
+      letter-spacing: -2px;
+      color: var(--ink);
+      margin-bottom: 32px;
+      max-width: 900px;
+    }
+
+    .hero-hed em {
+      color: var(--red);
+      font-style: italic
+    }
+
+    .hero-cols {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 48px;
+      align-items: end;
+      margin-top: 16px;
+    }
+
+    .hero-dek {
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--ink2);
+      line-height: 1.65;
+      border-left: 3px solid var(--ink);
+      padding-left: 20px;
+    }
+
+    .hero-numbers {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+    }
+
+    .hn {
+      background: var(--parchment2);
+      padding: 20px 18px;
+    }
+
+    .hn-n {
+      font-family: 'Instrument Serif', serif;
+      font-size: 52px;
+      line-height: 1;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    .hn-n span {
+      color: var(--red)
+    }
+
+    .hn-l {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--ink3);
+    }
+
+    .hero-meta {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 1px;
+      color: var(--ink4);
+      border-top: 1px solid var(--rule);
+      padding-top: 20px;
+      margin-top: 40px;
+      display: flex;
+      gap: 40px;
+    }
+
+    /* ━━ LAYOUT ━━ */
+    .prose {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 0 48px
+    }
+
+    .wide {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 48px
+    }
+
+    /* ━━ TYPOGRAPHY ━━ */
+    .chap-mark {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--ink4);
+      margin: 80px 0 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .chap-mark::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--rule)
+    }
+
+    h2 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1.06;
+      letter-spacing: -0.5px;
+      color: var(--ink);
+      margin-bottom: 24px;
+    }
+
+    h2 em {
+      font-style: italic;
+      color: var(--red)
+    }
+
+    p {
+      color: var(--ink2);
+      margin-bottom: 22px;
+      font-size: 16px;
+      font-weight: 400
+    }
+
+    p strong {
+      color: var(--ink);
+      font-weight: 600
+    }
+
+    .dropcap::first-letter {
+      font-family: 'Instrument Serif', serif;
+      font-size: 5.5em;
+      float: left;
+      line-height: 0.72;
+      margin: 4px 10px 0 0;
+      color: var(--ink);
+    }
+
+    /* pull quote */
+    .pq {
+      margin: 44px 0;
+      padding: 28px 0 24px;
+      border-top: 3px solid var(--ink);
+      border-bottom: 1px solid var(--ink);
+    }
+
+    .pq-t {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(20px, 3vw, 32px);
+      font-style: italic;
+      color: var(--ink);
+      line-height: 1.3;
+      margin-bottom: 10px;
+    }
+
+    .pq-a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--ink4);
+    }
+
+    /* sidebar annotation */
+    .aside {
+      background: var(--parchment2);
+      border-left: 3px solid var(--amber);
+      padding: 16px 20px;
+      margin: 28px 0;
+      font-size: 14px;
+      color: var(--ink2);
+      line-height: 1.65;
+    }
+
+    .aside strong {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--amber);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid var(--rule);
+      margin: 60px 0
+    }
+
+    /* ━━ THE PROMPT STACK ━━ */
+    .prompt-stack {
+      margin: 56px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .ps-row {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 0;
+      position: relative;
+    }
+
+    /* vertical connector line */
+    .ps-row::before {
+      content: '';
+      position: absolute;
+      left: 27px;
+      top: 56px;
+      bottom: -3px;
+      width: 2px;
+      background: var(--rule);
+      z-index: 0;
+    }
+
+    .ps-row:last-child::before {
+      display: none
+    }
+
+    .ps-num {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .ps-circle {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2px solid var(--parchment3);
+      background: var(--parchment);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Instrument Serif', serif;
+      font-size: 17px;
+      color: var(--ink3);
+      transition: all 0.4s ease;
+      flex-shrink: 0;
+    }
+
+    .ps-circle.active {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: var(--parchment);
+    }
+
+    .ps-circle.insight {
+      background: var(--parchment);
+      border-color: var(--red);
+      color: var(--red);
+    }
+
+    .ps-content {
+      padding: 16px 0 20px 20px;
+    }
+
+    .ps-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--ink4);
+      margin-bottom: 6px;
+    }
+
+    .ps-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 22px;
+      color: var(--ink);
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    /* the terminal box */
+    .term {
+      background: var(--ink);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 14px 0;
+    }
+
+    .term-bar {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 9px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .term-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%
+    }
+
+    .term-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 1px;
+      color: rgba(247, 242, 233, 0.7);
+      margin-left: 6px;
+    }
+
+    .term-body {
+      padding: 16px 18px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      line-height: 1.95;
+      color: rgba(247, 242, 233, 0.9);
+    }
+
+    .term-body .kw {
+      color: #f0a090;
+      font-weight: 500
+    }
+
+    .term-body .hi {
+      color: #90d4a8
+    }
+
+    .term-body .st {
+      color: #f0d090
+    }
+
+    .term-body .em {
+      color: rgba(247, 242, 233, 0.95);
+      font-weight: 500
+    }
+
+    .term-body .cm {
+      color: rgba(247, 242, 233, 0.6);
+      font-style: italic
+    }
+
+    .term-body .bl {
+      color: #90b8e8
+    }
+
+    /* insight chip */
+    .ps-insight {
+      background: var(--parchment2);
+      border-left: 3px solid var(--red);
+      padding: 13px 17px;
+      margin: 12px 0;
+      font-size: 13px;
+      color: var(--ink2);
+      line-height: 1.65;
+    }
+
+    .ps-insight::before {
+      content: 'The move';
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--red);
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    /* output chip */
+    .ps-out {
+      background: rgba(46, 122, 80, 0.06);
+      border: 1px solid rgba(46, 122, 80, 0.2);
+      padding: 13px 17px;
+      margin: 12px 0;
+      font-size: 13px;
+      color: var(--ink2);
+      line-height: 1.65;
+    }
+
+    .ps-out::before {
+      content: '↳ Result';
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--green);
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    /* ━━ THE BIG TRANSFORMATION VISUAL ━━ */
+    .transform {
+      margin: 56px 0;
+      display: grid;
+      grid-template-columns: 1fr 60px 1fr;
+      align-items: start;
+      gap: 0;
+    }
+
+    .tf-col {
+      padding: 0
+    }
+
+    .tf-head {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .tf-col.before .tf-head {
+      background: var(--parchment3);
+      color: var(--ink3);
+      border-left: 1px solid var(--rule);
+      border-top: 1px solid var(--rule);
+      border-right: 1px solid var(--rule);
+    }
+
+    .tf-col.after .tf-head {
+      background: var(--ink);
+      color: rgba(247, 242, 233, 0.8);
+      border-top: 1px solid var(--ink);
+    }
+
+    .tf-item {
+      padding: 13px 20px;
+      font-size: 13px;
+      line-height: 1.5;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .tf-item:last-child {
+      border-bottom: none
+    }
+
+    .tf-col.before .tf-item {
+      color: var(--ink3);
+      background: var(--parchment2);
+      border-left: 1px solid var(--rule);
+      border-right: 1px solid var(--rule);
+    }
+
+    .tf-col.before .tf-item:last-child {
+      border-bottom: 1px solid var(--rule)
+    }
+
+    .tf-col.after .tf-item {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10.5px;
+      background: var(--ink2);
+      color: rgba(247, 242, 233, 0.8);
+      line-height: 1.7;
+    }
+
+    .tf-col.after .tf-item:last-child {
+      border-bottom: none
+    }
+
+    .tf-arrow-col {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 0 0;
+      color: var(--ink4);
+      font-size: 22px;
+    }
+
+    /* tags */
+    .tag {
+      display: inline-block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 8px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 2px 6px;
+      border-radius: 2px;
+      margin-left: 4px;
+      vertical-align: middle;
+    }
+
+    .tag.r {
+      background: rgba(192, 52, 28, 0.1);
+      color: var(--red)
+    }
+
+    .tag.g {
+      background: rgba(46, 122, 80, 0.1);
+      color: var(--green)
+    }
+
+    .tag.a {
+      background: rgba(184, 120, 0, 0.1);
+      color: var(--amber)
+    }
+
+    /* ━━ THE SCHEMA TABLE ━━ */
+    .schema-wrap {
+      margin: 48px 0;
+      border: 1px solid var(--rule);
+      overflow: hidden;
+    }
+
+    .sch-thead {
+      display: grid;
+      grid-template-columns: 70px 60px 210px 1fr 190px;
+      background: var(--ink);
+    }
+
+    .sch-th {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(247, 242, 233, 0.85);
+      padding: 11px 12px;
+      border-right: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .sch-th:last-child {
+      border-right: none
+    }
+
+    .sch-cat {
+      background: var(--parchment3);
+      padding: 8px 12px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--ink4);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .sch-row {
+      display: grid;
+      grid-template-columns: 70px 60px 210px 1fr 190px;
+      border-bottom: 1px solid var(--rule2);
+      transition: background 0.15s;
+      cursor: default;
+    }
+
+    .sch-row:hover {
+      background: var(--parchment2)
+    }
+
+    .sch-row:last-child {
+      border-bottom: none
+    }
+
+    .sch-cell {
+      padding: 11px 12px;
+      font-size: 12px;
+      border-right: 1px solid var(--rule2);
+      line-height: 1.5;
+      color: var(--ink2);
+    }
+
+    .sch-cell:last-child {
+      border-right: none
+    }
+
+    .lv {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 8.5px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 2px 6px;
+      border-radius: 2px;
+      display: inline-block;
+    }
+
+    .lv.s {
+      background: rgba(30, 79, 140, 0.08);
+      color: var(--blue)
+    }
+
+    .lv.f {
+      background: rgba(192, 52, 28, 0.08);
+      color: var(--red)
+    }
+
+    .sch-name {
+      color: var(--ink);
+      font-weight: 600
+    }
+
+    .sch-logic {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      line-height: 1.7;
+      color: var(--ink2);
+    }
+
+    .sch-logic .hl {
+      color: var(--red)
+    }
+
+    .sch-cite {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--ink3);
+    }
+
+    /* ━━ REFINE ARC ━━ */
+    .arc {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin: 48px 0;
+    }
+
+    .arc-row {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 0;
+    }
+
+    .arc-ver {
+      background: var(--parchment3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Instrument Serif', serif;
+      font-size: 32px;
+      color: var(--ink4);
+      padding: 20px 0;
+      border-right: 1px solid var(--rule);
+    }
+
+    .arc-body {
+      background: var(--parchment2);
+      padding: 18px 24px;
+    }
+
+    .arc-title {
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+
+    .arc-desc {
+      font-size: 13px;
+      color: var(--ink2);
+      line-height: 1.6;
+      margin-bottom: 10px
+    }
+
+    .arc-pills {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap
+    }
+
+    .arc-pill {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      padding: 3px 9px;
+      border-radius: 100px;
+      background: var(--parchment3);
+      color: var(--ink3);
+      letter-spacing: 0.5px;
+    }
+
+    .arc-pill.add {
+      background: rgba(46, 122, 80, 0.1);
+      color: var(--green)
+    }
+
+    .arc-pill.new {
+      background: rgba(192, 52, 28, 0.08);
+      color: var(--red)
+    }
+
+    /* ━━ BIG NUMBER PANEL ━━ */
+    .bignum-panel {
+      background: var(--ink);
+      padding: 80px 48px;
+      margin: 64px 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bignum-panel::before {
+      content: 'LAW → CODE';
+      position: absolute;
+      font-family: 'Instrument Serif', serif;
+      font-size: 220px;
+      line-height: 1;
+      font-style: italic;
+      color: rgba(255, 255, 255, 0.025);
+      letter-spacing: -8px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      white-space: nowrap;
+    }
+
+    .bn-n {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(100px, 16vw, 180px);
+      line-height: 1;
+      color: rgba(247, 242, 233, 0.9);
+      position: relative;
+      margin-bottom: 8px;
+    }
+
+    .bn-n span {
+      color: var(--red)
+    }
+
+    .bn-l {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: rgba(247, 242, 233, 0.6);
+      position: relative;
+    }
+
+    /* ━━ COPY PROMPT BOX ━━ */
+    .copy-box {
+      margin: 56px 0;
+      border: 2px solid var(--ink);
+      overflow: hidden;
+    }
+
+    .cb-head {
+      background: var(--ink);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .cb-title {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(247, 242, 233, 0.8);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cb-dots {
+      display: flex;
+      gap: 5px
+    }
+
+    .cb-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%
+    }
+
+    .cb-btn {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: rgba(192, 52, 28, 0.15);
+      border: 1px solid rgba(192, 52, 28, 0.3);
+      color: var(--red);
+      padding: 7px 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .cb-btn:hover {
+      background: var(--red);
+      color: var(--parchment)
+    }
+
+    .cb-body {
+      background: var(--ink);
+      padding: 28px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--parchment);
+      max-height: 480px;
+      overflow-y: auto;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .cb-body .kw {
+      color: #f0a090;
+      font-weight: 500
+    }
+
+    .cb-body .hi {
+      color: #90d4a8
+    }
+
+    .cb-body .st {
+      color: #f0d090
+    }
+
+    .cb-body .cm {
+      color: rgba(247, 242, 233, 0.8);
+      font-style: italic
+    }
+
+    .cb-body .em {
+      color: rgba(247, 242, 233, 0.95)
+    }
+
+    .cb-body .bl {
+      color: #90b8e8
+    }
+
+    .cb-follow {
+      background: var(--parchment2);
+      border-top: 2px solid var(--ink);
+      padding: 20px 28px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--ink3);
+      line-height: 2.1;
+    }
+
+    .cb-follow strong {
+      color: var(--ink);
+      font-weight: 500
+    }
+
+    /* ━━ INSIGHT CALLOUT ━━ */
+    .callout {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0;
+      margin: 44px 0;
+      border: 1px solid var(--rule);
+    }
+
+    .callout-num {
+      background: var(--ink);
+      padding: 24px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .callout-n {
+      font-family: 'Instrument Serif', serif;
+      font-size: 56px;
+      color: var(--red);
+      line-height: 1;
+      writing-mode: vertical-lr;
+      text-orientation: mixed;
+      transform: rotate(180deg);
+    }
+
+    .callout-body {
+      background: var(--parchment2);
+      padding: 22px 26px;
+    }
+
+    .callout-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--ink4);
+      margin-bottom: 10px;
+    }
+
+    .callout-text {
+      font-family: 'Instrument Serif', serif;
+      font-size: 22px;
+      line-height: 1.35;
+      color: var(--ink);
+      margin-bottom: 10px;
+      font-style: italic;
+    }
+
+    .callout-sub {
+      font-size: 13px;
+      color: var(--ink2);
+      line-height: 1.6;
+    }
+
+    /* ━━ FADE IN ━━ */
+    .fade {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .fade.in {
+      opacity: 1;
+      transform: translateY(0)
+    }
+
+    /* ━━ FOOTER ━━ */
+    .footer {
+      background: var(--ink);
+      padding: 32px 48px;
+      margin-top: 80px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 1px;
+      color: rgba(247, 242, 233, 0.6);
+      line-height: 2;
+      text-align: center;
+    }
+
+    ::-webkit-scrollbar {
+      width: 3px
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--parchment3)
+    }
+
+    @media(max-width:768px) {
+      .hero-cols {
+        grid-template-columns: 1fr
+      }
+
+      .transform {
+        grid-template-columns: 1fr
+      }
+
+      .tf-arrow-col {
+        display: none
+      }
+
+      .sch-thead,
+      .sch-row {
+        grid-template-columns: 60px 1fr
+      }
+
+      .sch-th:nth-child(n+3),
+      .sch-cell:nth-child(n+3) {
+        display: none
+      }
+
+      .ps-row {
+        grid-template-columns: 44px 1fr;
+        gap: 12px
+      }
+
+      .hero,
+      .prose,
+      .wide,
+      .nav {
+        padding-left: 24px;
+        padding-right: 24px
+      }
+
+      .hero-inner {
+        padding: 0 24px
       }
     }
-  });
-}, {threshold: 0.2});
+  </style>
+</head>
 
-document.querySelectorAll('.ps-row').forEach(el => stepObs.observe(el));
+<body>
 
-// Nav active state on scroll
-const navIds = ['s-problem','s-method','s-output','s-prompt'];
-const navObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if(e.isIntersecting) {
-      const id = e.target.id;
-      document.querySelectorAll('.nav-links a').forEach(a => {
-        a.classList.toggle('lit', a.getAttribute('href') === '#' + id);
+  <div class="topbar"></div>
+
+  <nav class="nav" id="top">
+    <div class="nav-name">Policy as Code · Florida Schools</div>
+    <div class="nav-links">
+      <a href="index.html">Return to Dashboard</a>
+      <a href="#s-problem" class="lit">The Problem</a>
+      <a href="#s-method">The Method</a>
+      <a href="#s-output">The Output</a>
+      <a href="#s-prompt">The Prompt</a>
+    </div>
+  </nav>
+
+  <!-- ━━━ HERO ━━━ -->
+  <section id="s-problem">
+    <div class="hero">
+      <div class="hero-inner">
+        <div class="hero-kicker">A Policy-as-Code Investigation · Florida Private Schools</div>
+        <h1 class="hero-hed">
+          The law is<br>
+          written in<br>
+          <em>plain text.</em><br>
+          We made it<br>
+          executable.
+        </h1>
+        <div class="hero-cols">
+          <p class="hero-dek">
+            We gave an AI a single research brief — carefully engineered across 8 iterative prompts — and it returned
+            the complete regulatory schema for Florida private schools: 72 requirements, 11 agencies, every validation
+            rule expressed as boolean code ready for a compliance engine to run.
+          </p>
+          <div class="hero-numbers">
+            <div class="hn">
+              <div class="hn-n"><span>8</span></div>
+              <div class="hn-l">Prompts to get there</div>
+            </div>
+            <div class="hn">
+              <div class="hn-n">72</div>
+              <div class="hn-l">Regulations extracted</div>
+            </div>
+            <div class="hn">
+              <div class="hn-n">11</div>
+              <div class="hn-l">Gov. agencies</div>
+            </div>
+            <div class="hn">
+              <div class="hn-n"><span>1</span></div>
+              <div class="hn-l">Afternoon</div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-meta">
+          <span>Nord Anglia Education · Florida</span>
+          <span>North Broward Prep · Windermere Prep</span>
+          <span>Gemini Deep Research</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ━━━ OPENING ━━━ -->
+  <div class="prose" style="padding-top:64px">
+    <h2>A school that doesn't know<br>what it <em>doesn't</em> know</h2>
+
+    <p class="dropcap">A private international school in Florida is simultaneously subject to Florida state statutes,
+      federal immigration law, labor regulations, IRS tax code, EPA asbestos rules, OSHA standards, FTC data privacy
+      guidelines, and Department of Health inspection requirements — each enforced by a different agency, each on a
+      different cycle. Nobody in the school has a complete picture. The regulations aren't secret. They're just
+      scattered.</p>
+
+    <p>For Nord Anglia Education — which operates schools across 35 countries — the question was pointed: <strong>do we
+        actually know everything we're required to comply with in Florida?</strong> And more pressingly: is there a way
+      to verify compliance automatically, against actual school documents, rather than relying on institutional memory?
+    </p>
+
+    <p>The answer required a prior step. Before any software could check compliance, every regulation had to be
+      extracted from legal text and expressed as machine-readable logic. That extraction is what this story is about.
+    </p>
+
+    <div class="pq">
+      <div class="pq-t">"The output format is as important as the question. Ask for a summary and you get prose. Ask for
+        a Data Schema Table and you get a database."</div>
+      <div class="pq-a">The core insight · this project</div>
+    </div>
+
+    <p>The method was 8 prompts — a deliberate, iterative sequence run in a single Gemini Deep Research session. Each
+      prompt had a specific purpose. The result was not a report. It was a schema: 72 rows of compliance logic, ready to
+      be loaded into a software engine and run against school documents in real time.</p>
+  </div>
+
+  <!-- ━━━ THE BIG PANEL ━━━ -->
+  <div class="wide fade">
+    <div class="bignum-panel">
+      <div class="bn-n"><span>72</span></div>
+      <div class="bn-l">Regulations — from legal text to boolean logic — in one session</div>
+    </div>
+  </div>
+
+  <!-- ━━━ THE METHOD ━━━ -->
+  <div class="prose" id="s-method">
+    <div class="chap-mark">The Method</div>
+    <h2>Eight prompts.<br>A deliberate <em>sequence.</em></h2>
+    <p>Most AI research is a single query. This was a structured methodology — each prompt building on the last, each
+      one serving a specific function in a pipeline designed to turn statute language into executable code.</p>
+  </div>
+
+  <div class="wide">
+    <div class="prompt-stack">
+
+      <!-- STEP 1 -->
+      <div class="ps-row fade">
+        <div class="ps-num">
+          <div class="ps-circle active">1</div>
+        </div>
+        <div class="ps-content">
+          <div class="ps-label">Prompt 1 · The Meta-Move</div>
+          <div class="ps-title">Ask the AI to critique the prompt before running it</div>
+          <div class="term">
+            <div class="term-bar">
+              <div class="term-dot" style="background:#ef4444"></div>
+              <div class="term-dot" style="background:#f59e0b"></div>
+              <div class="term-dot" style="background:#10b981"></div>
+              <div class="term-label">→ Gemini Deep Research</div>
+            </div>
+            <div class="term-body">
+              <span class="kw">what would an expert change in this prompt</span>
+              <span class="em">that a beginner would miss?</span>
+
+              <span class="cm">[ + original compliance research brief attached ]</span>
+            </div>
+          </div>
+          <div class="ps-insight">
+            Don't run your first draft. Feed it to the AI and ask what an expert would change. This meta-prompting
+            technique surfaces blind spots in seconds that domain expertise would take days to identify. The AI returned
+            6 structural gaps in the original prompt — most critically: it was written from a public-school mindset.
+            Private school law in Florida lives in Chapter 1002 F.S. Treating them identically produces hundreds of
+            false-positive regulations.
+          </div>
+          <div class="ps-out">6 structural gaps identified. Key finding: the original prompt conflated Florida's public
+            school statute (Chapter 1003) with private school law (Chapter 1002). The AI flagged that this would return
+            the wrong regulatory universe entirely.</div>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="ps-row fade">
+        <div class="ps-num">
+          <div class="ps-circle active">2</div>
+        </div>
+        <div class="ps-content">
+          <div class="ps-label">Prompt 2 · Get the Better Prompt Written</div>
+          <div class="ps-title">"Give me the full prompt I can pass to Gemini Deep Research"</div>
+          <div class="term">
+            <div class="term-bar">
+              <div class="term-dot" style="background:#ef4444"></div>
+              <div class="term-dot" style="background:#f59e0b"></div>
+              <div class="term-dot" style="background:#10b981"></div>
+              <div class="term-label">→ Gemini Deep Research</div>
+            </div>
+            <div class="term-body">
+              <span class="hi">give me the full prompt</span>
+              <span class="em">that I can pass to Gemini Deep Research</span>
+            </div>
+          </div>
+          <div class="ps-insight">
+            After the AI described what to change, the next move was simple: ask it to write the improved prompt.
+            Critique → implementation. Two steps, not one. The AI produced a completely restructured brief with a new
+            role framing ("Senior Compliance Architect"), a strict scope (Chapter 1002 only, exclude Chapter 1003), and
+            a Data Schema Table as the output format — replacing the original legal memo structure.
+          </div>
+          <div class="ps-out">Expert-rewritten prompt returned. The output format changed from prose to a structured
+            table with four columns: Artifact Name | Trigger Condition | Validation Logic (The Code) | Citation. This
+            column structure is what makes the output machine-executable.</div>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="ps-row fade">
+        <div class="ps-num">
+          <div class="ps-circle active">3</div>
+        </div>
+        <div class="ps-content">
+          <div class="ps-label">Prompt 3 · The Core Research Run</div>
+          <div class="ps-title">Run the expert-designed prompt — ~20 minutes, 24+ sources</div>
+          <div class="term">
+            <div class="term-bar">
+              <div class="term-dot" style="background:#ef4444"></div>
+              <div class="term-dot" style="background:#f59e0b"></div>
+              <div class="term-dot" style="background:#10b981"></div>
+              <div class="term-label">→ Gemini Deep Research · ~20 min · 24+ primary sources</div>
+            </div>
+            <div class="term-body">
+              <span class="kw">Role:</span> <span class="hi">Act as a Senior Compliance Architect and Legal
+                Researcher.</span>
+              <span class="kw">Context:</span> "Policy as Code" engine for Nord Anglia (North Broward + Windermere).
+              <span class="kw">Problem:</span> Most data conflates <span class="em">Public</span> (Chapter 1003) vs
+              <span class="em">Private</span> (Chapter 1002) rules.
+
+              <span class="kw">Scope:</span>
+              <span class="st">State:</span> Chapter 1002 ONLY — <span class="em">EXCLUDE</span> Chapter 1003
+              <span class="st">Scholarship:</span> Step Up For Students (FES-UA, FES-EO, FTC) via Provider Handbooks
+              <span class="st">Federal:</span> DHS/ICE SEVIS for F-1 visa students
+              <span class="st">Accreditation:</span> Where does FCIS or Cognia supersede state inspection?
+
+              <span class="kw">Output Format — Data Schema Table (NOT a legal memo):</span>
+              <span class="hi">Artifact Name | Trigger Condition | Validation Logic | Citation</span>
+
+              <span class="cm">// "Do not provide generic summaries."
+                // Validation Logic must be written as boolean code, not prose.
+                // Example: Tdap_Date > DOB + 10 years — not "must have Tdap vaccine"</span>
+            </div>
+          </div>
+          <div class="ps-insight">
+            The role framing ("Senior Compliance Architect") and the instruction to write Validation Logic as boolean
+            code — not prose — are the two design decisions that separate this from a typical AI search. Without them,
+            you get summaries. With them, you get logic gates. "Must be dated within 12 months" becomes "Exam_Date >
+            (Entry_Date - 12 months)". That's the difference between a document you read and code you run.
+          </div>
+          <div class="ps-out">28 regulations returned across 5 state categories. Each row includes an exact form number,
+            a trigger condition, and boolean validation logic. State layer complete.</div>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="ps-row fade">
+        <div class="ps-num">
+          <div class="ps-circle">4</div>
+        </div>
+        <div class="ps-content">
+          <div class="ps-label">Prompt 4 · Scope Expansion</div>
+          <div class="ps-title">Add buildings and infrastructure</div>
+          <div class="term">
+            <div class="term-bar">
+              <div class="term-dot" style="background:#ef4444"></div>
+              <div class="term-dot" style="background:#f59e0b"></div>
+              <div class="term-dot" style="background:#10b981"></div>
+              <div class="term-label">→ Gemini Deep Research</div>
+            </div>
+            <div class="term-body">
+              <span class="hi">Are there any building and infrastructure requirements</span>
+              <span class="em">— can you add that too</span>
+            </div>
+          </div>
+          <div class="ps-insight">
+            Expanding scope within the same session preserves context. The AI already knew the school type, the output
+            format, and the regulatory universe. A fresh session would reset all of that. This one built on it — adding
+            12 regulations that a state-only search would never surface, including federal AHERA asbestos rules which
+            apply to all private schools regardless of funding.
+          </div>
+          <div class="ps-out">Added 12 building & safety regulations — Certificate of Occupancy, Radon Testing (Form DH
+            1777, 5-year cycle, stops after 2 tests), AHERA Asbestos Plan, OSHA 300 Injury Log, Chemical Hygiene Plan
+            for science labs, ADA barrier documentation.</div>
+        </div>
+      </div>
+
+      <!-- STEP 5 -->
+      <div class="ps-row fade">
+        <div class="ps-num">
+          <div class="ps-circle">5</div>
+        </div>
+        <div class="ps-content">
+          <div class="ps-label">Prompt 5 · The Hidden Layer</div>
+          <div class="ps-title">Unlock the federal overlay — six words, 32 regulations</div>
+          <div class="term">
+            <div class="term-bar">
+              <div class="term-dot" style="background:#ef4444"></div>
+              <div class="term-dot" style="background:#f59e0b"></div>
+              <div class="term-dot" style="background:#10b981"></div>
+              <div class="term-label">→ Gemini Deep Research</div>
+            </div>
+            <div class="term-body">
+              <span class="hi">while these are state level requirements</span>
+              <span class="em">are there any federal requirements?</span>
+            </div>
+          </div>
+          <div class="ps-insight">
+            Six words. An entirely new regulatory dimension. Federal rules for international private schools carry the
+            highest-consequence requirements in the entire matrix — including criminal liability for IRS cash reporting
+            failures and the permanent loss of F-1 visa issuance rights for SEVIS non-compliance. A state-only research
+            frame would miss all of it.
+          </div>
+          <div class="ps-out">Added 32 federal regulations across 7 agencies: DHS/ICE (Form I-20, I-9, SEVIS logs), DOL
+            (FLSA, FMLA, PUMP Act 2023), FTC (COPPA, Vendor DPAs), IRS (Form 8300 cash reporting — federal felony if
+            missed, BOI FinCEN 2024), Copyright Act (movie licensing), OSHA/AHERA overlays.</div>
+        </div>
+      </div>
+
+      <!-- STEP 6 -->
+      <div class="ps-row fade">
+        <div class="ps-num">
+          <div class="ps-circle">6</div>
+        </div>
+        <div class="ps-content">
+          <div class="ps-label">Prompt 6 · The Self-Audit</div>
+          <div class="ps-title">Feed the full list back — ask what's been missed</div>
+          <div class="term">
+            <div class="term-bar">
+              <div class="term-dot" style="background:#ef4444"></div>
+              <div class="term-dot" style="background:#f59e0b"></div>
+              <div class="term-dot" style="background:#10b981"></div>
+              <div class="term-label">→ Gemini Deep Research</div>
+            </div>
+            <div class="term-body">
+              <span class="hi">review these listed and let me know if</span>
+              <span class="em">anyone has been missed in your evaluation</span>
+
+              <span class="cm">[ + entire compiled regulation list pasted in ]</span>
+            </div>
+          </div>
+          <div class="ps-insight">
+            The AI's initial research runs are forward-looking — scanning for things to include. This backward pass is a
+            different cognitive task: checking a completed list for what's absent. Pasting the full compiled list back
+            in and asking for a gap check reliably surfaces regulations that fell through the cracks of the
+            category-by-category approach.
+          </div>
+          <div class="ps-out">4 gaps found. Added: Nursing Mother's Break Log (PUMP Act 2023 — newly enacted, widely
+            missed), SEVIS Status Update Log with the specific 21-day reporting window for dropout/address changes,
+            English Proficiency documentation for international student admissions, Form I-901 SEVIS Fee Receipt.</div>
+        </div>
+      </div>
+
+      <!-- STEP 7 -->
+      <div class="ps-row fade">
+        <div class="ps-num">
+          <div class="ps-circle">7</div>
+        </div>
+        <div class="ps-content">
+          <div class="ps-label">Prompt 7 · Lock the Schema</div>
+          <div class="ps-title">Enforce one consistent format across all 72 rows</div>
+          <div class="term">
+            <div class="term-bar">
+              <div class="term-dot" style="background:#ef4444"></div>
+              <div class="term-dot" style="background:#f59e0b"></div>
+              <div class="term-dot" style="background:#10b981"></div>
+              <div class="term-label">→ Gemini Deep Research</div>
+            </div>
+            <div class="term-body">
+              <span class="hi">can you reorganise</span> <span class="cm">[ full list ]</span>
+              <span class="em">in this format:</span>
+
+              <span class="kw">State/Federal</span> | <span class="kw">Category</span> | <span class="kw">Artifact
+                Name</span>
+              | <span class="kw">Trigger Condition</span> | <span class="kw">Validation Logic (The "Code")</span>
+              | <span class="kw">Citation</span>
+            </div>
+          </div>
+          <div class="ps-insight">
+            After 6 passes of expansion and cross-checking, the accumulated list was inconsistently formatted. This
+            prompt enforced a uniform 6-column schema across every row. The result is not a document — it is a database.
+            Every row becomes a checklist item the software engine can evaluate: load this schema, scan the school's
+            documents against each row, return compliant / partial / non-compliant with evidence.
+          </div>
+          <div class="ps-out">72 regulations unified into one schema: State/Federal | Category | Artifact Name | Trigger
+            Condition | Validation Logic (boolean code) | Citation. This is checklist.json — the file that powers the
+            compliance engine.</div>
+        </div>
+      </div>
+
+      <!-- STEP 8 -->
+      <div class="ps-row fade">
+        <div class="ps-num">
+          <div class="ps-circle insight">8</div>
+        </div>
+        <div class="ps-content">
+          <div class="ps-label">Prompt 8 · The Honest Failure — and the smarter fix</div>
+          <div class="ps-title">When AI can't do something, find the workaround</div>
+          <div class="term">
+            <div class="term-bar">
+              <div class="term-dot" style="background:#ef4444"></div>
+              <div class="term-dot" style="background:#f59e0b"></div>
+              <div class="term-dot" style="background:#10b981"></div>
+              <div class="term-label">→ Gemini Deep Research</div>
+            </div>
+            <div class="term-body">
+              <span class="hi">can you give me the specific URLs</span>
+              <span class="em">for each citation as reference</span>
+
+              <span class="cm">→ First attempt: URLs returned but led to catalog landing pages
+                → AI acknowledged: "previous links were citation landing pages
+                like a library card catalog"
+                → Second attempt: still opened incorrect pages</span>
+
+              <span class="kw">// Resolution:</span>
+              <span class="em">Convert each citation to a Google search query instead</span>
+              <span class="cm">// → "s. 1002.42(2)(b) F.S." → Google: "Florida Statute 1002.42 private school"
+                // → Always resolvable · Never rots · Always finds current text</span>
+            </div>
+          </div>
+          <div class="ps-insight">
+            AI tools have a known limitation with live URL verification. The solution — converting every citation to a
+            pre-filled Google search query — is actually better than hardcoded URLs. Statute pages move. Search results
+            always find the current text. The failure led to a more robust design than the original request would have
+            produced.
+          </div>
+          <div class="ps-out">Final schema delivered with Google search query links for all 72 citations. Every link
+            opens a targeted search for the exact statute — always live, always current, never a dead URL.</div>
+        </div>
+      </div>
+
+    </div><!-- .prompt-stack -->
+  </div><!-- .wide -->
+
+  <!-- ━━━ THE TRANSFORMATION ━━━ -->
+  <div class="prose">
+    <div class="chap-mark">The Difference</div>
+    <h2>The same regulation.<br><em>Two outputs.</em></h2>
+    <p>The most important upgrade across 8 prompts wasn't the scope — it was the format. The same regulatory content,
+      expressed two different ways, produces a document versus a database. Only one of those can power software.</p>
+  </div>
+
+  <div class="wide fade">
+    <div class="transform">
+      <div class="tf-col before">
+        <div class="tf-head">Prompt V1 — prose output (unexecutable)</div>
+        <div class="tf-item">Teacher requirements: Private schools must ensure teachers are qualified. Florida law
+          allows alternatives to state certification for private school educators. <span class="tag r">Vague</span>
+        </div>
+        <div class="tf-item">Background checks: All staff working with students must undergo background screening,
+          renewed periodically as required. <span class="tag r">No deadline</span></div>
+        <div class="tf-item">Bus inspections: School vehicles must be regularly inspected to ensure student safety.
+          <span class="tag r">No interval</span>
+        </div>
+        <div class="tf-item">Scholarship audits: Schools receiving scholarship funds may face financial oversight
+          depending on the amount received. <span class="tag r">No threshold</span></div>
+        <div class="tf-item">Radon testing: Schools should test for radon gas as required by Florida law, at appropriate
+          intervals. <span class="tag r">No form number</span></div>
+      </div>
+      <div class="tf-arrow-col">→</div>
+      <div class="tf-col after">
+        <div class="tf-head">Prompt V3 — boolean logic (executable)</div>
+        <div class="tf-item">Has_Degree == TRUE <span style="color:#f0a090">OR</span> Exp_Years >= 3 <span
+            style="color:#f0a090">OR</span> Special_Skills == TRUE → s.1002.421(1)(h) <span class="tag g">Runs as
+            code</span></div>
+        <div class="tf-item">Status == "Eligible" AND Date_Screened > (Today - 5yr) → VECHS → s.1002.42(2)(c) <span
+            class="tag g">Has deadline</span></div>
+        <div class="tf-item">School_Days_Since(Inspection) &lt;= 30 → Form 2020-IF → Rule 6A-3.0171 <span
+            class="tag a">School days, not calendar</span></div>
+        <div class="tf-item">IF Revenue > $250,000: CPA_Opinion == "Unmodified" AND Filed &lt;= Sept 15 →
+          s.1002.421(1)(q) <span class="tag g">Has threshold</span></div>
+        <div class="tf-item">IF Tests_Done >= 2: Required = FALSE (unless Remodel == TRUE) → Form DH 1777 → s.404.056
+          <span class="tag g">Has form + stop rule</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ━━━ KEY INSIGHTS ━━━ -->
+  <div class="prose">
+    <div class="chap-mark">What AI surfaced</div>
+    <h2>The rules schools<br>didn't know <em>existed</em></h2>
+    <p>The structured prompt approach didn't just retrieve known regulations faster. It surfaced regulatory nuances that
+      a manual research process — or a generic AI search — would likely miss entirely. Here are the five most
+      consequential findings.</p>
+  </div>
+
+  <div class="wide">
+    <div class="callout fade">
+      <div class="callout-num">
+        <div class="callout-n">01</div>
+      </div>
+      <div class="callout-body">
+        <div class="callout-label">The For-Profit Switch</div>
+        <div class="callout-text">Nord Anglia schools are corporate subsidiaries of a private equity firm — not
+          nonprofits. Every compliance framework built for 501(c)(3) schools is wrong for them.</div>
+        <div class="callout-sub">No Form 990. Instead: mandatory Beneficial Ownership Information (BOI) filing with
+          FinCEN (Corporate Transparency Act 2024), Form 8300 for any cash tuition payment over $10,000 filed within 15
+          days — criminal felony if missed. W-8BEN for any foreign contractor or guest speaker. The AI identified this
+          switch immediately. Most generic frameworks miss it entirely.</div>
+      </div>
+    </div>
+
+    <div class="callout fade">
+      <div class="callout-num">
+        <div class="callout-n">02</div>
+      </div>
+      <div class="callout-body">
+        <div class="callout-label">The Teacher OR Gate</div>
+        <div class="callout-text">Private schools in Florida don't require state teacher certification. The law is an OR
+          gate, not a minimum standard.</div>
+        <div class="callout-sub">Under s.1002.421(1)(h), a teacher qualifies if they have <em>any one</em> of: a
+          bachelor's degree in any field, 3 or more years of teaching experience, or documented special skills (a native
+          French speaker teaching French, a professional musician teaching band). A compliance engine checking for
+          "state certification" on every teacher would flag false non-compliance for every private school in Florida.
+        </div>
+      </div>
+    </div>
+
+    <div class="callout fade">
+      <div class="callout-num">
+        <div class="callout-n">03</div>
+      </div>
+      <div class="callout-body">
+        <div class="callout-label">The Radon Stop Rule</div>
+        <div class="callout-text">Radon testing in Florida schools is not annual. It is mandatory exactly twice — then
+          it stops.</div>
+        <div class="callout-sub">Under s.404.056, schools must test once upon occupancy and once 5 years later. After
+          that, testing stops unless the building is remodeled. Most compliance frameworks treat this as an ongoing
+          annual requirement. The correct logic is: IF Tests_Done >= 2: Required = FALSE (unless Remodel == TRUE).
+          Schools are either over-testing or forgetting the second test entirely.</div>
+      </div>
+    </div>
+
+    <div class="callout fade">
+      <div class="callout-num">
+        <div class="callout-n">04</div>
+      </div>
+      <div class="callout-body">
+        <div class="callout-label">The FERPA Trap</div>
+        <div class="callout-text">Florida scholarship programs (FTC, FES) are state tax-credit funds — not federal
+          funds. FERPA doesn't apply. But Florida's own SOPIPA does.</div>
+        <div class="callout-sub">Schools that assume FERPA triggers automatically are applying the wrong framework. The
+          actual exposure is Florida's SOPIPA (s.1006.1494) — which prohibits EdTech vendors from selling or profiling
+          student data regardless of federal funding status. Every vendor contract must include specific SOPIPA
+          compliance language. The AI surfaced this distinction; a federal-law-first research approach would have missed
+          the state-level exposure.</div>
+      </div>
+    </div>
+
+    <div class="callout fade">
+      <div class="callout-num">
+        <div class="callout-n">05</div>
+      </div>
+      <div class="callout-body">
+        <div class="callout-label">The 30-Day School Clock</div>
+        <div class="callout-text">Bus safety inspections run every 30 school days — not 30 calendar days. The
+          distinction closes one inspection cycle entirely.</div>
+        <div class="callout-sub">Rule 6A-3.0171 F.A.C. specifies school days. A 180-school-day year requires 6
+          inspections annually, not 12. A compliance tool checking on a calendar-month basis would flag false violations
+          through summer and school breaks. More importantly, a school tracking on calendar months might miss that their
+          bus needs inspection after returning from a long break.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ━━━ THE SCHEMA ━━━ -->
+  <div class="prose" id="s-output">
+    <div class="chap-mark">The Output</div>
+    <h2>The actual schema<br><em>the session produced</em></h2>
+    <p>Below is a direct sample from the final compliance matrix — exactly as it emerged from the 8-prompt Gemini
+      session, organized into the uniform 6-column schema enforced in Step 7. Each row is loaded into the compliance
+      engine as a discrete check.</p>
+  </div>
+
+  <div class="wide fade">
+    <div class="schema-wrap">
+      <div class="sch-thead">
+        <div class="sch-th">Level</div>
+        <div class="sch-th">ID</div>
+        <div class="sch-th">Artifact Name</div>
+        <div class="sch-th">Validation Logic — The Code</div>
+        <div class="sch-th">Citation</div>
+      </div>
+
+      <div class="sch-cat">State · Administrative &amp; Financial Compliance</div>
+      <div class="sch-row">
+        <div class="sch-cell"><span class="lv s">STATE</span></div>
+        <div class="sch-cell sch-cite">ADM-01</div>
+        <div class="sch-cell sch-name">Notarized Annual Survey</div>
+        <div class="sch-cell sch-logic">Submission_Date &lt;= <span class="hl">May 1st</span> AND Notarized == TRUE
+        </div>
+        <div class="sch-cell sch-cite">s. 1002.42(2)(b), F.S.</div>
+      </div>
+      <div class="sch-row">
+        <div class="sch-cell"><span class="lv s">STATE</span></div>
+        <div class="sch-cell sch-cite">ADM-02</div>
+        <div class="sch-cell sch-name">Attendance Register</div>
+        <div class="sch-cell sch-logic">Sum(Days) &gt;= <span class="hl">170</span> OR Sum(Hours) &gt;= Grade_Threshold
+        </div>
+        <div class="sch-cell sch-cite">Rule 6A-1.09512, F.A.C.</div>
+      </div>
+      <div class="sch-row">
+        <div class="sch-cell"><span class="lv s">STATE</span></div>
+        <div class="sch-cell sch-cite">ADM-03</div>
+        <div class="sch-cell sch-name">Scholarship Compliance Form SCF-1</div>
+        <div class="sch-cell sch-logic">Submission_Date &lt;= <span class="hl">March 1st</span> AND Notarized == TRUE
+        </div>
+        <div class="sch-cell sch-cite">s. 1002.421, F.S.</div>
+      </div>
+
+      <div class="sch-cat">State · Personnel &amp; Hard Legal Requirements</div>
+      <div class="sch-row">
+        <div class="sch-cell"><span class="lv s">STATE</span></div>
+        <div class="sch-cell sch-cite">PER-01</div>
+        <div class="sch-cell sch-name">FDLE VECHS Clearance</div>
+        <div class="sch-cell sch-logic">Status == "Eligible" AND Date_Screened > (Today - <span class="hl">5
+            years</span>)</div>
+        <div class="sch-cell sch-cite">s. 1002.421(1)(m)</div>
+      </div>
+      <div class="sch-row">
+        <div class="sch-cell"><span class="lv s">STATE</span></div>
+        <div class="sch-cell sch-cite">PER-02</div>
+        <div class="sch-cell sch-name">Teacher Qualification Record</div>
+        <div class="sch-cell sch-logic">Has_Degree == TRUE <span class="hl">OR</span> Exp_Years &gt;= 3 <span
+            class="hl">OR</span> Special_Skills == TRUE</div>
+        <div class="sch-cell sch-cite">s. 1002.421(2)(h)</div>
+      </div>
+
+      <div class="sch-cat">Federal · DHS &amp; ICE — Immigration / SEVIS</div>
+      <div class="sch-row">
+        <div class="sch-cell"><span class="lv f">FEDERAL</span></div>
+        <div class="sch-cell sch-cite">IMM-01</div>
+        <div class="sch-cell sch-name">Form I-20 (Certificate of Eligibility)</div>
+        <div class="sch-cell sch-logic">IF Citizenship != "USA": Status == "Active" AND End_Date > Today</div>
+        <div class="sch-cell sch-cite">8 CFR 214.2(f)</div>
+      </div>
+      <div class="sch-row">
+        <div class="sch-cell"><span class="lv f">FEDERAL</span></div>
+        <div class="sch-cell sch-cite">IMM-02</div>
+        <div class="sch-cell sch-name">SEVIS Status Update Log</div>
+        <div class="sch-cell sch-logic">Reported_To_SEVIS_Date &lt;= (Event_Date + <span class="hl">21 days</span>)
+        </div>
+        <div class="sch-cell sch-cite">8 CFR 214.2(f)</div>
+      </div>
+      <div class="sch-row">
+        <div class="sch-cell"><span class="lv f">FEDERAL</span></div>
+        <div class="sch-cell sch-cite">IMM-03</div>
+        <div class="sch-cell sch-name">Form I-9 (Employment Eligibility)</div>
+        <div class="sch-cell sch-logic">Section_2_Signed &lt;= (Start_Date + <span class="hl">3 days</span>) AND
+          Docs_Valid == TRUE</div>
+        <div class="sch-cell sch-cite">8 CFR 274a.2</div>
+      </div>
+
+      <div class="sch-cat">State · Financial &amp; Scholarship Compliance</div>
+      <div class="sch-row">
+        <div class="sch-cell"><span class="lv s">STATE</span></div>
+        <div class="sch-cell sch-cite">FIN-01</div>
+        <div class="sch-cell sch-name">AUP Audit (Agreed-Upon Procedures)</div>
+        <div class="sch-cell sch-logic">IF Revenue &gt; <span class="hl">$250,000</span>: CPA_Opinion == "Unmodified"
+          AND Filed &lt;= Sept 15</div>
+        <div class="sch-cell sch-cite">s. 1002.421(1)(q)</div>
+      </div>
+
+      <div class="sch-cat">Federal · IRS &amp; Treasury — For-Profit Corporate</div>
+      <div class="sch-row">
+        <div class="sch-cell"><span class="lv f">FEDERAL</span></div>
+        <div class="sch-cell sch-cite">IRS-01</div>
+        <div class="sch-cell sch-name">Form 8300 (Cash Payments)</div>
+        <div class="sch-cell sch-logic">IF Cash &gt; <span class="hl">$10,000</span>: Filed_Within_15_Days == TRUE <span
+            style="color:var(--red)">// felony if not</span></div>
+        <div class="sch-cell sch-cite">26 U.S.C. 6050I</div>
+      </div>
+      <div class="sch-row">
+        <div class="sch-cell"><span class="lv f">FEDERAL</span></div>
+        <div class="sch-cell sch-cite">IRS-02</div>
+        <div class="sch-cell sch-name">Beneficial Ownership Info (BOI)</div>
+        <div class="sch-cell sch-logic">IF Entity == "Corp": Report_Filed_FinCEN == TRUE <span
+            style="color:var(--ink3)">// CTA 2024</span></div>
+        <div class="sch-cell sch-cite">31 CFR 1010.380</div>
+      </div>
+
+      <div class="sch-cat">State · Transportation — Rule 6A-3</div>
+      <div class="sch-row">
+        <div class="sch-cell"><span class="lv s">STATE</span></div>
+        <div class="sch-cell sch-cite">TRN-01</div>
+        <div class="sch-cell sch-name">Form 2020-IF (Bus Safety Inspection)</div>
+        <div class="sch-cell sch-logic">School_Days_Since(Last_Inspection) &lt;= <span class="hl">30</span> <span
+            style="color:var(--red)">// not calendar days</span></div>
+        <div class="sch-cell sch-cite">Rule 6A-3.0171, F.A.C.</div>
+      </div>
+      <div class="sch-row">
+        <div class="sch-cell"><span class="lv s">STATE</span></div>
+        <div class="sch-cell sch-cite">TRN-02</div>
+        <div class="sch-cell sch-name">Form MCSA-5876 (Medical Certificate)</div>
+        <div class="sch-cell sch-logic">Expiration_Date > Today AND Max_Validity &lt;= <span class="hl">2 years</span>
+        </div>
+        <div class="sch-cell sch-cite">Rule 6A-3.0141, F.A.C.</div>
+      </div>
+
+      <div class="sch-cat">Federal · Building &amp; Safety — AHERA / OSHA</div>
+      <div class="sch-row">
+        <div class="sch-cell"><span class="lv f">FEDERAL</span></div>
+        <div class="sch-cell sch-cite">BSF-01</div>
+        <div class="sch-cell sch-name">AHERA Asbestos Management Plan</div>
+        <div class="sch-cell sch-logic">IF Built_Year &lt; <span class="hl">1989</span>: AMP_On_Site == TRUE AND
+          Reinspection &lt; 3yr ago</div>
+        <div class="sch-cell sch-cite">40 CFR 763</div>
+      </div>
+      <div class="sch-row">
+        <div class="sch-cell"><span class="lv f">FEDERAL</span></div>
+        <div class="sch-cell sch-cite">BSF-02</div>
+        <div class="sch-cell sch-name">Radon Testing Report (DH 1777)</div>
+        <div class="sch-cell sch-logic">IF Tests_Done &lt; 2: Date &gt; (Today - 5yr). IF Tests_Done &gt;= 2: <span
+            class="hl">Required = FALSE</span></div>
+        <div class="sch-cell sch-cite">s. 404.056, F.S.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ━━━ THE PROMPT ━━━ -->
+  <div class="prose" id="s-prompt">
+    <div class="chap-mark">Replicate it</div>
+    <h2>The full prompt —<br><em>ready to run</em></h2>
+    <p>Below is the expert-engineered research brief from Step 3 — the one that did the core work. Copy it into Gemini
+      Deep Research and follow it with the four expansion prompts listed at the bottom. Adapt the school names and state
+      for your context.</p>
+  </div>
+
+  <div class="wide fade">
+    <div class="copy-box">
+      <div class="cb-head">
+        <div class="cb-title">
+          <div class="cb-dots">
+            <div class="cb-dot" style="background:#ef4444"></div>
+            <div class="cb-dot" style="background:#f59e0b"></div>
+            <div class="cb-dot" style="background:#10b981"></div>
+          </div>
+          Gemini Deep Research · Expert Compliance Extraction Prompt
+        </div>
+        <button class="cb-btn" onclick="copyPrompt()">Copy prompt</button>
+      </div>
+      <div class="cb-body">
+        <span class="kw">Role:</span> <span class="hi">Act as a Senior Compliance Architect and Legal Researcher for an
+          EdTech startup.</span>
+
+        <span class="kw">Context:</span> I am building a "Policy as Code" compliance engine for private, international
+        K-12 schools in Florida (specifically Nord Anglia schools like North Broward Prep
+        and Windermere Prep). The software will ingest PDFs (forms, logs, certificates)
+        and structured data to automatically flag non-compliance.
+
+        <span class="kw">The Problem:</span> Most compliance data conflates <span class="em">Public school rules</span>
+        (highly regulated,
+        Chapter 1003) with <span class="em">Private school rules</span> (Chapter 1002, deregulated but
+        contractually bound). Do not mix them.
+
+        <span class="kw">Your Task:</span> Conduct deep research to identify the specific audit constraints.
+        <span class="em">Do not provide generic summaries.</span> Identify:
+        — The specific <span class="hi">Document Artifacts</span> (what exact file does an auditor look for?)
+        — The <span class="hi">Validation Logic</span> (what boolean rule makes it valid or invalid?)
+
+        <span class="kw">Scope of Research:</span>
+        <span class="st">Florida State:</span> Chapter 1002 ONLY — EXCLUDE Chapter 1003 (public schools)
+        <span class="st">Scholarship:</span> Step Up For Students (FES-UA, FES-EO, FTC)
+        Use Provider Handbooks, not just statutes
+        <span class="st">Federal/Intl:</span> DHS/ICE SEVIS record-keeping requirements for F-1 visa students
+        <span class="st">Accreditation:</span> Note where FCIS or Cognia accreditation supersedes state inspection
+
+        <span class="kw">Research Categories:</span>
+
+        <span class="bl">1. Personnel & Hard Legal Requirements</span>
+        — Teacher Certification: exact OR-gate logic for non-certified private school teachers?
+        — Background Checks: FDLE Level 2 — valid duration before re-screening?
+        What Clearinghouse result must be in the file? ("Eligible" vs "Not Eligible"?)
+        — Ethics Training: s. 1012.796 — one-time or annual renewal?
+
+        <span class="bl">2. International Student Compliance (SEVIS / F-1)</span>
+        — Form I-20: What Financial Solvency evidence must be retained?
+        — Reporting: Deadlines for status changes (e.g., within 21 days of dropout?)
+        — English Proficiency: what documentation must the school retain?
+
+        <span class="bl">3. Health, Safety & Physical Plant</span>
+        CONSTRAINT: <span class="hi">EXCLUDE SREF.</span> Private schools use Florida Building Code + FFPC only.
+        — DH 680: Specific 7th Grade validation trigger (Tdap booster date vs DOB)?
+        — DH 3040: Freshness rule — exam must be dated within 12 months of start date?
+        — Fire: Annual inspection by local Fire Marshal — what does "clear" look like?
+        — Radon: Re-testing interval for existing buildings? Does testing ever stop?
+        — Food: DOH inspection frequency for private school cafeterias (quarterly?)?
+
+        <span class="bl">4. Financial & Scholarship Compliance</span>
+        — AUP Audit: At what revenue threshold does attestation become a full CPA Audit?
+        — Surety Bond: When is one required? What amount?
+
+        <span class="bl">5. Transportation (Private School — s. 316.615)</span>
+        — Driver files: CDL endorsements required (P and S?), medical cert frequency
+        — Vehicle: Inspection measured in school days or calendar days?
+
+        <span class="kw">Output Format — Data Schema Table (NOT a legal memo):</span>
+
+        <span class="hi">Category | Artifact Name | Trigger Condition | Validation Logic (The Code) | Citation</span>
+
+        <span class="cm">// Column definitions:
+          // Artifact Name: Exact filename or form number (e.g., "Form DH 680", "Form MCSA-5876")
+          // Trigger Condition: When does this rule activate? (New Hire / Annually / Citizenship != USA)
+          // Validation Logic: Boolean rule written as code, not prose
+          // e.g.: Tdap_Date > DOB + 10 years
+          // e.g.: Status == "Eligible" AND Date_Screened > (Today - 5 years)
+          // Citation: Specific Statute, F.A.C. Rule, or Handbook Section</span>
+      </div>
+      <div class="cb-follow">
+        <strong>Run these 4 follow-up prompts in order after the main research run:</strong><br>
+        <strong>→</strong> "Are there any building and infrastructure requirements — can you add that too"<br>
+        <strong>→</strong> "While these are state level requirements, are there any federal requirements?"<br>
+        <strong>→</strong> "Review these listed and let me know if anyone has been missed in your evaluation [paste full
+        list]"<br>
+        <strong>→</strong> "Can you reorganise in format: State/Federal | Category | Artifact Name | Trigger Condition |
+        Validation Logic (The Code) | Citation"<br>
+        <strong>→</strong> For source links: use Google search query URLs instead of hardcoded URLs — statute pages
+        move, search results don't
+      </div>
+    </div>
+  </div>
+
+  <!-- ━━━ CLOSING ━━━ -->
+  <div class="prose fade">
+    <div class="chap-mark">Conclusion</div>
+    <h2>The law was always<br>readable. Now it's<br><em>executable.</em></h2>
+
+    <p>The regulations governing a Florida private school were never secret. They are published in Florida Statutes, the
+      Code of Federal Regulations, Department of Health guidelines, and scholarship provider handbooks. The problem was
+      never access — it was structure. Every rule existed in legal prose. No software can evaluate legal prose directly.
+      Software needs logic gates.</p>
+
+    <p>The 8-prompt methodology above is a translation pipeline. It takes statute language — "schools must maintain a
+      register of daily attendance" — and returns code: <strong>Sum(Instructional_Days) >= 170 OR Sum(Net_Hours) >=
+        Grade_Threshold</strong>. That code is what a compliance engine runs against a school's uploaded documents.
+      Every row of the schema is a test. Every test returns compliant, partial, or non-compliant — with evidence cited
+      from the document itself.</p>
+
+    <div class="pq">
+      <div class="pq-t">"We didn't build a faster way to read regulations. We built a way to stop reading them at all —
+        and start running them instead."</div>
+      <div class="pq-a">ComplianceIQ · Policy as Code · Florida Private Schools</div>
+    </div>
+
+    <p>The same methodology applies to any jurisdiction, any school system, any regulatory domain. The prompts change.
+      The output format stays the same. And the output format is the whole game.</p>
+  </div>
+
+  <div class="footer">
+    Sources traversed by Gemini Deep Research: FLDOE.org · Florida Statutes Ch. 1002 · FLSENATE.GOV · 8 CFR Title 8
+    (DHS/ICE) · Step Up For Students Private School Handbook · OSHA.gov 29 CFR 1904 &amp; 1910 · IRS.gov 26 U.S.C. 6050I
+    · FinCEN 31 CFR 1010.380 · EPA 40 CFR 763 (AHERA) · FTC 16 CFR 312 (COPPA) · FloridaHealth.gov · 24+ primary
+    sources<br>
+    Output: 72 regulations · 11 government agencies · 18 regulatory categories · checklist.json · ComplianceIQ Dashboard
+  </div>
+
+  <script>
+    // Intersection observer for scroll reveals
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade').forEach(el => io.observe(el));
+
+    // Step circles light up as they scroll in
+    const stepObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          const circle = e.target.querySelector('.ps-circle:not(.insight)');
+          if (circle) {
+            setTimeout(() => circle.classList.add('active'), 250);
+          }
+        }
       });
+    }, { threshold: 0.2 });
+
+    document.querySelectorAll('.ps-row').forEach(el => stepObs.observe(el));
+
+    // Nav active state on scroll
+    const navIds = ['s-problem', 's-method', 's-output', 's-prompt'];
+    const navObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const id = e.target.id;
+          document.querySelectorAll('.nav-links a').forEach(a => {
+            a.classList.toggle('lit', a.getAttribute('href') === '#' + id);
+          });
+        }
+      });
+    }, { threshold: 0.4 });
+
+    navIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) navObs.observe(el);
+    });
+
+    // Animate big number
+    function animateNum(el, target, dur) {
+      let start = null;
+      const step = ts => {
+        if (!start) start = ts;
+        const progress = Math.min((ts - start) / dur, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.round(eased * target);
+        if (progress < 1) requestAnimationFrame(step);
+        else el.textContent = target;
+      };
+      requestAnimationFrame(step);
     }
-  });
-}, {threshold: 0.4});
+    const bigNumObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const spanEl = e.target.querySelector('.bn-n span');
+          if (spanEl) animateNum(spanEl, 72, 1400);
+          bigNumObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    const bigPanel = document.querySelector('.bignum-panel');
+    if (bigPanel) bigNumObs.observe(bigPanel);
 
-navIds.forEach(id => {
-  const el = document.getElementById(id);
-  if(el) navObs.observe(el);
-});
-
-// Animate big number
-function animateNum(el, target, dur) {
-  let start = null;
-  const step = ts => {
-    if(!start) start = ts;
-    const progress = Math.min((ts - start)/dur, 1);
-    const eased = 1 - Math.pow(1-progress, 3);
-    el.textContent = Math.round(eased * target);
-    if(progress < 1) requestAnimationFrame(step);
-    else el.textContent = target;
-  };
-  requestAnimationFrame(step);
-}
-const bigNumObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if(e.isIntersecting) {
-      const spanEl = e.target.querySelector('.bn-n span');
-      if(spanEl) animateNum(spanEl, 72, 1400);
-      bigNumObs.unobserve(e.target);
-    }
-  });
-}, {threshold: 0.5});
-const bigPanel = document.querySelector('.bignum-panel');
-if(bigPanel) bigNumObs.observe(bigPanel);
-
-// Copy prompt
-function copyPrompt() {
-  const promptText = `Role: Act as a Senior Compliance Architect and Legal Researcher for an EdTech startup.
+    // Copy prompt
+    function copyPrompt() {
+      const promptText = `Role: Act as a Senior Compliance Architect and Legal Researcher for an EdTech startup.
 
 Context: I am building a "Policy as Code" compliance engine for private, international K-12 schools in Florida (specifically Nord Anglia schools like North Broward Prep and Windermere Prep). The software will ingest PDFs (forms, logs, certificates) and structured data to automatically flag non-compliance.
 
@@ -1440,21 +2065,22 @@ Follow-up prompts to run in order after the main research:
 4. "Can you reorganise in format: State/Federal | Category | Artifact Name | Trigger Condition | Validation Logic | Citation"
 Note: For source links, use Google search query URLs — statute pages move, search results don't`;
 
-  navigator.clipboard.writeText(promptText).then(() => {
-    const btn = document.querySelector('.cb-btn');
-    const orig = btn.textContent;
-    btn.textContent = '✓ Copied!';
-    btn.style.background = 'var(--green)';
-    btn.style.color = 'white';
-    btn.style.borderColor = 'var(--green)';
-    setTimeout(() => {
-      btn.textContent = orig;
-      btn.style.background = '';
-      btn.style.color = '';
-      btn.style.borderColor = '';
-    }, 2800);
-  });
-}
-</script>
+      navigator.clipboard.writeText(promptText).then(() => {
+        const btn = document.querySelector('.cb-btn');
+        const orig = btn.textContent;
+        btn.textContent = '✓ Copied!';
+        btn.style.background = 'var(--green)';
+        btn.style.color = 'white';
+        btn.style.borderColor = 'var(--green)';
+        setTimeout(() => {
+          btn.textContent = orig;
+          btn.style.background = '';
+          btn.style.color = '';
+          btn.style.borderColor = '';
+        }, 2800);
+      });
+    }
+  </script>
 </body>
+
 </html>

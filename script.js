@@ -23,12 +23,12 @@ const DOC_LABELS = {
 };
 
 // ---- DOM refs ----
-const $tableBody    = document.getElementById('tableBody');
-const $scoreVal     = document.getElementById('scoreVal');
-const $countC       = document.getElementById('countCompliant');
-const $countP       = document.getElementById('countPartial');
-const $countN       = document.getElementById('countNon');
-const $countT       = document.getElementById('countTotal');
+const $tableBody = document.getElementById('tableBody');
+const $scoreVal = document.getElementById('scoreVal');
+const $countC = document.getElementById('countCompliant');
+const $countP = document.getElementById('countPartial');
+const $countN = document.getElementById('countNon');
+const $countT = document.getElementById('countTotal');
 const $scanProgress = document.getElementById('scanProgress');
 
 // ---- Boot ----
@@ -44,7 +44,7 @@ const $scanProgress = document.getElementById('scanProgress');
       throw new Error('One or more data files failed to load.');
     }
 
-    checklist    = await checklistRes.json();
+    checklist = await checklistRes.json();
     schoolData[0] = await nbRes.json();
     schoolData[1] = await wmRes.json();
 
@@ -109,110 +109,256 @@ function updateDashboard() {
 // ---- Render Table ----
 function renderTable(animate) {
   $tableBody.innerHTML = '';
-  let lastCat = '';
   let rowNum = 0;
 
-  checklist.forEach((reg, idx) => {
+  // Group regulations by category
+  const categories = {};
+
+  checklist.forEach(reg => {
     const result = getResult(currentSchool, reg.id);
-    if (!result) return;
+    if (!result || !matchesFilter(reg, result)) return;
 
-    // Apply filter
-    if (!matchesFilter(reg, result)) return;
-
-    // Category divider
-    if (reg.category !== lastCat) {
-      const divider = document.createElement('div');
-      divider.className = 'category-divider';
-      divider.innerHTML = `<div class="category-tag">${reg.category}</div>`;
-      $tableBody.appendChild(divider);
-      lastCat = reg.category;
+    if (!categories[reg.category]) {
+      categories[reg.category] = {
+        name: reg.category,
+        items: [],
+        counts: { compliant: 0, partial: 0, nonCompliant: 0, highRisk: 0 }
+      };
     }
+    categories[reg.category].items.push({ reg, result });
 
-    rowNum++;
-
-    // Build row
-    const row = document.createElement('div');
-    row.className = 'reg-row';
-    row.setAttribute('data-status', result.status);
-    row.setAttribute('data-level', reg.level);
-
-    if (animate) {
-      row.classList.add('scanning');
-      row.style.animationDelay = (rowNum * 30) + 'ms';
+    // update counts
+    if (result.status === 'compliant') categories[reg.category].counts.compliant++;
+    else if (result.status === 'partial') categories[reg.category].counts.partial++;
+    else if (result.status === 'non-compliant') {
+      categories[reg.category].counts.nonCompliant++;
+      categories[reg.category].counts.highRisk++;
     }
+  });
 
-    // Evidence / action block
-    let evidenceHTML = `<div class="evidence-cell">${result.evidence}`;
-    if (result.quote) {
-      evidenceHTML += `<div class="evidence-quote">"${result.quote}"</div>`;
-    }
-    if (result.action && result.status === 'non-compliant') {
-      evidenceHTML += `<div class="evidence-action">&#9889; ${result.action}</div>`;
-    } else if (result.action && result.status === 'partial') {
-      evidenceHTML += `<div class="evidence-warn">&#9888;&#65039; ${result.action}</div>`;
-    }
-    evidenceHTML += '</div>';
+  Object.values(categories).forEach(cat => {
+    // Create theme group wrapper
+    const groupElement = document.createElement('div');
+    groupElement.className = 'theme-group';
 
-    // Doc chip
-    let docChipHTML = '';
-    if (reg.relatedDoc) {
-      const docLabel = DOC_LABELS[reg.relatedDoc] || reg.relatedDoc;
-      docChipHTML = `<div class="doc-chip" data-doc="${reg.relatedDoc}">&#128196; ${docLabel}</div>`;
-    }
+    // Create category divider
+    const divider = document.createElement('div');
+    divider.className = 'category-divider collapsed';
 
-    row.innerHTML = `
-      <div class="row-num">${String(rowNum).padStart(2, '0')}</div>
-      <div>
-        <div class="reg-name">${reg.name}</div>
-        <div class="reg-citation">${citationLink(reg.citation)}</div>
-        ${docChipHTML}
-      </div>
-      <div class="reg-trigger">${reg.trigger}</div>
-      <div>
-        <div class="status-badge ${result.status}">
-          <div class="status-dot"></div>
-          ${statusLabel(result.status)}
-        </div>
-      </div>
-      ${evidenceHTML}
-      <span class="chevron">&#9660;</span>
-      <div class="row-detail" id="detail-${reg.id}">
-        <div class="detail-grid">
-          <div class="detail-box">
-            <div class="detail-box-title">Validation Logic</div>
-            <div class="detail-box-body">${reg.trigger}</div>
-          </div>
-          <div class="detail-box">
-            <div class="detail-box-title">Citation</div>
-            <div class="detail-box-body">${citationLink(reg.citation)}</div>
-          </div>
-          ${reg.relatedDoc ? `
-          <div class="detail-box">
-            <div class="detail-box-title">Related Document</div>
-            <div class="detail-box-body">
-              <span class="doc-chip" data-doc="${reg.relatedDoc}" style="margin:0">&#128196; ${DOC_LABELS[reg.relatedDoc] || reg.relatedDoc}</span>
+    let itemsHTML = '<div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: stretch; justify-content: flex-start; width: 100%;">';
+
+    cat.items.forEach(item => {
+      const { reg, result } = item;
+      let boxClass = '';
+      let icon = '';
+      let safetyIndicator = '';
+      let isHighRisk = false;
+
+      if (result.status === 'compliant') {
+        boxClass = 'green';
+        icon = '&#10004;&#65039;';
+        safetyIndicator = 'Safe';
+      } else if (result.status === 'partial') {
+        boxClass = 'amber';
+        icon = '&#9888;&#65039;';
+        safetyIndicator = 'Partial';
+      } else {
+        boxClass = 'red';
+        icon = '&#10060;';
+        safetyIndicator = 'High Risk';
+        isHighRisk = true;
+      }
+
+      const tooltipContent = `Evidence: ${result.evidence || 'N/A'}`;
+
+      itemsHTML += `
+        <div class="pill-tooltip" data-rule-id="${reg.id}">
+          <div class="item-pill ${boxClass} ${isHighRisk ? 'pulse-risk' : ''}" style="${isHighRisk ? 'box-shadow: 0 0 6px rgba(239,68,68,0.5); border: 1px solid rgba(239,68,68,0.8);' : ''}">
+            <div style="display:flex; justify-content:flex-start; align-items:center; gap: 6px; margin-bottom: 8px; font-weight: 700; font-size: 13px;">
+              ${icon} <span>${safetyIndicator}</span>
             </div>
-          </div>` : ''}
-          ${result.action ? `
-          <div class="detail-box">
-            <div class="detail-box-title">Recommended Action</div>
-            <div class="detail-box-body" style="color:${result.status === 'non-compliant' ? 'var(--red)' : 'var(--amber)'}">${result.action}</div>
-          </div>` : ''}
+            <div class="pill-title">${reg.name}</div>
+            <div class="pill-cite">${reg.citation}</div>
+          </div>
+          <span class="tooltiptext">${tooltipContent}</span>
         </div>
-      </div>
-    `;
+      `;
+    });
+    itemsHTML += '</div>';
 
-    // Row click → expand/collapse
-    row.addEventListener('click', (e) => {
-      // Don't expand if clicking doc chip or citation link
-      if (e.target.closest('.doc-chip')) return;
-      if (e.target.closest('.citation-link')) return;
-      row.classList.toggle('expanded');
-      const detail = row.querySelector('.row-detail');
-      detail.classList.toggle('open');
+    divider.innerHTML = `
+      <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+        <div class="category-tag">${cat.name}</div>
+        <span class="theme-chevron">&#9660;</span>
+      </div>
+      ${itemsHTML}
+    `;
+    groupElement.appendChild(divider);
+
+    // Create content wrapper
+    const contentElement = document.createElement('div');
+    contentElement.className = 'theme-content collapsed';
+
+    // Add table header for this theme group
+    const headerRow = document.createElement('div');
+    headerRow.className = 'table-header-row';
+    headerRow.style.background = 'var(--surface)';
+    headerRow.innerHTML = `
+      <div class="th">#</div>
+      <div class="th">Regulation / Artifact</div>
+      <div class="th">Trigger Condition</div>
+      <div class="th">Status &amp; Evidence</div>
+    `;
+    contentElement.appendChild(headerRow);
+
+    // Toggle logic
+    divider.addEventListener('click', (e) => {
+      const collapseOthers = () => {
+        const allContents = $tableBody.querySelectorAll('.theme-content');
+        const allDividers = $tableBody.querySelectorAll('.category-divider');
+        allContents.forEach(c => {
+          if (c !== contentElement) c.classList.add('collapsed');
+        });
+        allDividers.forEach(d => {
+          if (d !== divider) d.classList.add('collapsed');
+        });
+      };
+
+      const tooltip = e.target.closest('.pill-tooltip');
+      if (tooltip) {
+        e.stopPropagation();
+        const ruleId = tooltip.getAttribute('data-rule-id');
+
+        // Accordion: Ensure others are closed
+        collapseOthers();
+
+        // Ensure current category is expanded
+        contentElement.classList.remove('collapsed');
+        divider.classList.remove('collapsed');
+
+        // Find and highlight specific rule row
+        const ruleRow = contentElement.querySelector(`.reg-row[data-id="${ruleId}"]`);
+        if (ruleRow) {
+          setTimeout(() => {
+            ruleRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            ruleRow.classList.add('expanded');
+            const detail = ruleRow.querySelector('.row-detail');
+            if (detail) detail.classList.add('open');
+
+            ruleRow.style.backgroundColor = 'rgba(59,130,246,0.1)';
+            setTimeout(() => { ruleRow.style.backgroundColor = ''; }, 1500);
+          }, 50); // small delay to allow expansion rendering
+        }
+        return;
+      }
+
+      const isCurrentlyCollapsed = contentElement.classList.contains('collapsed');
+      if (isCurrentlyCollapsed) {
+        // Accordion: close others before opening this one
+        collapseOthers();
+        contentElement.classList.remove('collapsed');
+        divider.classList.remove('collapsed');
+      } else {
+        // Just collapse this one if it's already open
+        contentElement.classList.add('collapsed');
+        divider.classList.add('collapsed');
+      }
     });
 
-    $tableBody.appendChild(row);
+    cat.items.forEach(item => {
+      const { reg, result } = item;
+      rowNum++;
+
+      // Build row
+      const row = document.createElement('div');
+      row.className = 'reg-row';
+      row.setAttribute('data-id', reg.id);
+      row.setAttribute('data-status', result.status);
+      row.setAttribute('data-level', reg.level);
+
+      if (animate) {
+        row.classList.add('scanning');
+        row.style.animationDelay = (rowNum * 30) + 'ms';
+      }
+
+      // Evidence / action block
+      let evidenceHTML = `<div class="evidence-cell">${result.evidence}`;
+      if (result.quote) {
+        evidenceHTML += `<div class="evidence-quote">"${result.quote}"</div>`;
+      }
+      if (result.action && result.status === 'non-compliant') {
+        evidenceHTML += `<div class="evidence-action">&#9889; ${result.action}</div>`;
+      } else if (result.action && result.status === 'partial') {
+        evidenceHTML += `<div class="evidence-warn">&#9888;&#65039; ${result.action}</div>`;
+      }
+      evidenceHTML += '</div>';
+
+      // Doc chip
+      let docChipHTML = '';
+      if (reg.relatedDoc) {
+        const docLabel = DOC_LABELS[reg.relatedDoc] || reg.relatedDoc;
+        docChipHTML = `<div class="doc-chip" data-doc="${reg.relatedDoc}">&#128196; ${docLabel}</div>`;
+      }
+
+      row.innerHTML = `
+        <div class="row-num">${String(rowNum).padStart(2, '0')}</div>
+        <div>
+          <div class="reg-name">${reg.name}</div>
+          <div class="reg-citation">${citationLink(reg.citation)}</div>
+          ${docChipHTML}
+        </div>
+        <div class="reg-trigger">${reg.trigger}</div>
+        <div class="status-evidence-cell">
+          <div>
+            <div class="status-badge ${result.status}">
+              <div class="status-dot"></div>
+              ${statusLabel(result.status)}
+            </div>
+          </div>
+          ${evidenceHTML}
+        </div>
+        <span class="chevron">&#9660;</span>
+        <div class="row-detail" id="detail-${reg.id}">
+          <div class="detail-grid">
+            <div class="detail-box">
+              <div class="detail-box-title">Validation Logic</div>
+              <div class="detail-box-body">${reg.trigger}</div>
+            </div>
+            <div class="detail-box">
+              <div class="detail-box-title">Citation</div>
+              <div class="detail-box-body">${citationLink(reg.citation)}</div>
+            </div>
+            ${reg.relatedDoc ? `
+            <div class="detail-box">
+              <div class="detail-box-title">Related Document</div>
+              <div class="detail-box-body">
+                <span class="doc-chip" data-doc="${reg.relatedDoc}" style="margin:0">&#128196; ${DOC_LABELS[reg.relatedDoc] || reg.relatedDoc}</span>
+              </div>
+            </div>` : ''}
+            ${result.action ? `
+            <div class="detail-box">
+              <div class="detail-box-title">Recommended Action</div>
+              <div class="detail-box-body" style="color:${result.status === 'non-compliant' ? 'var(--red)' : 'var(--amber)'}">${result.action}</div>
+            </div>` : ''}
+          </div>
+        </div>
+      `;
+
+      // Row click → expand/collapse
+      row.addEventListener('click', (e) => {
+        // Don't expand if clicking doc chip or citation link
+        if (e.target.closest('.doc-chip')) return;
+        if (e.target.closest('.citation-link')) return;
+        row.classList.toggle('expanded');
+        const detail = row.querySelector('.row-detail');
+        detail.classList.toggle('open');
+      });
+
+      contentElement.appendChild(row);
+    });
+
+    groupElement.appendChild(contentElement);
+    $tableBody.appendChild(groupElement);
   });
 
   // Attach doc chip handlers
