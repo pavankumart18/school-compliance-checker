@@ -157,15 +157,15 @@ function renderTable(animate) {
       if (result.status === 'compliant') {
         boxClass = 'green';
         icon = '&#10004;&#65039;';
-        safetyIndicator = 'Safe';
+        safetyIndicator = 'Fully Compliant';
       } else if (result.status === 'partial') {
         boxClass = 'amber';
         icon = '&#9888;&#65039;';
-        safetyIndicator = 'Partial';
+        safetyIndicator = 'Partial Compliance';
       } else {
         boxClass = 'red';
         icon = '&#10060;';
-        safetyIndicator = 'High Risk';
+        safetyIndicator = 'Non-Complaint';
         isHighRisk = true;
       }
 

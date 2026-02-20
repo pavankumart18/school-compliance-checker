@@ -479,7 +479,7 @@ body::before {
   padding: 10px 14px;
   position: absolute;
   z-index: 1000;
-  bottom: 150%;
+  bottom: calc(100% + 10px);
   left: 0;
   transform: none;
   opacity: 0;
