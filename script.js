@@ -74,9 +74,9 @@ function getReg(regId) {
 }
 
 function statusLabel(status) {
-  if (status === 'compliant') return 'Compliant';
+  if (status === 'compliant') return 'Fully Compliant';
   if (status === 'non-compliant') return 'Non-Compliant';
-  if (status === 'partial') return 'Partial';
+  if (status === 'partial') return 'Partial Compliant';
   return status;
 }
 
@@ -145,7 +145,7 @@ function renderTable(animate) {
     const divider = document.createElement('div');
     divider.className = 'category-divider collapsed';
 
-    let itemsHTML = '<div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: stretch; justify-content: flex-start; width: 100%;">';
+    let itemsHTML = '<div style="display: flex; flex-wrap: wrap; overflow: visible; gap: 10px; align-items: stretch; justify-content: flex-start; width: 100%; padding-bottom: 4px;">';
 
     cat.items.forEach(item => {
       const { reg, result } = item;
@@ -187,11 +187,15 @@ function renderTable(animate) {
     itemsHTML += '</div>';
 
     divider.innerHTML = `
-      <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-        <div class="category-tag">${cat.name}</div>
-        <span class="theme-chevron">&#9660;</span>
+      <div style="display: flex; flex-direction: row; align-items: flex-start; width: 100%; gap: 16px;">
+        <div class="category-tag-wrapper" style="width: 250px; flex-shrink: 0; padding-top: 2px;">
+          <div class="category-tag">${cat.name}</div>
+        </div>
+        <div style="flex-grow: 1; min-width: 0;">
+          ${itemsHTML}
+        </div>
+        <span class="theme-chevron" style="flex-shrink: 0; align-self: center;">&#9660;</span>
       </div>
-      ${itemsHTML}
     `;
     groupElement.appendChild(divider);
 

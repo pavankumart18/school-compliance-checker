@@ -512,15 +512,15 @@ body::before {
 
 /* Item dot pills for individual rules */
 .item-pill {
-  width: 220px;
+  width: 175px;
   height: 100%;
-  min-height: 90px;
+  min-height: 80px;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   justify-content: flex-start;
-  padding: 12px;
+  padding: 10px;
   font-size: 11px;
   text-align: left;
   border: 1px solid transparent;

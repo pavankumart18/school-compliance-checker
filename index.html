@@ -21,7 +21,7 @@
       <div class="logo-badge">&#127963;</div>
       <div>
         <div class="header-title">ComplianceIQ</div>
-        <div class="header-subtitle">FLORIDA PRIVATE SCHOOL &middot; POLICY AS CODE</div>
+        <div class="header-subtitle">FLORIDA PRIVATE SCHOOL</div>
       </div>
     </div>
     <div class="header-right">
@@ -53,19 +53,28 @@
         Windermere Preparatory
       </button>
     </div>
-    <div class="overall-score" id="overallScore">
-      <span class="score-label">COMPLIANCE SCORE</span>
-      <span class="score-val" id="scoreVal">—</span>
-    </div>
   </div>
 
   <!-- SUMMARY STRIP -->
   <div class="summary-strip">
     <div class="stat-card">
+      <div style="display: flex; flex-direction: column; justify-content: center; height: 100%; gap: 6px;">
+        <div class="stat-label">COMPLIANCE SCORE</div>
+        <div class="score-val" id="scoreVal" style="font-size: 32px;">—</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon blue">&#128196;</div>
+      <div>
+        <div class="stat-num" id="countTotal">—</div>
+        <div class="stat-label">Total Regulations Checked</div>
+      </div>
+    </div>
+    <div class="stat-card">
       <div class="stat-icon green">&#10004;&#65039;</div>
       <div>
         <div class="stat-num" id="countCompliant">—</div>
-        <div class="stat-label">Compliant</div>
+        <div class="stat-label">Fully Compliant</div>
       </div>
     </div>
     <div class="stat-card">
@@ -80,13 +89,6 @@
       <div>
         <div class="stat-num" id="countNon">—</div>
         <div class="stat-label">Non-Compliant</div>
-      </div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-icon blue">&#128196;</div>
-      <div>
-        <div class="stat-num" id="countTotal">—</div>
-        <div class="stat-label">Total Regulations Checked</div>
       </div>
     </div>
   </div>
