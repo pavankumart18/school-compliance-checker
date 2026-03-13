@@ -69,7 +69,7 @@
     "name": "Affidavit of Good Moral Character",
     "trigger": "Every new hire — notarized before start date",
     "citation": "s. 1002.421(1)(m), F.S.",
-    "relatedDoc": "VECHS_Clearance_Log.pdf"
+    "relatedDoc": "Affidavit_Good_Moral_Character_Log.pdf"
   },
   {
     "id": "PER-004",
@@ -78,7 +78,7 @@
     "name": "Ethics Policy Acknowledgement (Annual)",
     "trigger": "Teachers and Admin — signed annually",
     "citation": "s. 1012.796, F.S.",
-    "relatedDoc": null
+    "relatedDoc": "Ethics_Policy_Acknowledgement_Log.pdf"
   },
   {
     "id": "HLT-001",

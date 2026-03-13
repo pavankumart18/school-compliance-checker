@@ -10,6 +10,18 @@ let currentSchool = 0;
 let currentFilter = 'all';
 
 const SCHOOL_PDF_FOLDERS = ['north_broward', 'windermere'];
+const DEMO_FOCUS_BY_SCHOOL = [
+  [
+    { id: 'PER-002', label: 'Teacher Qualifications (Partial)' },
+    { id: 'IRS-002', label: 'Cash Tuition Filing (Non-Compliant)' },
+    { id: 'ADM-001', label: 'Annual Survey + Notary (Compliant)' }
+  ],
+  [
+    { id: 'PER-002', label: 'Teacher Qualifications (Partial)' },
+    { id: 'IRS-001', label: 'BOI Filing Missing (Non-Compliant)' },
+    { id: 'ADM-002', label: 'Instruction Calendar (Compliant)' }
+  ]
+];
 
 // Friendly labels for doc chips
 const DOC_LABELS = {
@@ -19,7 +31,9 @@ const DOC_LABELS = {
   'Fire_Safety_Inspection.pdf': 'Fire Inspection PDF',
   'Teacher_Qualifications.pdf': 'Teacher Quals PDF',
   'SEVIS_I20_Log.pdf': 'SEVIS I-20 PDF',
-  'SCF1_Scholarship_Form.pdf': 'SCF-1 Form PDF'
+  'SCF1_Scholarship_Form.pdf': 'SCF-1 Form PDF',
+  'Affidavit_Good_Moral_Character_Log.pdf': 'Good Moral Character Affidavit Log',
+  'Ethics_Policy_Acknowledgement_Log.pdf': 'Ethics Acknowledgement Log'
 };
 
 // ---- DOM refs ----
@@ -49,6 +63,7 @@ const $scanProgress = document.getElementById('scanProgress');
     schoolData[1] = await wmRes.json();
 
     updateDashboard();
+    updateDemoFocusBar();
     renderTable();
   } catch (err) {
     console.error('Data load error:', err);
@@ -83,6 +98,86 @@ function statusLabel(status) {
 function citationLink(citation) {
   const url = 'https://www.google.com/search?q=' + encodeURIComponent(citation);
   return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="citation-link" title="Search Google for ${citation}">${citation}</a>`;
+}
+
+function escapeHtml(value) {
+  return String(value || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function getFileExtension(filename) {
+  const parts = String(filename || '').toLowerCase().split('.');
+  return parts.length > 1 ? parts.pop() : '';
+}
+
+function docGlyph(filename) {
+  const ext = getFileExtension(filename);
+  if (ext === 'pdf') return '&#128196;';
+  if (ext === 'doc' || ext === 'docx') return '&#128221;';
+  if (ext === 'xls' || ext === 'xlsx' || ext === 'csv') return '&#128202;';
+  if (['png', 'jpg', 'jpeg', 'webp', 'gif', 'svg'].includes(ext)) return '&#128247;';
+  return '&#128196;';
+}
+
+function buildEvidenceGroups(reg, result) {
+  const groups = [];
+  if (Array.isArray(result.evidenceGroups) && result.evidenceGroups.length) {
+    result.evidenceGroups.forEach(group => {
+      if (!group || !Array.isArray(group.items) || !group.items.length) return;
+      groups.push({
+        title: group.title || 'Evidence',
+        items: group.items
+      });
+    });
+  }
+
+  if (!groups.length && reg.relatedDoc) {
+    groups.push({
+      title: 'Primary Evidence',
+      items: [{ name: reg.relatedDoc, label: DOC_LABELS[reg.relatedDoc] || reg.relatedDoc, state: 'present' }]
+    });
+  }
+
+  if (!groups.length) {
+    groups.push({
+      title: 'Primary Evidence',
+      items: [{ name: 'Compliance_Audit_Workpaper_2025.pdf', label: 'Audit Workpaper Extract', state: 'present' }]
+    });
+  }
+  return groups;
+}
+
+function renderEvidenceDocs(reg, result) {
+  const groups = buildEvidenceGroups(reg, result);
+  if (!groups.length) {
+    return '<div class="evidence-docs-empty">No supporting documents linked yet.</div>';
+  }
+
+  return `
+    <div class="evidence-groups">
+      ${groups.map(group => `
+        <div class="evidence-group">
+          <div class="evidence-group-title">${escapeHtml(group.title)}</div>
+          <div class="evidence-doc-list">
+            ${group.items.map(item => {
+              const fileName = item.name || '';
+              const label = item.label || fileName || 'Unnamed document';
+              const isMissing = item.state === 'missing';
+              const missingTag = isMissing ? '<span class="missing-tag">Missing</span>' : '';
+              if (isMissing) {
+                return `<span class="doc-chip evidence-doc missing-doc" title="Document not found in file set">${docGlyph(fileName)} ${escapeHtml(label)} ${missingTag}</span>`;
+              }
+              return `<button type="button" class="doc-chip evidence-doc" data-doc="${escapeHtml(fileName)}" title="Open ${escapeHtml(label)}">${docGlyph(fileName)} ${escapeHtml(label)}</button>`;
+            }).join('')}
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
 }
 
 // ---- Dashboard Update ----
@@ -165,12 +260,11 @@ function renderTable(animate) {
       } else {
         boxClass = 'red';
         icon = '&#10060;';
-        safetyIndicator = 'Non-Complaint';
+        safetyIndicator = 'Non-Compliant';
         isHighRisk = true;
       }
 
       const tooltipContent = `Evidence: ${result.evidence || 'N/A'}`;
-
       itemsHTML += `
         <div class="pill-tooltip" data-rule-id="${reg.id}">
           <div class="item-pill ${boxClass} ${isHighRisk ? 'pulse-risk' : ''}" style="${isHighRisk ? 'box-shadow: 0 0 6px rgba(239,68,68,0.5); border: 1px solid rgba(239,68,68,0.8);' : ''}">
@@ -301,13 +395,17 @@ function renderTable(animate) {
       let docChipHTML = '';
       if (reg.relatedDoc) {
         const docLabel = DOC_LABELS[reg.relatedDoc] || reg.relatedDoc;
-        docChipHTML = `<div class="doc-chip" data-doc="${reg.relatedDoc}">&#128196; ${docLabel}</div>`;
+        docChipHTML = `<button type="button" class="doc-chip" data-doc="${reg.relatedDoc}">&#128196; ${docLabel}</button>`;
       }
+
+      const evidenceDocsHTML = renderEvidenceDocs(reg, result);
 
       row.innerHTML = `
         <div class="row-num">${String(rowNum).padStart(2, '0')}</div>
         <div>
-          <div class="reg-name">${reg.name}</div>
+          <div class="reg-name-wrap">
+            <div class="reg-name">${reg.name}</div>
+          </div>
           <div class="reg-citation">${citationLink(reg.citation)}</div>
           ${docChipHTML}
         </div>
@@ -336,7 +434,7 @@ function renderTable(animate) {
             <div class="detail-box">
               <div class="detail-box-title">Related Document</div>
               <div class="detail-box-body">
-                <span class="doc-chip" data-doc="${reg.relatedDoc}" style="margin:0">&#128196; ${DOC_LABELS[reg.relatedDoc] || reg.relatedDoc}</span>
+                <button type="button" class="doc-chip" data-doc="${reg.relatedDoc}" style="margin:0">&#128196; ${DOC_LABELS[reg.relatedDoc] || reg.relatedDoc}</button>
               </div>
             </div>` : ''}
             ${result.action ? `
@@ -344,6 +442,12 @@ function renderTable(animate) {
               <div class="detail-box-title">Recommended Action</div>
               <div class="detail-box-body" style="color:${result.status === 'non-compliant' ? 'var(--red)' : 'var(--amber)'}">${result.action}</div>
             </div>` : ''}
+            <div class="detail-box evidence-docs-box">
+              <div class="detail-box-title">Evidence Documents</div>
+              <div class="detail-box-body">
+                ${evidenceDocsHTML}
+              </div>
+            </div>
           </div>
         </div>
       `;
@@ -370,7 +474,8 @@ function renderTable(animate) {
     chip.addEventListener('click', (e) => {
       e.stopPropagation();
       const docName = chip.getAttribute('data-doc');
-      openPdfPreview(docName);
+      if (!docName) return;
+      openDocumentPreview(docName);
     });
   });
 }
@@ -386,6 +491,59 @@ function matchesFilter(reg, result) {
   return true;
 }
 
+function setFilter(filter) {
+  currentFilter = filter;
+  document.querySelectorAll('.filter-chip').forEach(c => {
+    c.classList.toggle('active-filter', c.getAttribute('data-filter') === filter);
+  });
+  renderTable();
+}
+
+function updateDemoFocusBar() {
+  const bar = document.getElementById('demoFocusBar');
+  if (!bar) return;
+  const buttons = bar.querySelectorAll('.demo-focus-btn');
+  const config = DEMO_FOCUS_BY_SCHOOL[currentSchool] || DEMO_FOCUS_BY_SCHOOL[0];
+  buttons.forEach((btn, idx) => {
+    const entry = config[idx];
+    if (!entry) return;
+    btn.textContent = entry.label;
+    btn.setAttribute('data-focus-id', entry.id);
+    btn.classList.toggle('active-demo-focus', idx === 0);
+  });
+}
+
+function focusRuleCard(ruleId) {
+  if (!ruleId) return;
+
+  if (currentFilter !== 'all') {
+    setFilter('all');
+  }
+
+  const row = $tableBody.querySelector(`.reg-row[data-id="${ruleId}"]`);
+  if (!row) return;
+
+  const content = row.closest('.theme-content');
+  const divider = content ? content.previousElementSibling : null;
+  $tableBody.querySelectorAll('.theme-content').forEach(c => {
+    c.classList.toggle('collapsed', c !== content);
+  });
+  $tableBody.querySelectorAll('.category-divider').forEach(d => {
+    d.classList.toggle('collapsed', d !== divider);
+  });
+
+  if (content) content.classList.remove('collapsed');
+  if (divider) divider.classList.remove('collapsed');
+
+  row.classList.add('expanded');
+  const detail = row.querySelector('.row-detail');
+  if (detail) detail.classList.add('open');
+
+  row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  row.classList.add('focus-flash');
+  setTimeout(() => row.classList.remove('focus-flash'), 1500);
+}
+
 // ---- School Switching ----
 function selectSchool(idx) {
   currentSchool = idx;
@@ -396,6 +554,7 @@ function selectSchool(idx) {
   });
 
   updateDashboard();
+  updateDemoFocusBar();
   renderTable();
 }
 
@@ -471,31 +630,69 @@ function openDocs() {
   document.querySelectorAll('.doc-item').forEach(item => {
     item.addEventListener('click', (e) => {
       const docName = item.getAttribute('data-doc');
-      openPdfPreview(docName);
+      openDocumentPreview(docName);
     });
   });
 }
 
-// ---- PDF Preview ----
-function openPdfPreview(filename) {
+// ---- Document Preview ----
+function openDocumentPreview(filename) {
+  if (!filename) return;
   const folder = SCHOOL_PDF_FOLDERS[currentSchool];
-  const pdfPath = `./pdfs/${folder}/${filename}`;
+  const docPath = `./pdfs/${folder}/${filename}`;
+  const ext = getFileExtension(filename);
+  const isImage = ['png', 'jpg', 'jpeg', 'webp', 'gif', 'svg'].includes(ext);
+  const isTextLike = ['txt', 'csv', 'log', 'json', 'md'].includes(ext);
+  const canRenderInline = isImage || ext === 'pdf';
 
   document.getElementById('pdfModalTitle').innerHTML = `&#128196; ${filename}`;
 
   const wrap = document.getElementById('pdfIframeWrap');
-  wrap.innerHTML = `<iframe src="${pdfPath}" title="PDF Preview: ${filename}"></iframe>`;
+  if (isTextLike) {
+    wrap.innerHTML = `<pre class="doc-preview-text">Loading document...</pre>`;
+    fetch(docPath)
+      .then(resp => {
+        if (!resp.ok) throw new Error('Fetch failed');
+        return resp.text();
+      })
+      .then(text => {
+        wrap.innerHTML = `<pre class="doc-preview-text">${escapeHtml(text)}</pre>`;
+      })
+      .catch(() => {
+        wrap.innerHTML = `
+          <div class="pdf-error">
+            <div class="pdf-error-icon">&#128196;</div>
+            <div class="pdf-error-text">Could not load document</div>
+            <div class="pdf-error-sub">${docPath}</div>
+          </div>`;
+      });
+    openModal('pdfModal');
+    return;
+  }
 
-  // Handle iframe load error
-  const iframe = wrap.querySelector('iframe');
-  iframe.onerror = () => {
+  if (canRenderInline) {
+    wrap.innerHTML = isImage
+      ? `<img src="${docPath}" alt="Preview ${filename}" class="doc-preview-image">`
+      : `<iframe src="${docPath}" title="Document Preview: ${filename}"></iframe>`;
+
+    const previewEl = wrap.querySelector('iframe, img');
+    previewEl.onerror = () => {
+      wrap.innerHTML = `
+        <div class="pdf-error">
+          <div class="pdf-error-icon">&#128196;</div>
+          <div class="pdf-error-text">Could not load document</div>
+          <div class="pdf-error-sub">${docPath}</div>
+        </div>`;
+    };
+  } else {
     wrap.innerHTML = `
       <div class="pdf-error">
-        <div class="pdf-error-icon">&#128196;</div>
-        <div class="pdf-error-text">Could not load document</div>
-        <div class="pdf-error-sub">${pdfPath}</div>
+        <div class="pdf-error-icon">&#128194;</div>
+        <div class="pdf-error-text">Preview is not available for this file type</div>
+        <div class="pdf-error-sub">${docPath}</div>
+        <a class="doc-fallback-link" href="${docPath}" target="_blank" rel="noopener noreferrer">Open file in new tab</a>
       </div>`;
-  };
+  }
 
   openModal('pdfModal');
 }
@@ -526,11 +723,20 @@ document.getElementById('schoolTabs').addEventListener('click', (e) => {
 document.getElementById('filterBar').addEventListener('click', (e) => {
   const chip = e.target.closest('.filter-chip');
   if (!chip) return;
-  currentFilter = chip.getAttribute('data-filter');
-  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active-filter'));
-  chip.classList.add('active-filter');
-  renderTable();
+  setFilter(chip.getAttribute('data-filter'));
 });
+
+const demoFocusBar = document.getElementById('demoFocusBar');
+if (demoFocusBar) {
+  demoFocusBar.addEventListener('click', (e) => {
+    const btn = e.target.closest('.demo-focus-btn');
+    if (!btn) return;
+    demoFocusBar.querySelectorAll('.demo-focus-btn').forEach(b => {
+      b.classList.toggle('active-demo-focus', b === btn);
+    });
+    focusRuleCard(btn.getAttribute('data-focus-id'));
+  });
+}
 
 // Header buttons
 document.getElementById('btnRules').addEventListener('click', openRules);

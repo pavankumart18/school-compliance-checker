@@ -10,12 +10,54 @@
     "non_compliant": 7
   },
   "documents": [
-    { "name": "Annual_Survey_2025.pdf", "label": "Annual Private School Survey 2024-25", "desc": "Survey submitted May 3, 2025 — MISSING notary seal — under review", "size": "33 KB" },
-    { "name": "VECHS_Clearance_Log.pdf", "label": "FDLE VECHS Clearance Log — All Staff", "desc": "1 expired screening (J. Martinez — last screened June 2019, 5yr 8mo ago)", "size": "27 KB" },
-    { "name": "DH684_Immunization_Report.pdf", "label": "Form DH-684 Immunization Report 2024", "desc": "K grade complete — 7th grade data missing — submission incomplete", "size": "18 KB" },
-    { "name": "Fire_Safety_Inspection.pdf", "label": "Fire Safety Inspection Report 2025", "desc": "Inspection Feb 2025 — 2 minor violations — reinspection pending", "size": "22 KB" },
-    { "name": "Teacher_Qualifications.pdf", "label": "Teacher Qualification Records", "desc": "3 teachers missing bachelor's degree or 3yr experience documentation", "size": "38 KB" },
-    { "name": "SCF1_Scholarship_Form.pdf", "label": "Scholarship Compliance Form SCF-1", "desc": "Filed March 8, 2025 — MISSED March 1 deadline by 7 days", "size": "15 KB" }
+    {
+      "name": "Annual_Survey_2025.pdf",
+      "label": "Annual Private School Survey 2024-25",
+      "desc": "Survey submitted May 3, 2025 — MISSING notary seal — under review",
+      "size": "33 KB"
+    },
+    {
+      "name": "VECHS_Clearance_Log.pdf",
+      "label": "FDLE VECHS Clearance Log — All Staff",
+      "desc": "1 expired screening (J. Martinez — last screened June 2019, 5yr 8mo ago)",
+      "size": "27 KB"
+    },
+    {
+      "name": "DH684_Immunization_Report.pdf",
+      "label": "Form DH-684 Immunization Report 2024",
+      "desc": "K grade complete — 7th grade data missing — submission incomplete",
+      "size": "18 KB"
+    },
+    {
+      "name": "Fire_Safety_Inspection.pdf",
+      "label": "Fire Safety Inspection Report 2025",
+      "desc": "Inspection Feb 2025 — 2 minor violations — reinspection pending",
+      "size": "22 KB"
+    },
+    {
+      "name": "Teacher_Qualifications.pdf",
+      "label": "Teacher Qualification Records",
+      "desc": "3 teachers missing bachelor's degree or 3yr experience documentation",
+      "size": "38 KB"
+    },
+    {
+      "name": "SCF1_Scholarship_Form.pdf",
+      "label": "Scholarship Compliance Form SCF-1",
+      "desc": "Filed March 8, 2025 — MISSED March 1 deadline by 7 days",
+      "size": "15 KB"
+    },
+    {
+      "name": "Affidavit_Good_Moral_Character_Log.pdf",
+      "label": "Affidavit of Good Moral Character Log",
+      "desc": "6 new hires reviewed; 2 notarized after start date (flagged)",
+      "size": "9 KB"
+    },
+    {
+      "name": "Ethics_Policy_Acknowledgement_Log.pdf",
+      "label": "Ethics Policy Acknowledgement Log",
+      "desc": "41/47 signatures complete; 6 outstanding acknowledgements",
+      "size": "32 KB"
+    }
   ],
   "results": [
     {
@@ -23,14 +65,43 @@
       "status": "non-compliant",
       "evidence": "Survey submitted May 3, 2025 — 2 days past the May 1st statutory deadline. Additionally, notary seal is missing from the filed document.",
       "quote": null,
-      "action": "Resubmit survey with proper notarization immediately. Contact FLDOE to request late-filing waiver. Risk: scholarship eligibility jeopardized for 2025-26 academic year."
+      "action": "Resubmit survey with proper notarization immediately. Contact FLDOE to request late-filing waiver. Risk: scholarship eligibility jeopardized for 2025-26 academic year.",
+      "evidenceGroups": [
+        {
+          "title": "Survey Filing",
+          "items": [
+            {
+              "name": "Annual_Survey_2025.pdf",
+              "label": "Annual Survey Submission",
+              "state": "present"
+            },
+            {
+              "name": "Annual_Survey_Notary_Deficiency_Notice.pdf",
+              "label": "Notary Deficiency Notice",
+              "state": "present"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "ADM-002",
       "status": "compliant",
       "evidence": "180 instructional days scheduled. Daily attendance register verified current through Feb 14, 2025.",
       "quote": "Page 1: 'Academic calendar 2024-25: 180 instructional days. Attendance log updated daily by admin office.'",
-      "action": null
+      "action": null,
+      "evidenceGroups": [
+        {
+          "title": "Instruction Calendar",
+          "items": [
+            {
+              "name": "Instruction_Calendar_2024_25.pdf",
+              "label": "Instruction Calendar (180 Days)",
+              "state": "present"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "ADM-003",
@@ -58,35 +129,232 @@
       "status": "non-compliant",
       "evidence": "1 staff member (J. Martinez, Physical Education) last screened June 2019 — 5 years 8 months ago. Exceeded the 5-year VECHS renewal limit by 8 months.",
       "quote": null,
-      "action": "Remove J. Martinez from ALL student-contact duties immediately. Initiate emergency VECHS rescreening through FDLE Clearinghouse portal. This is a Level 1 personnel violation."
+      "action": "Remove J. Martinez from ALL student-contact duties immediately. Initiate emergency VECHS rescreening through FDLE Clearinghouse portal. This is a Level 1 personnel violation.",
+      "evidenceGroups": [
+        {
+          "title": "Background Screening Records",
+          "items": [
+            {
+              "name": "VECHS_Clearance_Log.pdf",
+              "label": "VECHS Master Clearance Log",
+              "state": "present"
+            },
+            {
+              "name": "VECHS_Record_Martinez_J.pdf",
+              "label": "VECHS Record - J. Martinez",
+              "state": "present"
+            }
+          ]
+        },
+        {
+          "title": "System Exports",
+          "items": [
+            {
+              "name": "VECHS_Export_2025.json",
+              "label": "VECHS Eligibility Export (JSON)",
+              "state": "present"
+            }
+          ]
+        },
+        {
+          "title": "Personnel Master Data",
+          "items": [
+            {
+              "name": "VECHS_Clearance_Log.pdf",
+              "label": "VECHS Clearance Master Log",
+              "state": "present"
+            },
+            {
+              "name": "Staff_Roster_2024_25.csv",
+              "label": "Staff Roster Export (CSV)",
+              "state": "present"
+            },
+            {
+              "name": "VECHS_Export_2025.json",
+              "label": "VECHS Eligibility Export (JSON)",
+              "state": "present"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "PER-002",
       "status": "partial",
       "evidence": "44 of 47 teachers have complete qualification files. 3 teachers have incomplete documentation — degrees referenced in contracts but transcripts not on file.",
       "quote": "Page 5: 'Faculty qualification audit: 44/47 PASS — 3 PENDING: Rodriguez (transcript), Kim (exp. verification), Davis (transcript)'",
-      "action": "Collect official transcripts from 3 teachers within 30 days. Acceptable alternative: Employment verification letters documenting 3+ years experience."
+      "action": "Collect official transcripts from 3 teachers within 30 days. Acceptable alternative: Employment verification letters documenting 3+ years experience.",
+      "demoHighlight": true,
+      "demoTag": "Demo Story",
+      "evidenceGroups": [
+        {
+          "title": "Teacher Contracts",
+          "items": [
+            {
+              "name": "Teacher_Contract_Rodriguez.pdf",
+              "label": "Contract - S. Rodriguez",
+              "state": "present"
+            },
+            {
+              "name": "Teacher_Contract_Kim.pdf",
+              "label": "Contract - Y. Kim",
+              "state": "present"
+            },
+            {
+              "name": "Teacher_Contract_Davis.pdf",
+              "label": "Contract - J. Davis",
+              "state": "present"
+            }
+          ]
+        },
+        {
+          "title": "Degree Certificates",
+          "items": [
+            {
+              "name": "Degree_Certificate_Rodriguez.pdf",
+              "label": "Degree Certificate - S. Rodriguez",
+              "state": "present"
+            },
+            {
+              "name": "Degree_Certificate_Kim.pdf",
+              "label": "Degree Certificate - Y. Kim",
+              "state": "present"
+            },
+            {
+              "name": "Degree_Certificate_Davis.pdf",
+              "label": "Degree Certificate - J. Davis",
+              "state": "present"
+            }
+          ]
+        },
+        {
+          "title": "Missing Documents",
+          "items": [
+            {
+              "name": "Transcript_Rodriguez.pdf",
+              "label": "Transcript - S. Rodriguez",
+              "state": "missing"
+            },
+            {
+              "name": "Transcript_Kim.pdf",
+              "label": "Transcript - Y. Kim",
+              "state": "missing"
+            },
+            {
+              "name": "Transcript_Davis.pdf",
+              "label": "Transcript - J. Davis",
+              "state": "missing"
+            }
+          ]
+        },
+        {
+          "title": "Raw Source Data",
+          "items": [
+            {
+              "name": "Teacher_Qualification_Audit_Sheet.csv",
+              "label": "Teacher Qualification Audit Sheet (CSV)",
+              "state": "present"
+            }
+          ]
+        },
+        {
+          "title": "Qualification Master File",
+          "items": [
+            {
+              "name": "Teacher_Qualifications.pdf",
+              "label": "Teacher Qualification Records",
+              "state": "present"
+            },
+            {
+              "name": "Teacher_Qualification_Audit_Sheet.csv",
+              "label": "Qualification Audit Sheet (CSV)",
+              "state": "present"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "PER-003",
       "status": "partial",
       "evidence": "4 of 6 new hires signed affidavits correctly. 2 were notarized 1 and 3 days after their respective start dates — technically non-compliant.",
       "quote": "Page 4: 'New hire affidavit compliance: 4/6 timely — 2 late notarizations flagged for corrective action'",
-      "action": "Retroactive notarization does not satisfy the statute. Document the gap and ensure all future hires complete notarization before Day 1."
+      "action": "Retroactive notarization does not satisfy the statute. Document the gap and ensure all future hires complete notarization before Day 1.",
+      "evidenceGroups": [
+        {
+          "title": "Affidavit Compliance Log",
+          "items": [
+            {
+              "name": "Affidavit_Good_Moral_Character_Log.pdf",
+              "label": "Affidavit Log (New Hires)",
+              "state": "present"
+            },
+            {
+              "name": "New_Hire_Affidavit_Tracker.csv",
+              "label": "Affidavit Tracker (CSV)",
+              "state": "present"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "PER-004",
       "status": "partial",
       "evidence": "41 of 47 staff have signed the 2024-25 Ethics Policy acknowledgement. 6 signatures outstanding — 3 part-time staff and 3 recent hires.",
       "quote": "Page 3: 'Ethics acknowledgement: 41/47 signed — 6 outstanding as of Feb 10, 2025'",
-      "action": "Collect outstanding 6 signatures within 2 weeks. Part-time and seasonal staff are NOT exempt from this requirement under s. 1012.796."
+      "action": "Collect outstanding 6 signatures within 2 weeks. Part-time and seasonal staff are NOT exempt from this requirement under s. 1012.796.",
+      "evidenceGroups": [
+        {
+          "title": "Ethics Acknowledgement Records",
+          "items": [
+            {
+              "name": "Ethics_Policy_Acknowledgement_Log.pdf",
+              "label": "Ethics Signature Log",
+              "state": "present"
+            },
+            {
+              "name": "Ethics_Acknowledgement_Register.csv",
+              "label": "Ethics Register (CSV)",
+              "state": "present"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "HLT-001",
       "status": "non-compliant",
       "evidence": "DH-684 submitted for Kindergarten ONLY. Grade 7 immunization data was not included in the October submission. 7th grade Tdap compliance data is entirely missing.",
       "quote": null,
-      "action": "File amended DH-684 including 7th Grade Tdap data immediately with Orange County DOH. Contact: 407-858-1400. Statutory deadline was Oct 1 — already past deadline."
+      "action": "File amended DH-684 including 7th Grade Tdap data immediately with Orange County DOH. Contact: 407-858-1400. Statutory deadline was Oct 1 — already past deadline.",
+      "evidenceGroups": [
+        {
+          "title": "Immunization Submission Evidence",
+          "items": [
+            {
+              "name": "DH684_Immunization_Report.pdf",
+              "label": "DH-684 Submitted Form",
+              "state": "present"
+            },
+            {
+              "name": "DH684_Grade7_Missing_Notice.pdf",
+              "label": "Grade 7 Missing Data Notice",
+              "state": "present"
+            }
+          ]
+        },
+        {
+          "title": "Raw Source Data",
+          "items": [
+            {
+              "name": "DH684_Submission_Extract.csv",
+              "label": "DH-684 Submission Extract (CSV)",
+              "state": "present"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "HLT-002",
@@ -163,7 +431,34 @@
       "status": "non-compliant",
       "evidence": "FMLA WH-1420 poster was NOT found during facility walkthrough of staff areas. Handbook references FMLA (Section 5.1) but does not include the required full policy text.",
       "quote": null,
-      "action": "Purchase and post current WH-1420 poster (free download: dol.gov/fmla). Update staff handbook Section 5.1 with complete FMLA policy text. Penalty risk: up to $189/day per violation."
+      "action": "Purchase and post current WH-1420 poster (free download: dol.gov/fmla). Update staff handbook Section 5.1 with complete FMLA policy text. Penalty risk: up to $189/day per violation.",
+      "evidenceGroups": [
+        {
+          "title": "Poster Verification",
+          "items": [
+            {
+              "name": "FMLA_Poster_Walkthrough_Report.pdf",
+              "label": "Facility Walkthrough Report",
+              "state": "present"
+            },
+            {
+              "name": "WH1420_Poster_Photo.pdf",
+              "label": "WH-1420 Poster Photo Evidence",
+              "state": "missing"
+            }
+          ]
+        },
+        {
+          "title": "Inspection Notes",
+          "items": [
+            {
+              "name": "FMLA_Walkthrough_Notes.txt",
+              "label": "FMLA Walkthrough Notes (Raw)",
+              "state": "present"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "DPR-001",
@@ -184,7 +479,36 @@
       "status": "non-compliant",
       "evidence": "No BOI FinCEN filing found on record. Corporate Transparency Act (CTA) required initial filing by January 1, 2024 for existing entities. School has been non-compliant for over 13 months.",
       "quote": null,
-      "action": "File BOI immediately at fincen.gov/boi — filing is free. Penalties: $500/day of non-compliance up to $10,000 + potential criminal liability for responsible individuals."
+      "action": "File BOI immediately at fincen.gov/boi — filing is free. Penalties: $500/day of non-compliance up to $10,000 + potential criminal liability for responsible individuals.",
+      "demoHighlight": true,
+      "demoTag": "Demo Story",
+      "evidenceGroups": [
+        {
+          "title": "BOI Filing Check",
+          "items": [
+            {
+              "name": "BOI_Requirement_Notice_2024.pdf",
+              "label": "FinCEN BOI Requirement Notice",
+              "state": "present"
+            },
+            {
+              "name": "BOI_Filing_Receipt_2024.pdf",
+              "label": "BOI Filing Receipt",
+              "state": "missing"
+            }
+          ]
+        },
+        {
+          "title": "Raw Verification Notes",
+          "items": [
+            {
+              "name": "BOI_Filing_Verification_Checklist.txt",
+              "label": "BOI Filing Verification Checklist (Raw)",
+              "state": "present"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "IRS-002",
@@ -216,4 +540,3 @@
     }
   ]
 }
-

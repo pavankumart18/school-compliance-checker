@@ -887,6 +887,8 @@ button.pipe-step {
 
 /* ---- RESPONSIVE ---- */
 @media (max-width: 1000px) {
+  .nav-inner { gap: 12px; }
+  .nav-progress-track { display: none; }
   .methodology-section {
     margin-left: 0;
     margin-right: 0;

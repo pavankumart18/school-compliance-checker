@@ -90,6 +90,13 @@ school/
 - **School Documents Modal** — Browse the current school's PDF documents with friendly labels and in-app preview.
 - **PDF Preview Modal** — Full-screen iframe preview of any selected PDF document.
 
+### New Evidence UX (Recent Update)
+
+- Evidence Documents now appear inside each expanded regulation card.
+- Partial and non-compliant rules can show multiple grouped artifacts plus missing-document indicators.
+- Mixed evidence formats are supported in cards (PDF plus raw `.csv`, `.txt`, and `.json` exports).
+- Demo Focus shortcuts jump directly to key stories for live presentations.
+
 ### Data Story (`story.html`)
 
 - **NYTimes-style Narrative** — An editorial, scroll-driven story exploring the compliance gap between the two schools.
