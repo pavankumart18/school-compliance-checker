@@ -8,7 +8,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
     rel="stylesheet">
-  <style>
+<style>
     * {
       margin: 0;
       padding: 0;
@@ -79,8 +79,7 @@
       display: flex;
       gap: 32px
     }
-
-    .nav-links a {
+.nav-links a {
       font-family: 'IBM Plex Mono', monospace;
       font-size: 10px;
       letter-spacing: 1.5px;
@@ -1136,7 +1135,7 @@
     <div class="nav-links">
       <a href="index.html">Return to Dashboard</a>
       <a href="flow-story.html">Flow Story</a>
-      <a href="#s-problem" class="lit">The Problem</a>
+<a href="#s-problem" class="lit">The Problem</a>
       <a href="#s-method">The Method</a>
       <a href="#s-output">The Output</a>
       <a href="#s-prompt">The Prompt</a>
@@ -1181,8 +1180,8 @@
           </div>
         </div>
         <div class="hero-meta">
-          <span>Nord Anglia Education · Florida</span>
-          <span>North Broward Prep · Windermere Prep</span>
+          <span>the school operator · Florida</span>
+          <span>School 1 · School 2</span>
           <span>Gemini Deep Research</span>
         </div>
       </div>
@@ -1199,7 +1198,7 @@
       different cycle. Nobody in the school has a complete picture. The regulations aren't secret. They're just
       scattered.</p>
 
-    <p>For Nord Anglia Education — which operates schools across 35 countries — the question was pointed: <strong>do we
+    <p>For the school operator — which operates schools across 35 countries — the question was pointed: <strong>do we
         actually know everything we're required to comply with in Florida?</strong> And more pressingly: is there a way
       to verify compliance automatically, against actual school documents, rather than relying on institutional memory?
     </p>
@@ -1323,7 +1322,7 @@
             <div class="term-body">
               <span class="kw">Role:</span> <span class="hi">Act as a Senior Compliance Architect and Legal
                 Researcher.</span>
-              <span class="kw">Context:</span> "Policy as Code" engine for Nord Anglia (North Broward + Windermere).
+              <span class="kw">Context:</span> "Policy as Code" engine for two Florida private schools (School 1 + School 2).
               <span class="kw">Problem:</span> Most data conflates <span class="em">Public</span> (Chapter 1003) vs
               <span class="em">Private</span> (Chapter 1002) rules.
 
@@ -1591,7 +1590,7 @@
       </div>
       <div class="callout-body">
         <div class="callout-label">The For-Profit Switch</div>
-        <div class="callout-text">Nord Anglia schools are corporate subsidiaries of a private equity firm — not
+        <div class="callout-text">these schools are corporate subsidiaries of a private equity firm — not
           nonprofits. Every compliance framework built for 501(c)(3) schools is wrong for them.</div>
         <div class="callout-sub">No Form 990. Instead: mandatory Beneficial Ownership Information (BOI) filing with
           FinCEN (Corporate Transparency Act 2024), Form 8300 for any cash tuition payment over $10,000 filed within 15
@@ -1844,8 +1843,8 @@
           EdTech startup.</span>
 
         <span class="kw">Context:</span> I am building a "Policy as Code" compliance engine for private, international
-        K-12 schools in Florida (specifically Nord Anglia schools like North Broward Prep
-        and Windermere Prep). The software will ingest PDFs (forms, logs, certificates)
+        K-12 schools in Florida (specifically these schools like School 1
+        and School 2). The software will ingest PDFs (forms, logs, certificates)
         and structured data to automatically flag non-compliance.
 
         <span class="kw">The Problem:</span> Most compliance data conflates <span class="em">Public school rules</span>
@@ -1953,8 +1952,7 @@
     sources<br>
     Output: 72 regulations · 11 government agencies · 18 regulatory categories · checklist.json · ComplianceIQ Dashboard
   </div>
-
-  <script>
+<script>
     // Intersection observer for scroll reveals
     const io = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
@@ -2024,7 +2022,7 @@
     function copyPrompt() {
       const promptText = `Role: Act as a Senior Compliance Architect and Legal Researcher for an EdTech startup.
 
-Context: I am building a "Policy as Code" compliance engine for private, international K-12 schools in Florida (specifically Nord Anglia schools like North Broward Prep and Windermere Prep). The software will ingest PDFs (forms, logs, certificates) and structured data to automatically flag non-compliance.
+Context: I am building a "Policy as Code" compliance engine for private, international K-12 schools in Florida (specifically two private schools labelled School 1 and School 2). The software will ingest PDFs (forms, logs, certificates) and structured data to automatically flag non-compliance.
 
 The Problem: Most compliance data conflates Public school rules (highly regulated, Chapter 1003) with Private school rules (Chapter 1002, deregulated but contractually bound). Do not mix them.
 

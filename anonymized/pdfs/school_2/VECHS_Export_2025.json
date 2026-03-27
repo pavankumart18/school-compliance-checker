@@ -1,0 +1,9 @@
+{
+  "school": "School 2",
+  "generated_at": "2026-03-13T00:00:00Z",
+  "total_staff": 47,
+  "expired_count": 1,
+  "expired_staff": [
+    "J. Martinez"
+  ]
+}

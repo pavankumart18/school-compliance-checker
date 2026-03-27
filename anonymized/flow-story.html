@@ -1,0 +1,419 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Compliance Flow Story</title>
+    <meta
+      name="description"
+      content="Realtime compliance flow dashboard showing documents moving from source systems to evidence-backed decisions."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="flow-story.css" />
+  </head>
+  <body>
+    <div class="page-shell" id="page-shell">
+      <div class="background-orbs" aria-hidden="true">
+        <span class="orb orb-a"></span>
+        <span class="orb orb-b"></span>
+        <span class="orb orb-c"></span>
+      </div>
+
+      <header class="hero panel reveal-stagger">
+        <div class="hero-copy">
+          <p class="eyebrow">AI-Augmented Compliance Engine - Flow Story</p>
+          <h1>Documents In. Evidence-Backed Decisions Out.</h1>
+          <div class="hero-lede">
+            <p>
+              This scene tells the product story in the clearest possible way:
+              raw files arrive from real-world systems, the compliance engine
+              parses them, extracts the facts that matter, checks those facts
+              against rules, and publishes a finding with visible proof.
+            </p>
+            <p>
+              Instead of asking an audience to trust a text explanation, the
+              page shows documents physically traveling through the workflow.
+              You can watch a filing, certificate, receipt, or spreadsheet turn
+              into a compliant, partial, or non-compliant result.
+            </p>
+            <p>
+              The goal is not backend realism. It is demo realism: a live,
+              understandable narrative that makes the compliance logic feel
+              transparent and believable.
+            </p>
+          </div>
+          <div class="hero-pills" id="hero-pills">
+            <span class="pill">Messy files become structured facts</span>
+            <span class="pill">Rules are checked in public view</span>
+            <span class="pill">Evidence always ships with the verdict</span>
+          </div>
+        </div>
+        <div class="hero-side">
+          <div class="live-status-card">
+            <div class="live-status-top">
+              <span class="live-dot running" id="live-dot"></span>
+              <span id="playback-status-label">Compliance stream running</span>
+            </div>
+            <div class="live-status-grid">
+              <div>
+                <div class="mini-label">Workflow</div>
+                <div class="mini-value" id="dataset-name">Generic compliance analysis</div>
+              </div>
+              <div>
+                <div class="mini-label">Documents Seen</div>
+                <div class="mini-value" id="dataset-count">0</div>
+              </div>
+              <div>
+                <div class="mini-label">Current Stage</div>
+                <div class="mini-value" id="current-stage-label">Waiting for first document</div>
+              </div>
+              <div>
+                <div class="mini-label">Current Outcome</div>
+                <div class="mini-value" id="mode-label">Standby</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="summary-card panel-subcard">
+            <div class="mini-label">Flow Narrative</div>
+            <div class="summary-note" id="summary-note">
+              A raw document arrives, enters the engine, becomes structured
+              evidence, and exits as a clear compliance story.
+            </div>
+            <div class="summary-steps" id="summary-steps"></div>
+          </div>
+        </div>
+      </header>
+
+      <section class="metric-strip" aria-label="Realtime metrics">
+        <article class="metric-card panel accent-blue">
+          <div class="metric-label">Documents Arrived</div>
+          <div class="metric-value" id="metric-arrived">0</div>
+          <div class="metric-foot">Files that entered the animated workflow</div>
+        </article>
+        <article class="metric-card panel accent-teal">
+          <div class="metric-label">Parsed</div>
+          <div class="metric-value" id="metric-parsed">0</div>
+          <div class="metric-foot">Files converted into readable document structure</div>
+        </article>
+        <article class="metric-card panel accent-lime">
+          <div class="metric-label">Rules Evaluated</div>
+          <div class="metric-value" id="metric-evaluated">0</div>
+          <div class="metric-foot">Documents that reached direct rule testing</div>
+        </article>
+        <article class="metric-card panel accent-gold">
+          <div class="metric-label">Evidence Packets</div>
+          <div class="metric-value" id="metric-evidence">0</div>
+          <div class="metric-foot">Findings bundled with proof, gaps, and action</div>
+        </article>
+        <article class="metric-card panel accent-lime">
+          <div class="metric-label">Fully Compliant</div>
+          <div class="metric-value"><span id="metric-full">0</span><small id="metric-full-rate">0%</small></div>
+          <div class="metric-foot">Requirements satisfied with visible proof</div>
+        </article>
+        <article class="metric-card panel accent-gold">
+          <div class="metric-label">Partially Compliant</div>
+          <div class="metric-value"><span id="metric-partial">0</span><small id="metric-partial-rate">0%</small></div>
+          <div class="metric-foot">Some requirements met, some evidence missing</div>
+        </article>
+        <article class="metric-card panel accent-coral">
+          <div class="metric-label">Non-Compliant</div>
+          <div class="metric-value"><span id="metric-non">0</span><small id="metric-non-rate">0%</small></div>
+          <div class="metric-foot">Source documents reveal a direct failure</div>
+        </article>
+        <article class="metric-card panel accent-violet">
+          <div class="metric-label">Avg Cycle Time</div>
+          <div class="metric-value" id="metric-cycle">--</div>
+          <div class="metric-foot">Average time from intake to published finding</div>
+        </article>
+      </section>
+
+      <section class="dashboard-grid" id="flow-section">
+        <section class="panel flow-panel">
+          <div class="panel-head">
+            <div>
+              <h2>Flow</h2>
+              <p class="panel-subtitle">
+                Documents arrive from different source types, cross the
+                compliance engine, and resolve into evidence-backed outcomes.
+              </p>
+            </div>
+            <div class="panel-badge" id="flow-badge">Waiting for first document</div>
+          </div>
+
+          <div class="flow-map" id="flow-map">
+            <svg class="flow-paths" viewBox="0 0 1000 520" preserveAspectRatio="none" aria-hidden="true">
+              <defs>
+                <linearGradient id="pathGlowIn" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="rgba(20,99,255,0.08)" />
+                  <stop offset="65%" stop-color="rgba(20,99,255,0.25)" />
+                  <stop offset="100%" stop-color="rgba(11,31,74,0.10)" />
+                </linearGradient>
+                <linearGradient id="pathGlowGood" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="rgba(46,168,111,0.08)" />
+                  <stop offset="60%" stop-color="rgba(46,168,111,0.28)" />
+                  <stop offset="100%" stop-color="rgba(11,31,74,0.08)" />
+                </linearGradient>
+                <linearGradient id="pathGlowWarn" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="rgba(241,180,0,0.08)" />
+                  <stop offset="60%" stop-color="rgba(241,180,0,0.28)" />
+                  <stop offset="100%" stop-color="rgba(11,31,74,0.08)" />
+                </linearGradient>
+                <linearGradient id="pathGlowFail" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="rgba(239,91,68,0.08)" />
+                  <stop offset="60%" stop-color="rgba(239,91,68,0.28)" />
+                  <stop offset="100%" stop-color="rgba(11,31,74,0.08)" />
+                </linearGradient>
+              </defs>
+              <path d="M130,70 C320,70 360,160 505,160" />
+              <path d="M130,130 C300,130 360,190 505,190" />
+              <path d="M130,190 C290,190 355,215 505,220" />
+              <path d="M130,250 C290,250 355,245 505,250" />
+              <path d="M130,310 C300,310 355,275 505,280" />
+              <path d="M130,370 C320,370 365,315 505,310" />
+              <path d="M130,430 C340,430 385,345 505,340" />
+              <path d="M130,490 C360,490 400,375 505,370" />
+              <path class="engine-out good" d="M590,236 C720,236 760,140 892,132" />
+              <path class="engine-out warn" d="M590,250 C720,250 765,250 892,250" />
+              <path class="engine-out fail" d="M590,264 C720,264 770,362 892,370" />
+            </svg>
+
+            <div class="flow-region source-region">
+              <button class="source-node" data-source="pdf_filing" type="button"><span class="icon">PDF</span><span class="label">PDF Filings</span><span class="count" id="count-pdf_filing">0</span></button>
+              <button class="source-node" data-source="spreadsheet" type="button"><span class="icon">XL</span><span class="label">Spreadsheets</span><span class="count" id="count-spreadsheet">0</span></button>
+              <button class="source-node" data-source="contract" type="button"><span class="icon">CT</span><span class="label">Contracts</span><span class="count" id="count-contract">0</span></button>
+              <button class="source-node" data-source="receipt" type="button"><span class="icon">$</span><span class="label">Receipts</span><span class="count" id="count-receipt">0</span></button>
+              <button class="source-node" data-source="certificate" type="button"><span class="icon">ID</span><span class="label">Certificates</span><span class="count" id="count-certificate">0</span></button>
+              <button class="source-node" data-source="inspection_log" type="button"><span class="icon">LG</span><span class="label">Inspection Logs</span><span class="count" id="count-inspection_log">0</span></button>
+              <button class="source-node" data-source="scan_image" type="button"><span class="icon">SC</span><span class="label">Scans and Images</span><span class="count" id="count-scan_image">0</span></button>
+              <button class="source-node" data-source="policy_plan" type="button"><span class="icon">PL</span><span class="label">Policies and Plans</span><span class="count" id="count-policy_plan">0</span></button>
+            </div>
+
+            <div class="engine-core" id="engine-core">
+              <div class="engine-core-ring"></div>
+              <div class="engine-core-inner">
+                <div class="engine-core-title">Compliance Engine</div>
+                <div class="engine-core-sub">Parse - Extract - Evaluate - Explain</div>
+                <div class="engine-core-stats">
+                  <span><strong id="core-processing">1</strong> live</span>
+                  <span><strong id="core-queue">0</strong> rotating</span>
+                </div>
+              </div>
+              <div class="engine-core-pulse pulse-a"></div>
+              <div class="engine-core-pulse pulse-b"></div>
+            </div>
+
+            <div class="outcome-node compliant" id="outcome-compliant">
+              <div class="outcome-node-icon">OK</div>
+              <div>
+                <div class="outcome-node-label">Fully Compliant</div>
+                <div class="outcome-node-value" id="outcome-compliant-count">0</div>
+              </div>
+            </div>
+            <div class="outcome-node partial" id="outcome-partial">
+              <div class="outcome-node-icon">PM</div>
+              <div>
+                <div class="outcome-node-label">Partially Compliant</div>
+                <div class="outcome-node-value" id="outcome-partial-count">0</div>
+              </div>
+            </div>
+            <div class="outcome-node non" id="outcome-non">
+              <div class="outcome-node-icon">NC</div>
+              <div>
+                <div class="outcome-node-label">Non-Compliant</div>
+                <div class="outcome-node-value" id="outcome-non-count">0</div>
+              </div>
+            </div>
+
+            <div class="packet-layer" id="packet-layer" aria-hidden="true"></div>
+            <div class="spark-layer" id="spark-layer" aria-hidden="true"></div>
+          </div>
+
+          <div class="flow-caption" id="flow-caption">
+            Documents animate from source systems into the Compliance Engine and
+            then resolve into a status node with visible evidence and action.
+          </div>
+        </section>
+
+        <section class="panel processing-panel">
+          <div class="panel-head compact">
+            <div>
+              <h2>Live Document Processing</h2>
+              <p class="panel-subtitle">
+                Current document, extracted facts, rule evaluation, evidence
+                packet, and recommended action.
+              </p>
+            </div>
+            <div class="panel-badge" id="current-phase-badge">Idle</div>
+          </div>
+
+          <div class="processing-layout">
+            <article class="document-focus card" id="document-focus">
+              <div class="card-head">
+                <div class="channel-pill" id="focus-source-pill">PDF Filing</div>
+                <div class="message-meta-top">
+                  <span id="focus-doc-id">CMP-001</span>
+                  <span id="focus-doc-time">Stage 1 of 6</span>
+                </div>
+              </div>
+
+              <div class="focus-persona">
+                <div>
+                  <div class="mini-label">Rule family</div>
+                  <div id="focus-rule-family">Annual reporting</div>
+                </div>
+                <div>
+                  <div class="mini-label">Document type</div>
+                  <div id="focus-doc-type">PDF filing packet</div>
+                </div>
+                <div>
+                  <div class="mini-label">Outcome</div>
+                  <div id="focus-doc-outcome">Queued</div>
+                </div>
+              </div>
+
+              <div class="message-text-wrap">
+                <div class="small-label">Document preview</div>
+                <pre class="message-text" id="focus-doc-text"></pre>
+              </div>
+
+              <div class="chip-grid" id="focus-doc-chips"></div>
+
+              <div class="raw-meta-grid">
+                <div>
+                  <div class="mini-label">Evidence set</div>
+                  <div id="focus-evidence-count">0 files</div>
+                </div>
+                <div>
+                  <div class="mini-label">Missing proof</div>
+                  <div id="focus-gap-state">Unknown</div>
+                </div>
+                <div>
+                  <div class="mini-label">Current stage</div>
+                  <div id="focus-stage-name">Document intake</div>
+                </div>
+                <div>
+                  <div class="mini-label">Next action</div>
+                  <div id="focus-action-short">Await evaluation</div>
+                </div>
+              </div>
+            </article>
+
+            <article class="agent-workbench card">
+              <div class="card-head">
+                <div class="workbench-title" id="workbench-title">Analyzing document</div>
+                <div class="thinking-pill active" id="thinking-pill">Engine live</div>
+              </div>
+
+              <div class="thinking-stage thinking" id="thinking-stage">
+                <div class="thinking-visual">
+                  <div class="thinking-ring"></div>
+                  <div class="thinking-ring inner"></div>
+                  <div class="thinking-core"></div>
+                </div>
+                <div class="thinking-copy">
+                  <div class="thinking-lines" id="thinking-lines"></div>
+                  <div class="thinking-progress-track">
+                    <div class="thinking-progress-fill" id="thinking-progress-fill"></div>
+                  </div>
+                  <div class="thinking-estimate" id="thinking-estimate">stage 1 of 6</div>
+                </div>
+              </div>
+
+              <div class="metadata-panel ready" id="metadata-panel">
+                <section class="metadata-group">
+                  <div class="small-label">Extracted facts</div>
+                  <div class="chip-grid" id="triage-chip-grid"></div>
+                </section>
+
+                <section class="metadata-group two-col">
+                  <div>
+                    <div class="small-label">Rule evaluation</div>
+                    <div class="stacked-list" id="routing-details"></div>
+                  </div>
+                  <div>
+                    <div class="small-label">Evidence packet</div>
+                    <div class="stacked-list" id="crm-actions-list"></div>
+                  </div>
+                </section>
+
+                <section class="metadata-group two-col">
+                  <div>
+                    <div class="small-label">Required action</div>
+                    <div class="stacked-list" id="draft-meta-list"></div>
+                  </div>
+                  <div>
+                    <div class="small-label">Guardrails and proof</div>
+                    <div class="stacked-list" id="citations-guardrails-list"></div>
+                  </div>
+                </section>
+              </div>
+
+              <div class="response-stream-panel">
+                <div class="response-head">
+                  <div>
+                    <div class="small-label">Narrative output</div>
+                    <div class="response-subtitle" id="response-subtitle">
+                      The engine is building an explainable compliance story.
+                    </div>
+                  </div>
+                  <div class="response-status" id="response-status">Waiting</div>
+                </div>
+                <pre class="response-stream" id="response-stream"></pre>
+                <span class="stream-caret visible" id="stream-caret" aria-hidden="true"></span>
+              </div>
+            </article>
+          </div>
+        </section>
+      </section>
+
+      <section class="panel outcome-panel">
+        <div class="panel-head compact">
+          <div>
+            <h2>Published Findings</h2>
+            <p class="panel-subtitle">
+              Each completed document journey lands here as a concise,
+              evidence-backed compliance card.
+            </p>
+          </div>
+          <div class="panel-badge" id="feed-badge">0 published</div>
+        </div>
+        <div class="feed-list" id="feed-list"></div>
+      </section>
+
+      <section class="panel page-footer" id="footer-panel">
+        <div class="footer-grid">
+          <article class="footer-card">
+            <div class="small-label">Why this works in a demo</div>
+            <p>
+              Viewers can watch a file move from source system to compliance
+              verdict instead of trying to infer the logic from static cards.
+            </p>
+          </article>
+          <article class="footer-card">
+            <div class="small-label">What the audience understands</div>
+            <p>
+              Which document arrived, which facts were extracted, which rule was
+              checked, what proof supports the result, and what action follows.
+            </p>
+          </article>
+          <article class="footer-card">
+            <div class="small-label">Outcome legend</div>
+            <p><span class="legend-dot teal"></span>Fully compliant means the rule passed with visible proof.</p>
+            <p><span class="legend-dot gold"></span>Partial means some evidence exists but some evidence is missing.</p>
+            <p><span class="legend-dot coral"></span>Non-compliant means the source documents show a clear violation.</p>
+          </article>
+        </div>
+        <div id="footer-status">Continuous compliance stream running.</div>
+      </section>
+    </div>
+
+    <script src="flow-story.js"></script>
+  </body>
+</html>
+

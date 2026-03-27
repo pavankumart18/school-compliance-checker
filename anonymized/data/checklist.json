@@ -1,0 +1,254 @@
+[
+  {
+    "id": "ADM-001",
+    "category": "State — Administrative & Financial",
+    "level": "state",
+    "name": "Notarized Annual Private School Survey",
+    "trigger": "Annual submission before May 1st",
+    "citation": "s. 1002.42(2)(b), F.S.",
+    "relatedDoc": "Annual_Survey_2025.pdf"
+  },
+  {
+    "id": "ADM-002",
+    "category": "State — Administrative & Financial",
+    "level": "state",
+    "name": "Attendance Register (170-Day Rule)",
+    "trigger": "Min 170 instructional days OR grade-band hours",
+    "citation": "Rule 6A-1.09512, F.A.C.",
+    "relatedDoc": null
+  },
+  {
+    "id": "ADM-003",
+    "category": "State — Administrative & Financial",
+    "level": "state",
+    "name": "Scholarship Compliance Form (IEPC SCF-1)",
+    "trigger": "Annual — deadline March 1st",
+    "citation": "s. 1002.421, F.S.",
+    "relatedDoc": "SCF1_Scholarship_Form.pdf"
+  },
+  {
+    "id": "ADM-004",
+    "category": "State — Administrative & Financial",
+    "level": "state",
+    "name": "Tuition & Fee Schedule",
+    "trigger": "Annual — scholarship rate must match non-scholarship rate",
+    "citation": "s. 1002.421, F.S.",
+    "relatedDoc": null
+  },
+  {
+    "id": "ADM-005",
+    "category": "State — Administrative & Financial",
+    "level": "state",
+    "name": "Certificate of Insurance",
+    "trigger": "Annual renewal — liability limits verified",
+    "citation": "s. 316.615(4), F.S.",
+    "relatedDoc": null
+  },
+  {
+    "id": "PER-001",
+    "category": "State — Personnel & Staffing",
+    "level": "state",
+    "name": "FDLE VECHS Level 2 Clearance (All Staff)",
+    "trigger": "All staff with student contact — renewed every 5 years",
+    "citation": "s. 1002.421(1)(m), F.S.",
+    "relatedDoc": "VECHS_Clearance_Log.pdf"
+  },
+  {
+    "id": "PER-002",
+    "category": "State — Personnel & Staffing",
+    "level": "state",
+    "name": "Teacher Qualification Records",
+    "trigger": "Per teacher: degree OR 3yr exp OR special skills",
+    "citation": "s. 1002.421(1)(h), F.S.",
+    "relatedDoc": "Teacher_Qualifications.pdf"
+  },
+  {
+    "id": "PER-003",
+    "category": "State — Personnel & Staffing",
+    "level": "state",
+    "name": "Affidavit of Good Moral Character",
+    "trigger": "Every new hire — notarized before start date",
+    "citation": "s. 1002.421(1)(m), F.S.",
+    "relatedDoc": "Affidavit_Good_Moral_Character_Log.pdf"
+  },
+  {
+    "id": "PER-004",
+    "category": "State — Personnel & Staffing",
+    "level": "state",
+    "name": "Ethics Policy Acknowledgement (Annual)",
+    "trigger": "Teachers and Admin — signed annually",
+    "citation": "s. 1012.796, F.S.",
+    "relatedDoc": "Ethics_Policy_Acknowledgement_Log.pdf"
+  },
+  {
+    "id": "HLT-001",
+    "category": "State — Student Health & Safety",
+    "level": "state",
+    "name": "Form DH-684 Immunization Annual Report",
+    "trigger": "Kindergarten and 7th Grade — submitted by Oct 1",
+    "citation": "Rule 64D-3.046, F.A.C.",
+    "relatedDoc": "DH684_Immunization_Report.pdf"
+  },
+  {
+    "id": "HLT-002",
+    "category": "State — Student Health & Safety",
+    "level": "state",
+    "name": "Form DH-680 (Blue Card) — Student Immunization",
+    "trigger": "Entry and Grade 7 — Tdap verified",
+    "citation": "s. 1003.22, F.S.",
+    "relatedDoc": "DH684_Immunization_Report.pdf"
+  },
+  {
+    "id": "HLT-003",
+    "category": "State — Student Health & Safety",
+    "level": "state",
+    "name": "Annual Fire Safety Inspection",
+    "trigger": "Annual — conducted by State Fire Marshal",
+    "citation": "s. 1013.12 / FFPC NFPA 101",
+    "relatedDoc": "Fire_Safety_Inspection.pdf"
+  },
+  {
+    "id": "FAC-001",
+    "category": "State — Facility & Operations",
+    "level": "state",
+    "name": "Monthly Drill Log & After-Action Report",
+    "trigger": "Monthly emergency drills — logged same day",
+    "citation": "Rule 6A-1.0018, F.A.C.",
+    "relatedDoc": null
+  },
+  {
+    "id": "FAC-002",
+    "category": "State — Facility & Operations",
+    "level": "state",
+    "name": "Form DH 1777 — Radon Testing",
+    "trigger": "Buildings over 1yr old — test every 5 years (max 2 tests)",
+    "citation": "s. 404.056, F.S.",
+    "relatedDoc": null
+  },
+  {
+    "id": "TRN-001",
+    "category": "State — Transportation",
+    "level": "state",
+    "name": "CDL License Scan (Class B + P/S Endorsements)",
+    "trigger": "Per bus driver — endorsements verified",
+    "citation": "s. 316.615, F.S.",
+    "relatedDoc": null
+  },
+  {
+    "id": "TRN-002",
+    "category": "State — Transportation",
+    "level": "state",
+    "name": "Medical Examiner Certificate (MCSA-5876)",
+    "trigger": "Per bus driver — renewed annually",
+    "citation": "s. 316.615(3), F.S.",
+    "relatedDoc": null
+  },
+  {
+    "id": "IMM-001",
+    "category": "Federal — Immigration (DHS/ICE/SEVIS)",
+    "level": "federal",
+    "name": "Form I-20 (Certificate of Eligibility)",
+    "trigger": "All non-US citizenship students — Active status required",
+    "citation": "8 CFR 214.2(f)",
+    "relatedDoc": "SEVIS_I20_Log.pdf"
+  },
+  {
+    "id": "IMM-002",
+    "category": "Federal — Immigration (DHS/ICE/SEVIS)",
+    "level": "federal",
+    "name": "Student Reporting Log (Term Registration in SEVIS)",
+    "trigger": "Each term — SEVIS registration within 30 days of term start",
+    "citation": "8 CFR 214.3(g)",
+    "relatedDoc": "SEVIS_I20_Log.pdf"
+  },
+  {
+    "id": "IMM-003",
+    "category": "Federal — Immigration (DHS/ICE/SEVIS)",
+    "level": "federal",
+    "name": "Form I-9 (Employment Eligibility Verification)",
+    "trigger": "All staff — Section 2 signed within 3 business days of start",
+    "citation": "8 CFR 274a.2",
+    "relatedDoc": null
+  },
+  {
+    "id": "DOL-001",
+    "category": "Federal — Department of Labor (DOL)",
+    "level": "federal",
+    "name": "FLSA Exemption Status (Teacher Salary Threshold)",
+    "trigger": "All teachers — salary >= $684/week verified",
+    "citation": "29 CFR 541.303",
+    "relatedDoc": null
+  },
+  {
+    "id": "DOL-002",
+    "category": "Federal — Department of Labor (DOL)",
+    "level": "federal",
+    "name": "FMLA Poster & Notice (WH-1420)",
+    "trigger": "Employer with 50+ employees — posted in break room",
+    "citation": "29 CFR 825.300",
+    "relatedDoc": null
+  },
+  {
+    "id": "DPR-001",
+    "category": "Federal — Data Privacy (FTC/COPPA)",
+    "level": "federal",
+    "name": "COPPA Direct Notice to Parents",
+    "trigger": "Students under 13 using 3rd party apps — parent consent required",
+    "citation": "16 CFR 312 (COPPA)",
+    "relatedDoc": null
+  },
+  {
+    "id": "DPR-002",
+    "category": "Federal — Data Privacy (FTC/COPPA)",
+    "level": "federal",
+    "name": "Vendor Privacy Agreement (DPA)",
+    "trigger": "All EdTech vendors — prohibits selling student data",
+    "citation": "FTC Safeguards Rule",
+    "relatedDoc": null
+  },
+  {
+    "id": "IRS-001",
+    "category": "Federal — IRS & Treasury",
+    "level": "federal",
+    "name": "Beneficial Ownership Information (BOI)",
+    "trigger": "Corporate entity — FinCEN report required (2024 CTA)",
+    "citation": "31 CFR 1010.380",
+    "relatedDoc": null
+  },
+  {
+    "id": "IRS-002",
+    "category": "Federal — IRS & Treasury",
+    "level": "federal",
+    "name": "Form 8300 (Cash Payments > $10,000)",
+    "trigger": "Cash transactions > $10,000 — filed within 15 days",
+    "citation": "26 U.S.C. 6050I",
+    "relatedDoc": null
+  },
+  {
+    "id": "BSF-001",
+    "category": "Federal — Building & Safety (OSHA/AHERA)",
+    "level": "federal",
+    "name": "AHERA Asbestos Management Plan",
+    "trigger": "Buildings built before 1989 — plan on site and accessible",
+    "citation": "40 CFR 763 (AHERA)",
+    "relatedDoc": null
+  },
+  {
+    "id": "BSF-002",
+    "category": "Federal — Building & Safety (OSHA/AHERA)",
+    "level": "federal",
+    "name": "OSHA 300 Log (Injury & Illness)",
+    "trigger": "Employers with 11+ employees — prior year log posted Feb-Apr",
+    "citation": "29 CFR 1904",
+    "relatedDoc": null
+  },
+  {
+    "id": "BSF-003",
+    "category": "Federal — Building & Safety (OSHA/AHERA)",
+    "level": "federal",
+    "name": "Chemical Hygiene Plan (Science Labs)",
+    "trigger": "Has science labs — SDS binder current + training logged",
+    "citation": "OSHA 29 CFR 1910.1450",
+    "relatedDoc": null
+  }
+]
