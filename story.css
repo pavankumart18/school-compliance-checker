@@ -68,6 +68,9 @@ body {
   letter-spacing: 1px;
   text-transform: uppercase;
 }
+.story-demo-toggle {
+  margin-left: auto;
+}
 .nav-progress-track {
   flex: 1;
   height: 2px;
@@ -897,6 +900,7 @@ button.pipe-step {
   }
 }
 @media (max-width: 768px) {
+  .nav-brand { display: none; }
   .hero-schools { flex-direction: column; gap: 12px; }
   .hero-vs { display: none; }
   .pipeline-steps { flex-direction: column; gap: 8px; }

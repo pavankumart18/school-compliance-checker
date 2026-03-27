@@ -1,0 +1,9 @@
+employee_id,name,role,start_date,affidavit_signed_date,notarized_date,timely
+NB-NH-001,Hernandez A,Teacher,2024-08-05,2024-08-05,2024-08-06,NO
+NB-NH-002,Patel R,Counselor,2024-08-12,2024-08-12,2024-08-15,NO
+NB-NH-003,Ruiz M,Teacher,2024-09-03,2024-08-29,2024-08-29,YES
+NB-NH-004,Owens P,Nurse,2024-09-10,2024-09-06,2024-09-06,YES
+NB-NH-005,Kim J,Teacher,2024-10-01,2024-09-26,2024-09-26,YES
+NB-NH-006,Brown S,Teacher,2024-10-14,2024-10-10,2024-10-10,YES
+NB-NH-007,Valdez T,Coach,2024-11-04,2024-10-31,2024-10-31,YES
+NB-NH-008,Ross L,Admin,2025-01-06,2024-12-30,2024-12-30,YES

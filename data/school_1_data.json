@@ -1,0 +1,757 @@
+{
+  "school": {
+    "name": "School 1",
+    "location": "Florida Region",
+    "type": "College Preparatory (PK-12)",
+    "enrollment": 847,
+    "score": 87,
+    "compliant": 21,
+    "partial": 4,
+    "non_compliant": 3
+  },
+  "documents": [
+    {
+      "name": "Annual_Survey_2025.pdf",
+      "label": "Annual Private School Survey 2024-25",
+      "desc": "Notarized survey submitted Apr 15, 2025 - FLDOE Survey #S1-0042",
+      "size": "21 KB"
+    },
+    {
+      "name": "VECHS_Clearance_Log.pdf",
+      "label": "FDLE VECHS Clearance Log - All Staff",
+      "desc": "Background screening results for 94 staff - Level 2 VECHS certified",
+      "size": "72 KB"
+    },
+    {
+      "name": "DH684_Immunization_Report.pdf",
+      "label": "Form DH-684 Immunization Compliance Report",
+      "desc": "K & 7th Grade immunization compliance - Oct 2024 submission",
+      "size": "37 KB"
+    },
+    {
+      "name": "Fire_Safety_Inspection.pdf",
+      "label": "Fire Safety Inspection Report 2025",
+      "desc": "Annual fire inspection - 0 violations - Fire Marshal signed Jan 2025",
+      "size": "7 KB"
+    },
+    {
+      "name": "Teacher_Qualifications.pdf",
+      "label": "Teacher Qualification Records - Faculty",
+      "desc": "Transcripts and credentials for all 62 instructional staff",
+      "size": "79 KB"
+    },
+    {
+      "name": "SEVIS_I20_Log.pdf",
+      "label": "SEVIS I-20 Master Log - International Students",
+      "desc": "78 active I-20s - all status Active - term registered within 30 days",
+      "size": "59 KB"
+    },
+    {
+      "name": "Affidavit_Good_Moral_Character_Log.pdf",
+      "label": "Affidavit of Good Moral Character Log",
+      "desc": "8 new hires reviewed; 2 notarized after start date (flagged)",
+      "size": "10 KB"
+    },
+    {
+      "name": "Ethics_Policy_Acknowledgement_Log.pdf",
+      "label": "Ethics Policy Acknowledgement Log",
+      "desc": "94/94 signatures complete for 2024-25 cycle",
+      "size": "60 KB"
+    },
+    {
+      "name": "MCSA5876_Driver_Medical_Review.pdf",
+      "label": "Driver Medical Certification Review (MCSA-5876)",
+      "desc": "Transportation medical certificate compliance review for 6 bus drivers",
+      "size": "40 KB"
+    },
+    {
+      "name": "MCSA5876_Dominguez_Certificate.pdf",
+      "label": "MCSA-5876 Certificate - R. Dominguez",
+      "desc": "DOT medical examiner certificate on file for driver Robert Dominguez",
+      "size": "17 KB"
+    },
+    {
+      "name": "Cash_Transaction_Compliance_Review_2025.pdf",
+      "label": "Cash Transaction Compliance Review 2025",
+      "desc": "Finance audit report for IRS Form 8300 timeliness and filing controls",
+      "size": "32 KB"
+    },
+    {
+      "name": "Cash_Tuition_Receipt_Oct03_2024.pdf",
+      "label": "Cash Tuition Receipt - Oct 3, 2024",
+      "desc": "Detailed receipt and ledger posting for $12,000 tuition cash payment",
+      "size": "15 KB"
+    },
+    {
+      "name": "Form_8300_Filing_Oct28_2024.pdf",
+      "label": "Form 8300 Filing Record - Oct 28, 2024",
+      "desc": "Filed IRS Form 8300 record and timeliness assessment attachment",
+      "size": "14 KB"
+    },
+    {
+      "name": "Radon_Compliance_Review_2025.pdf",
+      "label": "Radon Compliance Review Report 2025",
+      "desc": "Facilities environmental compliance review for radon testing cycle",
+      "size": "32 KB"
+    },
+    {
+      "name": "Radon_Test_Report_2018.pdf",
+      "label": "Form DH 1777 Radon Test Report (2018)",
+      "desc": "Historical radon test filing showing last completed measurement cycle",
+      "size": "13 KB"
+    },
+    {
+      "name": "Radon_Test_Schedule_Notice_2023.pdf",
+      "label": "Radon Retest Gap Notice (2023)",
+      "desc": "Facilities timeline showing missing second-cycle test filing",
+      "size": "7 KB"
+    },
+    {
+      "name": "Radon_Testing_Requirement_5Year_Rule.pdf",
+      "label": "Radon 5-Year Requirement Snapshot",
+      "desc": "Statutory requirement reference for school radon testing cycle",
+      "size": "7 KB"
+    },
+    {
+      "name": "IRS_Form_8300_15_Day_Rule.pdf",
+      "label": "IRS 15-Day Filing Rule",
+      "desc": "26 U.S.C. 6050I rule summary with filing deadline logic",
+      "size": "8 KB"
+    },
+    {
+      "name": "Chemical_Hygiene_Compliance_Audit_2025.pdf",
+      "label": "Lab Safety Compliance Audit (CHP)",
+      "desc": "Laboratory safety audit showing CHP, SDS, and eyewash control failures",
+      "size": "37 KB"
+    },
+    {
+      "name": "CHP_Revision_Log_2021.pdf",
+      "label": "Chemical Hygiene Plan Revision Log",
+      "desc": "Revision history showing last CHP update in August 2021",
+      "size": "8 KB"
+    },
+    {
+      "name": "SDS_Binder_Index_Feb2025.pdf",
+      "label": "SDS Binder Inventory Check",
+      "desc": "Chemistry lab SDS inventory with missing chemical safety sheets",
+      "size": "10 KB"
+    },
+    {
+      "name": "Eyewash_Inspection_Log_Q1_2025.pdf",
+      "label": "Eyewash Inspection Log (Q1 2025)",
+      "desc": "Weekly eyewash inspection register with identified gap period",
+      "size": "10 KB"
+    },
+    {
+      "name": "Attendance_Compliance_Report_2025.pdf",
+      "label": "Academic Attendance Compliance Report",
+      "desc": "Registrar audit report verifying instructional day compliance under 170-day rule",
+      "size": "27 KB"
+    },
+    {
+      "name": "Instruction_Calendar_2024_25.pdf",
+      "label": "Instruction Calendar 2024-25",
+      "desc": "Academic calendar summary with month-wise instructional day schedule",
+      "size": "12 KB"
+    },
+    {
+      "name": "Attendance_Register_Sample_Feb2025.pdf",
+      "label": "Attendance Register Extract (Feb 2025)",
+      "desc": "Daily attendance entries and registrar certification extract",
+      "size": "11 KB"
+    },
+    {
+      "name": "SCF1_Scholarship_Form.pdf",
+      "label": "IEPC Scholarship Compliance Form (SCF-1)",
+      "desc": "State scholarship compliance submission packet with IEPC confirmation",
+      "size": "24 KB"
+    },
+    {
+      "name": "Tuition_Fee_Schedule_2024_25.pdf",
+      "label": "Tuition and Fee Schedule 2024-25",
+      "desc": "Finance and admissions policy report with scholarship tuition parity verification",
+      "size": "20 KB"
+    },
+    {
+      "name": "Certificate_of_Insurance_2024_25.pdf",
+      "label": "Certificate of Liability Insurance 2024-25",
+      "desc": "Risk management insurance certificate and compliance verification report",
+      "size": "20 KB"
+    }
+  ],
+  "results": [
+    {
+      "id": "ADM-001",
+      "status": "compliant",
+      "evidence": "Survey filed April 15, 2025. Notary seal verified (County A seal #FL-882). Filed 16 days ahead of deadline.",
+      "quote": "Page 1: \"Sworn and subscribed before me this 15th day of April, 2025 - Notary Public Maria L. Gomez\"",
+      "action": null,
+      "demoHighlight": true,
+      "demoTag": "Demo Story",
+      "evidenceGroups": [
+        {
+          "title": "Survey Filing",
+          "items": [
+            {
+              "name": "Annual_Survey_2025.pdf",
+              "label": "Annual Survey Submission",
+              "state": "present"
+            },
+            {
+              "name": "Notary_Seal_Verification_Apr15_2025.pdf",
+              "label": "Notary Seal Verification Page",
+              "state": "present"
+            }
+          ]
+        },
+        {
+          "title": "Regulation Reference",
+          "items": [
+            {
+              "name": "Private_School_Annual_Survey_Rule.pdf",
+              "label": "Annual Survey Statute Snapshot",
+              "state": "present"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ADM-002",
+      "status": "compliant",
+      "evidence": "Academic calendar schedules 182 instructional days for 2024-2025. Attendance register is maintained daily, with 103 instructional days completed as of February 17, 2025.",
+      "quote": "Page 2: \"Total instructional days scheduled: 182 - YTD days completed as of Feb 17: 103\"",
+      "action": null,
+      "evidenceGroups": [
+        {
+          "title": "Registrar Compliance Report",
+          "items": [
+            {
+              "name": "Attendance_Compliance_Report_2025.pdf",
+              "label": "Instructional Day Attendance Compliance Report",
+              "state": "present"
+            }
+          ]
+        },
+        {
+          "title": "Calendar and Register Evidence",
+          "items": [
+            {
+              "name": "Instruction_Calendar_2024_25.pdf",
+              "label": "Academic Calendar (182 Scheduled Days)",
+              "state": "present"
+            },
+            {
+              "name": "Attendance_Register_Sample_Feb2025.pdf",
+              "label": "Daily Attendance Register Extract",
+              "state": "present"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ADM-003",
+      "status": "compliant",
+      "evidence": "SCF-1 annual scholarship compliance form submitted on February 22, 2025 with IEPC confirmation FL-2025-0338. Filing was accepted and submitted 6 days before the March 1 deadline.",
+      "quote": "Page 1: \"Submission Date: Feb 22, 2025 - IEPC Confirmation #FL-2025-0338\"",
+      "action": null,
+      "evidenceGroups": [
+        {
+          "title": "SCF-1 Submission Packet",
+          "items": [
+            {
+              "name": "SCF1_Scholarship_Form.pdf",
+              "label": "IEPC SCF-1 Submission Record",
+              "state": "present"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ADM-004",
+      "status": "compliant",
+      "evidence": "Tuition and fee policy was published on August 5, 2024. Standard tuition is $9,800 and scholarship tuition is $9,800, confirming rate parity under s.1002.421, F.S.",
+      "quote": "Page 3: \"Tuition Schedule 2024-25 - Standard Rate: $9,800 - Scholarship Rate: $9,800 - Rate Parity: CONFIRMED\"",
+      "action": null,
+      "evidenceGroups": [
+        {
+          "title": "Tuition Policy Report",
+          "items": [
+            {
+              "name": "Tuition_Fee_Schedule_2024_25.pdf",
+              "label": "Tuition and Fee Schedule Compliance Report",
+              "state": "present"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ADM-005",
+      "status": "compliant",
+      "evidence": "Policy GLI-2024-NB-77821 is active with National School Insurance Group. Coverage limits are $1,000,000 per occurrence and $3,000,000 aggregate, with expiration on August 31, 2025.",
+      "quote": "Page 1: \"General Liability Coverage - Expiration: 08/31/2025 - Per Occurrence: $1,000,000 - Aggregate: $3,000,000\"",
+      "action": null,
+      "evidenceGroups": [
+        {
+          "title": "Insurance Certificate Packet",
+          "items": [
+            {
+              "name": "Certificate_of_Insurance_2024_25.pdf",
+              "label": "Certificate of Liability Insurance and Verification Report",
+              "state": "present"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "PER-001",
+      "status": "compliant",
+      "evidence": "94 staff records reviewed - all status 'Eligible'. Most recent screening: Aug 2024. No expired screenings detected.",
+      "quote": "Page 3: 'All 94 instructional and administrative personnel hold current VECHS Eligible status as of date of report'",
+      "action": null,
+      "evidenceGroups": [
+        {
+          "title": "System Exports",
+          "items": [
+            {
+              "name": "VECHS_Export_2025.json",
+              "label": "VECHS Eligibility Export (JSON)",
+              "state": "present"
+            }
+          ]
+        },
+        {
+          "title": "Personnel Master Data",
+          "items": [
+            {
+              "name": "VECHS_Clearance_Log.pdf",
+              "label": "VECHS Clearance Master Log",
+              "state": "present"
+            },
+            {
+              "name": "Staff_Roster_2024_25.csv",
+              "label": "Staff Roster Export (CSV)",
+              "state": "present"
+            },
+            {
+              "name": "VECHS_Export_2025.json",
+              "label": "VECHS Eligibility Export (JSON)",
+              "state": "present"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "PER-002",
+      "status": "partial",
+      "evidence": "59 of 62 teachers have complete qualification files. 3 teachers have degrees referenced in contracts but official transcripts not on file.",
+      "quote": "Page 7: \"Total instructional staff: 62 - Qualification gate: 59 PASS / 3 PENDING - Transcripts needed for: Williams, Chen, Okafor\"",
+      "action": "Collect official transcripts from 3 teachers within 30 days. Acceptable alternative: Employment verification letters documenting 3+ years experience.",
+      "demoHighlight": true,
+      "demoTag": "Demo Story",
+      "evidenceGroups": [
+        {
+          "title": "Teacher Contracts",
+          "items": [
+            {
+              "name": "Teacher_Contract_Williams.pdf",
+              "label": "Contract - A. Williams",
+              "state": "present"
+            },
+            {
+              "name": "Teacher_Contract_Chen.pdf",
+              "label": "Contract - L. Chen",
+              "state": "present"
+            },
+            {
+              "name": "Teacher_Contract_Okafor.pdf",
+              "label": "Contract - T. Okafor",
+              "state": "present"
+            }
+          ]
+        },
+        {
+          "title": "Degree Certificates",
+          "items": [
+            {
+              "name": "Degree_Certificate_Williams.pdf",
+              "label": "Degree Certificate - A. Williams",
+              "state": "present"
+            },
+            {
+              "name": "Degree_Certificate_Chen.pdf",
+              "label": "Degree Certificate - L. Chen",
+              "state": "present"
+            },
+            {
+              "name": "Degree_Certificate_Okafor.pdf",
+              "label": "Degree Certificate - T. Okafor",
+              "state": "present"
+            }
+          ]
+        },
+        {
+          "title": "Missing Documents",
+          "items": [
+            {
+              "name": "Transcript_Williams.pdf",
+              "label": "Transcript - A. Williams",
+              "state": "missing"
+            },
+            {
+              "name": "Transcript_Chen.pdf",
+              "label": "Transcript - L. Chen",
+              "state": "missing"
+            },
+            {
+              "name": "Transcript_Okafor.pdf",
+              "label": "Transcript - T. Okafor",
+              "state": "missing"
+            }
+          ]
+        },
+        {
+          "title": "Qualification Master File",
+          "items": [
+            {
+              "name": "Teacher_Qualifications.pdf",
+              "label": "Teacher Qualification Records",
+              "state": "present"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "PER-003",
+      "status": "partial",
+      "evidence": "All 8 new hires in 2024-25 have signed affidavits. However, 2 were notarized 1 and 3 days after their respective start dates.",
+      "quote": "Page 5: 'New hire affidavit compliance: 6/8 timely - 2 late notarizations (Hernandez: +1 day, Patel: +3 days)'",
+      "action": "Retroactive notarization is technically non-compliant. Document the gap in personnel files. Enforce pre-start notarization for all future hires.",
+      "evidenceGroups": [
+        {
+          "title": "Affidavit Compliance Log",
+          "items": [
+            {
+              "name": "Affidavit_Good_Moral_Character_Log.pdf",
+              "label": "Affidavit Log (New Hires)",
+              "state": "present"
+            },
+            {
+              "name": "New_Hire_Affidavit_Tracker.csv",
+              "label": "Affidavit Tracker (CSV)",
+              "state": "present"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "PER-004",
+      "status": "compliant",
+      "evidence": "All 94 staff signed 2024-25 Ethics Policy acknowledgement. Signed copies on file in HR system.",
+      "quote": "Page 2: 'Ethics acknowledgement: 94/94 staff signed - Collection completed August 19, 2024'",
+      "action": null,
+      "evidenceGroups": [
+        {
+          "title": "Ethics Acknowledgement Records",
+          "items": [
+            {
+              "name": "Ethics_Policy_Acknowledgement_Log.pdf",
+              "label": "Ethics Signature Log",
+              "state": "present"
+            },
+            {
+              "name": "Ethics_Acknowledgement_Register.csv",
+              "label": "Ethics Register (CSV)",
+              "state": "present"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "HLT-001",
+      "status": "compliant",
+      "evidence": "DH-684 submitted Sept 28, 2024. Kindergarten: 98.6% compliance rate. Grade 7: 100% compliance rate.",
+      "quote": "Page 1: \"Immunization Report - Submission Date: 09/28/2024 - KG Rate: 98.6% - Gr7 Rate: 100%\"",
+      "action": null
+    },
+    {
+      "id": "HLT-002",
+      "status": "partial",
+      "evidence": "845 of 847 students have current DH-680 on file. 2 students have Part B (Temporary Medical Exemption) that expired within last 45 days.",
+      "quote": "Page 4: \"Student immunization records: 845/847 complete - 2 expired temporary exemptions (Student IDs: 4421, 4587)\"",
+      "action": "Contact families of 2 students with expired temporary exemptions. Obtain updated DH-680 or permanent exemption within 5 school days."
+    },
+    {
+      "id": "HLT-003",
+      "status": "compliant",
+      "evidence": "Inspection completed January 23, 2025. Zero violations. Certificate valid through Jan 2026.",
+      "quote": "Page 1: 'Florida State Fire Marshal Inspection - Date: 01/23/2025 - Violations: 0 - Status: PASS'",
+      "action": null
+    },
+    {
+      "id": "FAC-001",
+      "status": "compliant",
+      "evidence": "12 consecutive monthly drill logs on file. February 2025 drill completed Feb 7. Reports signed by Principal.",
+      "quote": "Page 8: 'February 2025 Fire Drill - Date: 02/07/2025 - Duration: 4 min 12 sec - Signed: Prin. Harrington'",
+      "action": null
+    },
+    {
+      "id": "FAC-002",
+      "status": "non-compliant",
+      "evidence": "Only 1 radon test on record (September 2018). Second test was due by September 2023 - now overdue by 2+ years. Form DH 1777 not filed for second test.",
+      "quote": "Page 5: \"Radon compliance review: 1 test on record - second test overdue by 2+ years - Form DH 1777 not filed for second test\"",
+      "action": "Schedule radon test immediately with DEP-certified inspector. Required form: DH 1777. Use DEP-certified lab for analysis. Penalty risk: facility non-compliance flag on annual survey.",
+      "evidenceGroups": [
+        {
+          "title": "Facilities Compliance Report",
+          "items": [
+            {
+              "name": "Radon_Compliance_Review_2025.pdf",
+              "label": "Facilities Environmental Compliance Report",
+              "state": "present"
+            }
+          ]
+        },
+        {
+          "title": "Historical Test Evidence",
+          "items": [
+            {
+              "name": "Radon_Test_Report_2018.pdf",
+              "label": "Radon Test Report - Sep 2018 (DH 1777)",
+              "state": "present"
+            },
+            {
+              "name": "Radon_Test_Schedule_Notice_2023.pdf",
+              "label": "Second Test Scheduling and Gap Notice",
+              "state": "present"
+            }
+          ]
+        },
+        {
+          "title": "Regulation Reference",
+          "items": [
+            {
+              "name": "Radon_Testing_Requirement_5Year_Rule.pdf",
+              "label": "Radon Testing Rule - 5 Year Cycle",
+              "state": "present"
+            }
+          ]
+        },
+        {
+          "title": "Missing Required Filing",
+          "items": [
+            {
+              "name": "DH1777_Second_Test_Report.pdf",
+              "label": "Form DH 1777 - Second Test",
+              "state": "missing"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "TRN-001",
+      "status": "compliant",
+      "evidence": "6 bus drivers on record - all hold valid Class B CDL with Passenger (P) and School Bus (S) endorsements. All licenses current.",
+      "quote": "Page 6: '6/6 drivers verified - CDL Class B - P and S endorsements confirmed - No expirations within 90 days'",
+      "action": null
+    },
+    {
+      "id": "TRN-002",
+      "status": "partial",
+      "evidence": "5 of 6 driver medical certificates current. 1 driver (R. Dominguez) certificate expires March 1, 2025 - renewal not yet scheduled.",
+      "quote": "Page 6: \"Medical certs: 5/6 valid - R. Dominguez MCSA-5876 expires 03/01/2025 - RENEWAL NEEDED\"",
+      "action": "Schedule DOT medical exam for R. Dominguez before March 1, 2025. Driver may not operate school bus with expired certificate.",
+      "evidenceGroups": [
+        {
+          "title": "Driver Medical Certification",
+          "items": [
+            {
+              "name": "MCSA5876_Driver_Medical_Review.pdf",
+              "label": "MCSA-5876 Driver Medical Review Report",
+              "state": "present"
+            },
+            {
+              "name": "MCSA5876_Dominguez_Certificate.pdf",
+              "label": "R. Dominguez MCSA-5876 Certificate",
+              "state": "present"
+            }
+          ]
+        },
+        {
+          "title": "Renewal Follow-Up",
+          "items": [
+            {
+              "name": "MCSA5876_Dominguez_Renewal_Receipt.pdf",
+              "label": "R. Dominguez Renewal Receipt",
+              "state": "missing"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "IMM-001",
+      "status": "compliant",
+      "evidence": "78 international students enrolled - 78 active I-20s on file. All program end dates extend beyond current term. PDSO records verified.",
+      "quote": "Page 3: 'SEVIS Active I-20s: 78/78 - All Program_End_Date > 02/18/2025 - PDSO: Dr. R. Patel'",
+      "action": null
+    },
+    {
+      "id": "IMM-002",
+      "status": "compliant",
+      "evidence": "Term started Jan 6, 2025. SEVIS registration completed Jan 9, 2025 - 3 days after term start. Within 30-day window.",
+      "quote": "Page 1: 'SEVIS Term Registration - Completion Date: Jan 9, 2025 - Days from term start: 3 - Status: COMPLIANT'",
+      "action": null
+    },
+    {
+      "id": "IMM-003",
+      "status": "compliant",
+      "evidence": "I-9 audit completed. All 94 employee I-9s on file. Section 2 signatures verified within 3-day window for all 2024-25 new hires.",
+      "quote": "Page 5: 'I-9 Compliance Audit - Result: PASS - All Section 2 dates within statutory 3-day window'",
+      "action": null
+    },
+    {
+      "id": "DOL-001",
+      "status": "compliant",
+      "evidence": "All 62 teachers classified as 'Exempt Professional.' Lowest salary: $42,800/year ($823/week). Above $684/week threshold.",
+      "quote": "Page 9: 'FLSA Exempt: 62/62 teachers - Min weekly salary: $823 - Threshold: $684 - Status: PASS'",
+      "action": null
+    },
+    {
+      "id": "DOL-002",
+      "status": "compliant",
+      "evidence": "FMLA WH-1420 poster verified posted in Staff Lounge (Building A). Handbook policy exists - Section 4.3, Page 14.",
+      "quote": "Page 2: 'FMLA Notice WH-1420 posted - Location: Staff Lounge A-114 - Handbook Section 4.3 verified'",
+      "action": null
+    },
+    {
+      "id": "DPR-001",
+      "status": "compliant",
+      "evidence": "16 EdTech vendor apps in use. 4 used by students under 13 - all have signed parent consent forms on file. Vendor DPAs reviewed Aug 2024.",
+      "quote": "Page 11: 'COPPA compliance: 4/4 apps affecting U-13 students have parent consent - DPAs on file for all 16 vendors'",
+      "action": null
+    },
+    {
+      "id": "DPR-002",
+      "status": "compliant",
+      "evidence": "16 vendor DPAs on file - all include data-sell prohibition and security standard definition. Most recent review: November 2024.",
+      "quote": "Page 12: 'Vendor DPA audit: 16/16 agreements current - all prohibit data sale - all define encryption standard'",
+      "action": null
+    },
+    {
+      "id": "IRS-001",
+      "status": "compliant",
+      "evidence": "BOI report filed with FinCEN on Jan 10, 2024. Ownership structure reported. Confirmation #FIN-2024-0082-NB.",
+      "quote": "Page 1: 'FinCEN BOI Filing - Date: 01/10/2024 - Confirmation: FIN-2024-0082-NB - Status: Filed'",
+      "action": null
+    },
+    {
+      "id": "IRS-002",
+      "status": "non-compliant",
+      "evidence": "One cash tuition payment of $12,000 was received on October 3, 2024. Form 8300 was filed on October 28, 2024 (25 days after receipt), exceeding the 15-day legal filing window by 10 days.",
+      "quote": "Page 5: \"Form 8300 filing review: 1 transaction exceeding $10,000 - Filing submitted 25 days after transaction - 10 days beyond 15-day legal requirement - STATUS: NON-COMPLIANT\"",
+      "action": "Submit corrective Form 8300 documentation and late-filing memo immediately. Record the exception in finance compliance logs and enforce automated deadline alerts for all cash transactions above $10,000.",
+      "demoHighlight": true,
+      "demoTag": "Demo Story",
+      "evidenceGroups": [
+        {
+          "title": "Financial Compliance Report",
+          "items": [
+            {
+              "name": "Cash_Transaction_Compliance_Review_2025.pdf",
+              "label": "Financial Compliance Audit Report (Form 8300)",
+              "state": "present"
+            }
+          ]
+        },
+        {
+          "title": "Transaction Evidence",
+          "items": [
+            {
+              "name": "Cash_Tuition_Receipt_Oct03_2024.pdf",
+              "label": "Cash Tuition Receipt - Oct 3",
+              "state": "present"
+            },
+            {
+              "name": "Form_8300_Filing_Oct28_2024.pdf",
+              "label": "Filed Form 8300 - Oct 28",
+              "state": "present"
+            }
+          ]
+        },
+        {
+          "title": "Regulation Reference",
+          "items": [
+            {
+              "name": "IRS_Form_8300_15_Day_Rule.pdf",
+              "label": "IRS 15-Day Filing Rule",
+              "state": "present"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "BSF-001",
+      "status": "compliant",
+      "evidence": "AMP on file - last updated Sept 2022. Available in Principal's office. Parent/staff access: no fee. Building constructed 1987.",
+      "quote": "Page 1: 'AHERA AMP - Location: Principal Office A-101 - Last Updated: Sept 2022 - Access: Free to parents/staff'",
+      "action": null
+    },
+    {
+      "id": "BSF-002",
+      "status": "compliant",
+      "evidence": "OSHA 300A Summary posted in Staff Lounge since Feb 1, 2025. 2024 log: 2 recordable incidents. Both properly documented.",
+      "quote": "Page 4: 'OSHA 300A - Posted Feb 1, 2025 - Location: Staff Lounge A-114 - 2024 Incidents recorded: 2'",
+      "action": null
+    },
+    {
+      "id": "BSF-003",
+      "status": "non-compliant",
+      "evidence": "Chemical Hygiene Plan was last revised on August 12, 2021 (outdated). SDS binder in Chemistry Lab C204 is missing 4 active chemical safety sheets. Eyewash inspection log has a 3-week documentation gap between February and March 2025.",
+      "quote": "Page 6: \"Laboratory safety review: CHP outdated - SDS binder missing 4 chemical records - Eyewash inspection gap detected - OVERALL STATUS: NON-COMPLIANT\"",
+      "action": "Update CHP immediately to current standards, complete missing SDS records for all active chemicals, and restore weekly eyewash inspections. Complete corrective actions within 10 working days due to high OSHA inspection risk.",
+      "evidenceGroups": [
+        {
+          "title": "Lab Safety Compliance Report",
+          "items": [
+            {
+              "name": "Chemical_Hygiene_Compliance_Audit_2025.pdf",
+              "label": "Laboratory Safety Compliance Audit",
+              "state": "present"
+            }
+          ]
+        },
+        {
+          "title": "Supporting Safety Records",
+          "items": [
+            {
+              "name": "CHP_Revision_Log_2021.pdf",
+              "label": "CHP Revision History",
+              "state": "present"
+            },
+            {
+              "name": "SDS_Binder_Index_Feb2025.pdf",
+              "label": "SDS Binder Inventory Review",
+              "state": "present"
+            },
+            {
+              "name": "Eyewash_Inspection_Log_Q1_2025.pdf",
+              "label": "Eyewash Inspection Register",
+              "state": "present"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

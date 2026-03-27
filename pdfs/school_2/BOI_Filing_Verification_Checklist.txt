@@ -1,0 +1,6 @@
+BOI Filing Verification Checklist
+Entity Name: School 2
+Portal Checked: FinCEN BOI E-Filing
+Confirmation ID found: NO
+Receipt file available: NO
+Status: NON-COMPLIANT (missing filing evidence)
